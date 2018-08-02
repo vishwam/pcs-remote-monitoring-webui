@@ -16,7 +16,8 @@
     "dashboard": "Dashboard",
     "devices": "Devices",
     "rules": "Rules",
-    "maintenance": "Maintenance"
+    "maintenance": "Maintenance",
+    "temp": "Temp"
   },
   "errorFormat": "Error: {{message}}",
   "errorCode": {

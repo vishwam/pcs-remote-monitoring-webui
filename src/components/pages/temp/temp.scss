@@ -1,0 +1,30 @@
+// Copyright (c) Microsoft. All rights reserved.
+
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+@import 'src/styles/themes';
+
+$bgColor: #00abff;
+$bgColorHover: #00fdff;
+$borderColor: $bgColorHover; //#005e8c;
+.temp-container {
+  padding: $baseContentPadding;
+
+  .hierarchy-level {
+    margin: 5px 0px 5px 20px;
+    padding: 10px 0px 10px 10px;
+    background-color: rgba($bgColor, 0.1);
+    border-color: $borderColor; /* Include default color to avoid odd black-to-color transitions*/
+    transition: all 0.25s ease;
+
+    &:hover {
+      background-color: rgba($bgColor, 0.05);
+      border-left: 4px solid $borderColor;
+    }
+
+    .hierarchy-name {
+      padding: 10px;
+      cursor: pointer;
+    }
+  }
+}
