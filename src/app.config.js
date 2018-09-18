@@ -33,6 +33,14 @@ const Config = {
   maxAlertsCount: 1000,
   gridMinResize: 1200, // In px
   mapCenterPosition: [-122.3320708, 47.606], // Default to Seattle
+  themes: { //Only theme based settings that cannot be done in CSS should be defined here
+    dark : {
+      mapStyle: 'grayscale_dark'
+    },
+    light : {
+      mapStyle: 'road'
+    }
+  },
   ruleSeverity: {
     info: 'info',
     warning: 'warning',

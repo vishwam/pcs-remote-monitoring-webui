@@ -397,6 +397,7 @@ export class Dashboard extends Component {
                 mapKeyIsPending={azureMapsKeyIsPending}
                 isPending={devicesIsPending || analyticsIsPending}
                 error={azureMapsKeyError || devicesError || analyticsError}
+                theme={theme}
                 t={t} />
             </PanelErrorBoundary>
           </Cell>

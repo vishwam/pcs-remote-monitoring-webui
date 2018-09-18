@@ -169,23 +169,12 @@ export class MapPanel extends Component {
     });
   }
 
-  zoom = (zoomFactor) => {
-    if (this.map) {
-      const currZoom = this.map.getCamera().zoom;
-      this.map.setCamera({ zoom: currZoom + zoomFactor });
-    }
-  }
-
-  zoomIn = () => this.zoom(1);
-
-  zoomOut = () => this.zoom(-1);
-
   openDeviceDetails = (selectedDeviceId) => this.setState({ selectedDeviceId });
 
   closeDeviceDetails = () => this.setState({ selectedDeviceId: undefined });
 
   render() {
-    const { t, isPending, devices, mapKeyIsPending, azureMapsKey, error } = this.props;
+    const { t, theme, isPending, devices, mapKeyIsPending, azureMapsKey, error } = this.props;
     const showOverlay = !error && isPending && mapKeyIsPending;
     return (
       <Panel className="map-panel-container">
@@ -194,9 +183,7 @@ export class MapPanel extends Component {
           { !showOverlay && isPending && <Indicator size="small" /> }
         </PanelHeader>
         <PanelContent className="map-panel-container">
-          <AzureMap azureMapsKey={azureMapsKey} onMapReady={this.onMapReady} />
-          <button className="zoom-btn zoom-in" onClick={this.zoomIn}>+</button>
-          <button className="zoom-btn zoom-out" onClick={this.zoomOut}>-</button>
+          <AzureMap azureMapsKey={azureMapsKey} theme={theme} onMapReady={this.onMapReady} />
         </PanelContent>
         { showOverlay && <PanelOverlay><Indicator /></PanelOverlay> }
         { !mapKeyIsPending && !this.props.azureMapsKey && <PanelError>{t('dashboard.panels.map.notSupportedError')}</PanelError> }

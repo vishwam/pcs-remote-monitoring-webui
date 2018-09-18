@@ -1,0 +1,9 @@
+// Copyright (c) Microsoft. All rights reserved.
+@import 'src/styles/mixins';
+@import 'src/styles/themes';
+
+.azure-maps-control-container {
+  @include themify($themes) {
+    .azure-maps-control-button { background-color: themed('colorDashboardPanelHeaderBg'); }
+  }
+}
