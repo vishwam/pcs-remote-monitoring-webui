@@ -24,10 +24,8 @@ export class AzureMap extends Component {
     // When the theme changes, also change the style for the map.
     // If the user manually chose a map style different than the theme,
     // that choice should be honored. Otherwise, use the default style for the theme.
-    if (this.map && nextProps.theme !== this.props.theme) {
-      if (this.getMapStyle(this.props.theme) === this.map.getStyle().style) {
-        this.map.setStyle({style: this.getMapStyle(nextProps.theme)});
-      }
+    if (this.map && nextProps.theme !== this.props.theme && this.getMapStyle(this.props.theme) === this.map.getStyle().style) {
+      this.map.setStyle({ style: this.getMapStyle(nextProps.theme) });
     }
   }
 
@@ -49,13 +47,23 @@ export class AzureMap extends Component {
       style: this.getMapStyle(theme)
     });
 
-    var styleSelector = new AzureMaps.control.StyleControl();
+    const styleSelector = new AzureMaps.control.StyleControl({style: theme});
     this.map.addControl(styleSelector, {
       position: "top-right"
     });
 
-    var zoomControl = new AzureMaps.control.ZoomControl();
+    const zoomControl = new AzureMaps.control.ZoomControl({style: theme});
     this.map.addControl(zoomControl, {
+      position: "top-right"
+    });
+
+    const pitchControl = new AzureMaps.control.PitchControl({style: theme});
+    this.map.addControl(pitchControl, {
+      position: "top-right"
+    });
+
+    const compassControl = new AzureMaps.control.CompassControl({style: theme});
+    this.map.addControl(compassControl, {
       position: "top-right"
     });
 
