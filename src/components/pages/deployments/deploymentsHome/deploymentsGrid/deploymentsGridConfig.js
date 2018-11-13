@@ -2,7 +2,7 @@
 
 import Config from 'app.config';
 import { SoftSelectLinkRenderer, TimeRenderer } from 'components/shared/cellRenderers';
-import { getPackageTypeTranslation } from 'utilities';
+import { getPackageTypeTranslation, getConfigTypeTranslation } from 'utilities';
 import { gridValueFormatters } from 'components/shared/pcsGrid/pcsGridConfig';
 
 const { checkForEmpty } = gridValueFormatters;
@@ -34,6 +34,11 @@ export const deploymentsColumnDefs = {
     headerName: 'deployments.grid.type',
     field: 'type',
     valueFormatter: ({ value, context: { t } }) => getPackageTypeTranslation(checkForEmpty(value), t)
+  },
+  configType: {
+    headerName: 'deployments.grid.configType',
+    field: 'configType',
+    valueFormatter: ({ value, context: { t } }) => getConfigTypeTranslation(checkForEmpty(value), t)
   },
   targeted: {
     headerName: 'deployments.grid.targeted',

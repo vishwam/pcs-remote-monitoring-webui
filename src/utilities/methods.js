@@ -2,7 +2,7 @@
 
 import Config from 'app.config';
 import dot from 'dot-object';
-import toCamelcase from './camelcase';
+import { toCamelcase } from './camelcase';
 
 /** Tests if a value is a function */
 export const isFunc = value => typeof value === 'function';
@@ -114,9 +114,19 @@ export const getEdgeAgentStatusCode = (code, t) => {
 
 /** Converts a packageType enum to a translated string equivalent */
 export const getPackageTypeTranslation = (packageType, t) => {
-  switch (packageType.toLowerCase()) {
-    case 'edgemanifest': return t('deployments.typeOptions.edgemanifest');
-    default: return t('deployments.typeOptions.unknown');
+  switch (toCamelcase(packageType)) {
+    case 'edgeManifest': return t('packageTypes.edgeManifest');
+    case 'deviceConfiguration': return t('packageTypes.deviceConfiguration');
+    default: return t('packageType.unknown');
+  }
+}
+
+/** Converts a packageType enum to a translated string equivalent */
+export const getConfigTypeTranslation = (configType, t) => {
+  switch (toCamelcase(configType)) {
+    case 'mxChipFirmwareUpdate': return t('configTypes.mxChipFirmwareUpdate');
+    case 'custom': return t('configTypes.custom');
+    default: return configType;
   }
 }
 

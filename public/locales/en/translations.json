@@ -622,16 +622,13 @@
         "info": "Deleting '{{deploymentName}}' will stop this deployment from being applied to these devices. It may result in a lower priority edge manifest being applied."
       }
     },
-    "typeOptions": {
-      "edgemanifest": "Edge Manifest",
-      "unknown": "Unknown"
-    },
     "grid": {
       "name": "Name",
       "package": "Package",
       "deviceGroup": "Device group",
       "priority": "Priority",
       "type": "Package Type",
+      "configType": "Config Type",
       "targeted": "Targeted",
       "applied": "Applied",
       "failed": "Failed",
@@ -649,6 +646,7 @@
     "grid": {
       "name": "Name",
       "type": "Type",
+      "configType": "Config Type",
       "dateCreated": "Date Created"
     },
     "flyouts": {
@@ -662,7 +660,8 @@
         "type": "Package type",
         "browse": "Browse",
         "browseText": "for a package file",
-        "placeHolder": "Select package type",
+        "packageTypePlaceHolder": "Select package type",
+        "configTypePlaceHolder": "Select config type",
         "package": "Package",
         "deploymentsPage": "Deployments page",
         "newDeployment": "+ New Deployment",
@@ -677,10 +676,16 @@
         "title": "Delete Package?",
         "info": "Deleting selected package will remove it. It will not impact any of the deployments of this package."
       }
-    },
-    "typeOptions": {
-      "edgemanifest": "Edge Manifest"
     }
+  },
+  "packageTypes": {
+    "edgeManifest": "Edge Manifest",
+    "deviceConfiguration": "Device Configuration",
+    "unknown": "Unknown"
+  },
+  "configTypes": {
+    "mxChipFirmwareUpdate": "MxChip Firmware Update",
+    "custom": "Custom"
   },
   "modal": {
     "delete": "Delete",

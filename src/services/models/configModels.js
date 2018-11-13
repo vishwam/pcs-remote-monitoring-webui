@@ -54,14 +54,18 @@ export const toSolutionSettingThemeModel = (response = {}) => camelCaseReshape(r
   'azureMapsKey': 'azureMapsKey'
 });
 
-export const packageTypeOptions = ['EdgeManifest'];
+export const packageTypeOptions = ['EdgeManifest', 'DeviceConfiguration'];
+
+export const configTypeOptions = ['FirmwareUpdateMxChip', 'Custom'];
 
 export const toNewPackageRequestModel = ({
   type,
+  configType,
   packageFile
 }) => {
   const data = new FormData();
   data.append('Type', type);
+  data.append('ConfigType', configType);
   data.append('Package', packageFile);
   return data;
 }
@@ -73,6 +77,7 @@ export const toPackageModel = (response = {}) => {
   return camelCaseReshape(response, {
     'id': 'id',
     'type': 'type',
+    'configType': 'configType',
     'name': 'name',
     'dateCreated': 'dateCreated',
     'content': 'content'

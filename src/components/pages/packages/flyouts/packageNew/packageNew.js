@@ -6,10 +6,11 @@ import { Link } from "react-router-dom";
 
 import {
   packageTypeOptions,
+  configTypeOptions,
   toSinglePropertyDiagnosticsModel,
   toDiagnosticsModel
 } from 'services/models';
-import { svgs, LinkedComponent, Validator } from 'utilities';
+import { svgs, LinkedComponent, Validator, toCamelcase } from 'utilities';
 import {
   AjaxError,
   Btn,
@@ -40,6 +41,8 @@ export class PackageNew extends LinkedComponent {
 
     this.state = {
       type: undefined,
+      configType: undefined,
+      customConfigType: undefined,
       packageFile: undefined,
       changesApplied: undefined
     };
@@ -52,7 +55,10 @@ export class PackageNew extends LinkedComponent {
   apply = (event) => {
     event.preventDefault();
     const { createPackage } = this.props;
-    const { type, packageFile } = this.state;
+    const { type, configType, customConfigType, packageFile } = this.state;
+    let configName = '';
+    if (configType === configTypeOptions[1]) configName = `${configTypeOptions[1]} - ${customConfigType}`;
+    else configName = configType;
     this.props.logEvent(
       toDiagnosticsModel(
         'NewPackage_Apply',
@@ -62,13 +68,21 @@ export class PackageNew extends LinkedComponent {
         })
     );
     if (this.formIsValid()) {
-      createPackage({ type: type, packageFile: packageFile });
+      createPackage({ type: type, configType: configName, packageFile: packageFile });
       this.setState({ changesApplied: true });
     }
   }
 
   packageTypeChange = ({ target: { value: { value = {} } } }) => {
-    this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_TypeClick', 'Type', value));
+    this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_PackageTypeClick', 'PackageType', value));
+  }
+
+  configTypeChange = ({ target: { value: { value = {} } } }) => {
+    this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_PackageTypeClick', 'ConfigType', value));
+  }
+
+  customConfigTypeChange = ({ target: { value = {} } }) => {
+    this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_PackageTypeClick', 'CustomConfigType', value));
   }
 
   onFileSelected = (e) => {
@@ -98,11 +112,15 @@ export class PackageNew extends LinkedComponent {
 
   render() {
     const { t, isPending, error } = this.props;
-    const { type, packageFile, changesApplied } = this.state;
+    const { type, configType, packageFile, changesApplied } = this.state;
 
     const summaryCount = 1;
-    const typeOptions = packageTypeOptions.map(value => ({
-      label: t(`packages.typeOptions.${value.toLowerCase()}`),
+    const packageOptions = packageTypeOptions.map(value => ({
+      label: t(`packageTypes.${toCamelcase(value)}`),
+      value
+    }));
+    const configOptions = configTypeOptions.map(value => ({
+      label: t(`packageTypes.${toCamelcase(value)}`),
       value
     }));
 
@@ -112,6 +130,7 @@ export class PackageNew extends LinkedComponent {
 
     // Links
     this.packageTypeLink = this.linkTo('type').map(({ value }) => value).withValidator(requiredValidator);
+    this.configTypeLink = this.linkTo('configType').map(({ value }) => value).withValidator(requiredValidator);
 
     return (
       <Flyout>
@@ -133,8 +152,8 @@ export class PackageNew extends LinkedComponent {
                   className="long"
                   onChange={this.packageTypeChange}
                   link={this.packageTypeLink}
-                  options={typeOptions}
-                  placeholder={t('packages.flyouts.new.placeHolder')}
+                  options={packageOptions}
+                  placeholder={t('packages.flyouts.new.packageTypePlaceHolder')}
                   clearable={false}
                   searchable={false} />
               }
@@ -142,7 +161,24 @@ export class PackageNew extends LinkedComponent {
                 completedSuccessfully && <FormLabel className="new-package-success-labels">{type}</FormLabel>
               }
             </FormGroup>
-
+            <FormGroup>
+              <FormLabel isRequired="true">{t('packages.flyouts.new.configType')}</FormLabel>
+              {
+                !completedSuccessfully &&
+                <FormControl
+                  type="select"
+                  className="long"
+                  onChange={this.packageTypeChange}
+                  link={this.packageTypeLink}
+                  options={configOptions}
+                  placeholder={t('packages.flyouts.new.configTypePlaceHolder')}
+                  clearable={false}
+                  searchable={false} />
+              }
+              {
+                completedSuccessfully && <FormLabel className="new-package-success-labels">{configType}</FormLabel>
+              }
+            </FormGroup>
             {
               !completedSuccessfully &&
               <div className="new-package-upload-container">

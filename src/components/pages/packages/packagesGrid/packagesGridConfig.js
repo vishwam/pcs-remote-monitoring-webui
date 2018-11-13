@@ -3,6 +3,7 @@
 import Config from 'app.config';
 import { TimeRenderer, SoftSelectLinkRenderer } from 'components/shared/cellRenderers';
 import { gridValueFormatters } from 'components/shared/pcsGrid/pcsGridConfig';
+import { getPackageTypeTranslation, getConfigTypeTranslation } from 'utilities';
 
 const { checkForEmpty } = gridValueFormatters;
 
@@ -17,7 +18,12 @@ export const packagesColumnDefs = {
   type: {
     headerName: 'packages.grid.type',
     field: 'type',
-    valueFormatter: ({ value }) => checkForEmpty(value)
+    valueFormatter: ({ value, context: { t } }) => getPackageTypeTranslation(checkForEmpty(value), t)
+  },
+  configType: {
+    headerName: 'packages.grid.configType',
+    field: 'configType',
+    valueFormatter: ({ value, context: { t } }) => getConfigTypeTranslation(checkForEmpty(value), t)
   },
   dateCreated: {
     headerName: 'packages.grid.dateCreated',

@@ -33,7 +33,7 @@ const preserveCamelCase = input => {
   return input;
 };
 
-export default (input, options) => {
+export const toCamelcase = (input, options) => {
   options = Object.assign({
     pascalCase: false
   }, options);
