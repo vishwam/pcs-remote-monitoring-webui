@@ -30,9 +30,9 @@ export const deploymentsColumnDefs = {
     field: 'priority',
     valueFormatter: ({ value }) => checkForEmpty(value)
   },
-  type: {
-    headerName: 'deployments.grid.type',
-    field: 'type',
+  packageType: {
+    headerName: 'deployments.grid.packageType',
+    field: 'packageType',
     valueFormatter: ({ value, context: { t } }) => getPackageTypeTranslation(checkForEmpty(value), t)
   },
   configType: {

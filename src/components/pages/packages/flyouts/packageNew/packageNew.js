@@ -40,7 +40,7 @@ export class PackageNew extends LinkedComponent {
     super(props);
 
     this.state = {
-      type: undefined,
+      packageType: undefined,
       configType: undefined,
       customConfigType: undefined,
       packageFile: undefined,
@@ -55,20 +55,20 @@ export class PackageNew extends LinkedComponent {
   apply = (event) => {
     event.preventDefault();
     const { createPackage } = this.props;
-    const { type, configType, customConfigType, packageFile } = this.state;
+    const { packageType, configType, customConfigType, packageFile } = this.state;
     let configName = '';
-    if (configType === configTypeOptions[1]) configName = `${configTypeOptions[1]} - ${customConfigType}`;
+    if (configType === configTypeOptions[2]) configName = `${configTypeOptions[2]} - ${customConfigType}`;
     else configName = configType;
     this.props.logEvent(
       toDiagnosticsModel(
         'NewPackage_Apply',
         {
-          type,
+          packageType,
           packageName: packageFile.name
         })
     );
     if (this.formIsValid()) {
-      createPackage({ type: type, configType: configName, packageFile: packageFile });
+      createPackage({ packageType: packageType, configType: configName, packageFile: packageFile });
       this.setState({ changesApplied: true });
     }
   }
@@ -111,8 +111,17 @@ export class PackageNew extends LinkedComponent {
   }
 
   render() {
-    const { t, isPending, error } = this.props;
-    const { type, configType, packageFile, changesApplied } = this.state;
+    const { t,
+      isPending,
+      error,
+      configTypes,
+      configTypesError,
+      configTypesIsPending } = this.props;
+    const {
+      packageType,
+      configType,
+      packageFile,
+      changesApplied } = this.state;
 
     const summaryCount = 1;
     const packageOptions = packageTypeOptions.map(value => ({
@@ -129,7 +138,7 @@ export class PackageNew extends LinkedComponent {
     const requiredValidator = (new Validator()).check(Validator.notEmpty, t('packages.flyouts.new.validation.required'));
 
     // Links
-    this.packageTypeLink = this.linkTo('type').map(({ value }) => value).withValidator(requiredValidator);
+    this.packageTypeLink = this.linkTo('packageType').map(({ value }) => value).withValidator(requiredValidator);
     this.configTypeLink = this.linkTo('configType').map(({ value }) => value).withValidator(requiredValidator);
 
     return (
@@ -144,7 +153,7 @@ export class PackageNew extends LinkedComponent {
             <div className="new-package-descr">{t('packages.flyouts.new.description')}</div>
 
             <FormGroup>
-              <FormLabel isRequired="true">{t('packages.flyouts.new.type')}</FormLabel>
+              <FormLabel isRequired="true">{t('packages.flyouts.new.packageType')}</FormLabel>
               {
                 !completedSuccessfully &&
                 <FormControl
@@ -158,7 +167,7 @@ export class PackageNew extends LinkedComponent {
                   searchable={false} />
               }
               {
-                completedSuccessfully && <FormLabel className="new-package-success-labels">{type}</FormLabel>
+                completedSuccessfully && <FormLabel className="new-package-success-labels">{packageType}</FormLabel>
               }
             </FormGroup>
             <FormGroup>

@@ -627,7 +627,7 @@
       "package": "Package",
       "deviceGroup": "Device group",
       "priority": "Priority",
-      "type": "Package Type",
+      "packageType": "Package Type",
       "configType": "Config Type",
       "targeted": "Targeted",
       "applied": "Applied",
@@ -645,7 +645,7 @@
     "delete": "Delete",
     "grid": {
       "name": "Name",
-      "type": "Type",
+      "packageType": "Package Type",
       "configType": "Config Type",
       "dateCreated": "Date Created"
     },
@@ -657,7 +657,8 @@
         "upload": "Upload",
         "cancel": "Cancel",
         "close": "Close",
-        "type": "Package type",
+        "packageType": "Package type",
+        "configType": "Configuration type",
         "browse": "Browse",
         "browseText": "for a package file",
         "packageTypePlaceHolder": "Select package type",
@@ -684,7 +685,8 @@
     "unknown": "Unknown"
   },
   "configTypes": {
-    "mxChipFirmwareUpdate": "MxChip Firmware Update",
+    "firmware": "Firmware Update",
+    "firmwareUpdateMxChip": "Firmware Update - MxChip",
     "custom": "Custom"
   },
   "modal": {

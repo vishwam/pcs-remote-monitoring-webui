@@ -15,9 +15,9 @@ export const packagesColumnDefs = {
     valueFormatter: ({ value }) => checkForEmpty(value),
     cellRendererFramework: SoftSelectLinkRenderer
   },
-  type: {
-    headerName: 'packages.grid.type',
-    field: 'type',
+  packageType: {
+    headerName: 'packages.grid.packageType',
+    field: 'packageType',
     valueFormatter: ({ value, context: { t } }) => getPackageTypeTranslation(checkForEmpty(value), t)
   },
   configType: {

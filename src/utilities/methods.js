@@ -124,7 +124,8 @@ export const getPackageTypeTranslation = (packageType, t) => {
 /** Converts a packageType enum to a translated string equivalent */
 export const getConfigTypeTranslation = (configType, t) => {
   switch (toCamelcase(configType)) {
-    case 'mxChipFirmwareUpdate': return t('configTypes.mxChipFirmwareUpdate');
+    case 'firmware': return t('configTypes.firmware');
+    case 'firmwareUpdateMxChip': return t('configTypes.firmwareUpdateMxChip');
     case 'custom': return t('configTypes.custom');
     default: return configType;
   }

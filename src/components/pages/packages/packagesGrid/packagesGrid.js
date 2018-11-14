@@ -27,7 +27,7 @@ export class PackagesGrid extends Component {
       checkboxColumn,
       packagesColumnDefs.name,
       packagesColumnDefs.configType,
-      packagesColumnDefs.type,
+      packagesColumnDefs.packageType,
       packagesColumnDefs.dateCreated
     ];
 

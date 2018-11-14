@@ -56,15 +56,15 @@ export const toSolutionSettingThemeModel = (response = {}) => camelCaseReshape(r
 
 export const packageTypeOptions = ['EdgeManifest', 'DeviceConfiguration'];
 
-export const configTypeOptions = ['FirmwareUpdateMxChip', 'Custom'];
+export const configTypeOptions = ['Firmware', 'FirmwareUpdateMxChip', 'Custom'];
 
 export const toNewPackageRequestModel = ({
-  type,
+  packageType,
   configType,
   packageFile
 }) => {
   const data = new FormData();
-  data.append('Type', type);
+  data.append('PackageType', packageType);
   data.append('ConfigType', configType);
   data.append('Package', packageFile);
   return data;
@@ -76,10 +76,12 @@ export const toPackagesModel = (response = {}) => getItems(response)
 export const toPackageModel = (response = {}) => {
   return camelCaseReshape(response, {
     'id': 'id',
-    'type': 'type',
+    'packageType': 'packageType',
     'configType': 'configType',
     'name': 'name',
     'dateCreated': 'dateCreated',
     'content': 'content'
   });
 };
+
+export const toConfigTypesModel = (response = {}) => getItems(response);
