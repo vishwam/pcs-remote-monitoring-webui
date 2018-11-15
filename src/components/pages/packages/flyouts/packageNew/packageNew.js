@@ -83,12 +83,12 @@ export class PackageNew extends LinkedComponent {
   }
 
   configTypeChange = ({ target: { value: { value = {} } } }) => {
-    this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_PackageTypeClick', 'ConfigType', value));
+    this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_ConfigTypeClick', 'ConfigType', value));
     this.setState({ customConfigType: '' });
   }
 
   customConfigNameChange = ({ target: { value = {} } }) => {
-    this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_PackageTypeClick', 'customConfigName', value));
+    this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_CustomConfigType', 'customConfigName', value));
   }
 
   onFileSelected = (e) => {
@@ -161,10 +161,7 @@ export class PackageNew extends LinkedComponent {
         this.props.t('packages.flyouts.new.validation.required')
       );
 
-    const configTypeEnabled = this.packageTypeLink.value === packageTypeOptions[1]
-      && configTypes
-      && !configTypesError
-      && !configTypesIsPending;
+    const configTypeEnabled = this.packageTypeLink.value === packageTypeOptions[1] && !configTypesError && !configTypesIsPending;
     const customTextVisible = configTypeEnabled && this.configTypeLink.value === configTypeOptions[2];
 
     return (

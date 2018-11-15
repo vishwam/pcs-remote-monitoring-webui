@@ -108,6 +108,12 @@ export class ConfigService {
       .map(toPackagesModel);
   }
 
+  /** Returns filtered packages */
+  static getfilteredPackages(packageType, configType) {
+    return HttpClient.get(`${ENDPOINT}packages/${packageType}/${configType}`)
+      .map(toPackagesModel);
+  }
+
   /** Returns all the account's packages */
   static getConfigTypes() {
     return HttpClient.get(`${ENDPOINT}packages/configTypes`)

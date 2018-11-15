@@ -189,7 +189,8 @@ export const toDeploymentModel = (deployment = {}) => {
     'deviceGroupName': 'deviceGroupName',
     'packageName': 'packageName',
     'priority': 'priority',
-    'type': 'type',
+    'packageType': 'packageType',
+    'configType': 'configType',
     'createdDateTimeUtc': 'createdDateTimeUtc',
     'metrics.appliedCount': 'appliedCount',
     'metrics.failedCount': 'failedCount',
@@ -213,7 +214,8 @@ export const toDeploymentRequestModel = (deploymentModel = {}) => ({
   PackageName: deploymentModel.packageName,
   PackageContent: deploymentModel.packageContent,
   Priority: deploymentModel.priority,
-  Type: deploymentModel.type
+  PackageType: deploymentModel.packageType,
+  ConfigType: deploymentModel.configType
 });
 
 export const toEdgeAgentModel = (edgeAgent = {}) => camelCaseReshape(edgeAgent, {

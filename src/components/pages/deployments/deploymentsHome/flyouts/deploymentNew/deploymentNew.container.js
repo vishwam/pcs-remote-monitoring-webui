@@ -15,7 +15,10 @@ import {
   getPackagesPendingStatus,
   getPackagesError,
   epics as packagesEpics,
-  redux as packagesRedux
+  redux as packagesRedux,
+  getConfigTypes,
+  getConfigTypesError,
+  getConfigTypesPendingStatus
 } from 'store/reducers/packagesReducer';
 import {
   getDeviceGroups,
@@ -40,18 +43,22 @@ const mapStateToProps = state => ({
   devicesError: getDevicesByConditionError(state),
   createIsPending: getCreateDeploymentPendingStatus(state),
   createError: getCreateDeploymentError(state),
-  createdDeploymentId: getLastItemId(state)
+  createdDeploymentId: getLastItemId(state),
+  configTypes: getConfigTypes(state),
+  configTypesError: getConfigTypesError(state),
+  configTypesIsPending: getConfigTypesPendingStatus(state)
 });
 
 // Wrap the dispatch methods
 const mapDispatchToProps = dispatch => ({
   createDeployment: deploymentModel => dispatch(deploymentsEpics.actions.createDeployment(deploymentModel)),
   resetCreatePendingError: () => dispatch(deploymentsRedux.actions.resetPendingAndError(deploymentsEpics.actions.createDeployment)),
-  fetchPackages: () => dispatch(packagesEpics.actions.fetchPackages()),
+  fetchPackages: (packageType, configType) => dispatch(packagesEpics.actions.fetchFilteredPackages(packageType, configType)),
   resetPackagesPendingError: () => dispatch(packagesRedux.actions.resetPendingAndError(packagesEpics.actions.fetchPackages)),
   fetchDevices: condition => dispatch(devicesEpics.actions.fetchDevicesByCondition(condition)),
   resetDevicesPendingError: () => dispatch(devicesRedux.actions.resetPendingAndError(devicesEpics.actions.fetchDevicesByCondition)),
-  logEvent: diagnosticsModel => dispatch(appEpics.actions.logEvent(diagnosticsModel))
+  logEvent: diagnosticsModel => dispatch(appEpics.actions.logEvent(diagnosticsModel)),
+  fetchConfigTypes: () => dispatch(packagesEpics.actions.fetchConfigTypes())
 });
 
 export const DeploymentNewContainer = translate()(connect(mapStateToProps, mapDispatchToProps)(DeploymentNew));
