@@ -56,7 +56,7 @@ export const toSolutionSettingThemeModel = (response = {}) => camelCaseReshape(r
 
 export const packageTypeOptions = ['EdgeManifest', 'DeviceConfiguration'];
 
-export const configTypeOptions = ['Firmware', 'FirmwareUpdateMxChip', 'Custom'];
+export const configTypeOptions = ['FirmwareUpdateMxChip', 'Custom'];
 
 export const toNewPackageRequestModel = ({
   packageType,

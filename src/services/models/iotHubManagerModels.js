@@ -192,13 +192,14 @@ export const toDeploymentModel = (deployment = {}) => {
     'packageType': 'packageType',
     'configType': 'configType',
     'createdDateTimeUtc': 'createdDateTimeUtc',
-    'metrics.appliedCount': 'appliedCount',
-    'metrics.failedCount': 'failedCount',
-    'metrics.succeededCount': 'succeededCount',
-    'metrics.targetedCount': 'targetedCount'
+    'metrics.systemMetrics.appliedCount': 'appliedCount',
+    'metrics.systemMetrics.failedCount': 'failedCount',
+    'metrics.systemMetrics.succeededCount': 'succeededCount',
+    'metrics.systemMetrics.targetedCount': 'targetedCount'
   });
   return update(modelData, {
-    deviceStatuses: { $set: dot.pick('Metrics.DeviceStatuses', deployment) }
+    deviceStatuses: { $set: dot.pick('Metrics.DeviceStatuses', deployment) },
+    customMetrics: { $set: dot.pick('Metrics.CustomMetrics', deployment) }
   });
 }
 

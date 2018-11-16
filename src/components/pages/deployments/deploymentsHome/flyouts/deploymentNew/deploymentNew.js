@@ -36,7 +36,7 @@ export class DeploymentNew extends LinkedComponent {
     super(props);
 
     this.state = {
-      packageType: undefined,
+      packageType: '',
       configType: '',
       deviceGroupId: undefined,
       deviceGroupName: '',
@@ -134,20 +134,26 @@ export class DeploymentNew extends LinkedComponent {
       toSinglePropertyDiagnosticsModel('NewDeployment_PackageTypeSelect', 'PackageType', selectedPackageType)
     );
 
-    this.setState({ configType: '' });
-    if (selectedPackageType === packageTypeOptions[1]) this.props.fetchConfigTypes();
-
     switch (selectedPackageType) {
-      // case Edge manifest
-      case 'EdgeManifest':
-        const { fetchPackages } = this.props;
-        fetchPackages();
-        this.setState({ edgePackageSelected: true });
+      // case - Edge manifest
+      case packageTypeOptions[0]:
+        this.props.fetchPackages(packageTypeOptions[0], '');
+        this.setState({ configType: '', edgePackageSelected: true });
         break;
-      // other cases to be impletmented in Edge walk iteration
+      // case - Device Configuration
+      case packageTypeOptions[1]:
+        this.props.fetchConfigTypes();
+        this.setState({ edgePackageSelected: false });
+        break;
       default:
         break;
     }
+    this.formControlChange();
+  }
+
+  configTypeChange = ({ target: { value: { value = {} } } }) => {
+    this.props.logEvent(toSinglePropertyDiagnosticsModel('NewDeployment_ConfigTypeClick', 'ConfigType', value));
+    this.props.fetchPackages(packageTypeOptions[0], value);
     this.formControlChange();
   }
 
@@ -218,6 +224,13 @@ export class DeploymentNew extends LinkedComponent {
 
     // Links
     this.packageTypeLink = this.linkTo('packageType').map(({ value }) => value).withValidator(requiredValidator);
+    this.configTypeLink = this.linkTo('configType')
+      .map(({ value }) => value)
+      .check(
+        // Validate for non-empty value if packageType is of type 'Device Configuration'
+        configValue => this.packageTypeLink.value === packageTypeOptions[1] ? Validator.notEmpty(configValue) : true,
+        this.props.t('deployments.flyouts.new.validation.required')
+      );
     this.nameLink = this.linkTo('name').withValidator(requiredValidator);
     this.deviceGroupIdLink = this.linkTo('deviceGroupId').map(({ value }) => value).withValidator(requiredValidator);
     this.priorityLink = this.linkTo('priority')
@@ -225,7 +238,8 @@ export class DeploymentNew extends LinkedComponent {
       .check(val => isPositiveInteger(val), t('deployments.flyouts.new.validation.positiveInteger'));
     this.packageIdLink = this.linkTo('packageId').map(({ value }) => value).withValidator(requiredValidator);
 
-    const isPackageTypeSelected = packageType !== undefined;
+
+    const isPackageTypeSelected = packageType !== '' && configType !== '';
     const isDeviceGroupSelected = deviceGroupId !== undefined;
     const packageOptions = packages.map(this.toPackageSelectOption);
     const deviceGroupOptions = deviceGroups.map(this.toDeviceGroupSelectOption);
@@ -294,7 +308,7 @@ export class DeploymentNew extends LinkedComponent {
                     onChange={this.configTypeChange}
                     link={this.configTypeLink}
                     options={configTypeSelectOptions}
-                    placeholder={t('pacdeploymentskages.flyouts.new.configTypePlaceHolder')}
+                    placeholder={t('deployments.flyouts.new.configTypePlaceHolder')}
                     clearable={false}
                     searchable={false} />
                 }
