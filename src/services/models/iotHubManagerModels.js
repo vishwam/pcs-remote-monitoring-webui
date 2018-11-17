@@ -192,7 +192,7 @@ export const toDeploymentModel = (deployment = {}) => {
     'deviceGroupName': 'deviceGroupName',
     'packageName': 'packageName',
     'priority': 'priority',
-    'type': 'packageType',
+    'packageType': 'packageType',
     'configType': 'configType',
     'createdDateTimeUtc': 'createdDateTimeUtc',
     'metrics.systemMetrics.appliedCount': 'appliedCount',
