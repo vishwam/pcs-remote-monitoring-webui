@@ -689,8 +689,7 @@
     "unknown": "Unknown"
   },
   "configTypes": {
-    "firmware": "Firmware Update",
-    "firmwareUpdateMxChip": "Firmware Update - MxChip",
+    "firmware": "Firmware",
     "custom": "Custom"
   },
   "modal": {

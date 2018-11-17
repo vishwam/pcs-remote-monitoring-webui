@@ -238,7 +238,6 @@ export class DeploymentNew extends LinkedComponent {
       .check(val => isPositiveInteger(val), t('deployments.flyouts.new.validation.positiveInteger'));
     this.packageIdLink = this.linkTo('packageId').map(({ value }) => value).withValidator(requiredValidator);
 
-
     const isPackageTypeSelected = packageType !== '' && configType !== '';
     const isDeviceGroupSelected = deviceGroupId !== undefined;
     const packageOptions = packages.map(this.toPackageSelectOption);
@@ -315,10 +314,10 @@ export class DeploymentNew extends LinkedComponent {
                 {configTypesIsPending && <Indicator />}
                 {
                   /** Displays an error message if one occurs while fetching configTypes. */
-                  configTypesError && <AjaxError className="new-package-flyout-error" t={t} error={configTypesError} />
+                  configTypesError && <AjaxError className="new-deployment-flyout-error" t={t} error={configTypesError} />
                 }
                 {
-                  completedSuccessfully && <FormLabel className="new-package-success-labels">{configType}</FormLabel>
+                  completedSuccessfully && <FormLabel className="new-deployment-success-labels">{configType}</FormLabel>
                 }
               </FormGroup>
             }

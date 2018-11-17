@@ -21,6 +21,7 @@ import {
   getError,
   toActionCreator
 } from 'store/utilities';
+import { packageTypeOptions } from 'services/models';
 
 // ========================= Epics - START
 const handleError = fromAction => error =>
@@ -56,13 +57,21 @@ export const epics = createEpicScenario({
   /** Loads the queried edgeAgents and devices */
   fetchDeployedDevices: {
     type: 'DEPLOYED_DEVICES_FETCH',
-    epic: fromAction => Observable
-      .forkJoin(
-        IoTHubManagerService.getModulesByQuery(createEdgeAgentQuery(getDeployedDeviceIds(fromAction.payload))),
-        IoTHubManagerService.getDevicesByQuery(createDevicesQuery(getDeployedDeviceIds(fromAction.payload))),
-      )
-      .map(toActionCreator(redux.actions.updateDeployedDevices, fromAction))
-      .catch(handleError(fromAction))
+    epic: fromAction => {
+      if (fromAction.payload.packageType === packageTypeOptions[1]) {
+        return Observable
+          .map(IoTHubManagerService.getDevicesByQuery(createDevicesQuery(getDeployedDeviceIds(fromAction.payload))))
+          .map(toActionCreator(redux.actions.updateADMDeployedDevices, fromAction))
+          .catch(handleError(fromAction))
+      }
+      return Observable
+        .forkJoin(
+          IoTHubManagerService.getModulesByQuery(createEdgeAgentQuery(getDeployedDeviceIds(fromAction.payload))),
+          IoTHubManagerService.getDevicesByQuery(createDevicesQuery(getDeployedDeviceIds(fromAction.payload))),
+        )
+        .map(toActionCreator(redux.actions.updateDeployedDevices, fromAction))
+        .catch(handleError(fromAction))
+    }
   },
   /** Create a new deployment */
   createDeployment: {
@@ -159,6 +168,29 @@ const updateDeployedDevicesReducer = (state, { payload: [modules, devices], from
   });
 };
 
+const updateADMDeployedDevicesReducer = (state, { payload, fromAction }) => {
+  const normalizedDevices = normalize(payload, deployedDevicesListSchema).entities.deployedDevices || {};
+  const deployedDevices = Object.keys(normalizedDevices)
+    .reduce(
+      (acc, deviceId) => ({
+        ...acc,
+        [deviceId]: {
+          start: normalizedDevices[deviceId].lastFwUpdateStartTime,
+          end: normalizedDevices[deviceId].lastFwUpdateEndTime,
+          firmware: normalizedDevices[deviceId].firmwareVersion,
+          device: normalizedDevices[deviceId]
+        }
+      }),
+      []
+    );
+  return update(state, {
+    entities: {
+      deployedDevices: { $set: deployedDevices }
+    },
+    ...setPending(fromAction.type, false)
+  });
+}
+
 const resetDeployedDevicesReducer = (state) => update(state, {
   entities: {
     $unset: ['deployedDevices']
@@ -181,6 +213,7 @@ export const redux = createReducerScenario({
   updateDeployments: { type: 'DEPLOYMENTS_UPDATE', reducer: updateDeploymentsReducer },
   updateDeployment: { type: 'DEPLOYMENTS_DETAILS_UPDATE', reducer: updateDeploymentReducer },
   updateDeployedDevices: { type: 'DEPLOYED_DEVICES_UPDATE', reducer: updateDeployedDevicesReducer },
+  updateADMDeployedDevices: { type: 'ADM_DEPLOYED_DEVICES_UPDATE', reducer: updateADMDeployedDevicesReducer },
   registerError: { type: 'DEPLOYMENTS_REDUCER_ERROR', reducer: errorReducer },
   resetDeployedDevices: { type: 'DEPLOYMETS_RESET_DEPLOYED_DEVICES', reducer: resetDeployedDevicesReducer },
   resetPendingAndError: { type: 'DEPLOYMENTS_REDUCER_RESET_ERROR_PENDING', reducer: resetPendingAndErrorReducer },

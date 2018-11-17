@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React, { Component } from 'react';
-import { permissions, toSinglePropertyDiagnosticsModel } from 'services/models';
+import {
+  permissions,
+  toSinglePropertyDiagnosticsModel,
+  packageTypeOptions
+} from 'services/models';
 import {
   AjaxError,
   Btn,
@@ -19,7 +23,7 @@ import {
   StatPropertyPair
 } from 'components/shared';
 import { TimeRenderer } from 'components/shared/cellRenderers';
-import { getPackageTypeTranslation, svgs } from 'utilities';
+import { getPackageTypeTranslation, getConfigTypeTranslation, svgs } from 'utilities';
 import { DeploymentDetailsGrid } from './deploymentDetailsGrid/deploymentDetailsGrid';
 
 import "./deploymentDetails.css";
@@ -114,18 +118,22 @@ export class DeploymentDetails extends Component {
     } = this.props;
     const {
       id,
-      appliedCount,
-      targetedCount,
-      succeededCount,
-      failedCount,
+      appliedCount = 0,
+      targetedCount = 0,
+      succeededCount = 0,
+      failedCount = 0,
       name,
       priority,
       deviceGroupName,
       createdDateTimeUtc,
-      type,
-      packageName
+      packageType,
+      configType,
+      packageName,
+      customMetrics = {}
     } = currentDeployment;
     const pendingCount = this.state.pendingCount ? this.state.pendingCount : '0';
+    const isADMDeployment = packageType === packageTypeOptions[1];
+    const customMetricsExist = Object.keys(customMetrics).length > 0;
 
     return (
       <ComponentArray>
@@ -154,59 +162,92 @@ export class DeploymentDetails extends Component {
               <div className="deployment-name">
                 {name}
               </div>
-              <StatSection className="summary-container-row1">
-                <StatGroup className="summary-container-columns">
-                  <StatProperty
-                    value={appliedCount}
-                    label={t('deployments.details.applied')}
-                    size="large" />
+              <StatSection>
+                <StatGroup>
+                  <StatSection className="summary-container-row1">
+                    <StatGroup className="summary-container-columns">
+                      <StatProperty
+                        value={appliedCount}
+                        label={t('deployments.details.applied')}
+                        size="large" />
+                    </StatGroup>
+                    <StatGroup className="summary-container-columns">
+                      <StatProperty
+                        value={failedCount}
+                        label={t('deployments.details.failed')}
+                        svg={failedCount !== 0 ? svgs.failed : undefined}
+                        svgClassName="stat-failed"
+                        size="large" />
+                    </StatGroup>
+                  </StatSection>
+                  <StatSection className="summary-container-row2">
+                    <StatGroup className="summary-container-columns">
+                      <StatProperty
+                        value={targetedCount}
+                        label={t('deployments.details.targeted')}
+                        size="large" />
+                    </StatGroup>
+                    <StatGroup className="summary-container-columns">
+                      <StatProperty
+                        className="summary-container-succeeded"
+                        value={succeededCount}
+                        label={t('deployments.details.succeeded')}
+                        size="small" />
+                      <StatProperty
+                        className="summary-container-pending"
+                        value={pendingCount}
+                        label={t('deployments.details.pending')}
+                        size="small" />
+                    </StatGroup>
+                  </StatSection>
                 </StatGroup>
-                <StatGroup className="summary-container-columns">
-                  <StatProperty
-                    value={failedCount}
-                    label={t('deployments.details.failed')}
-                    svg={failedCount !== 0 ? svgs.failed : undefined}
-                    svgClassName="stat-failed"
-                    size="large" />
-                </StatGroup>
-                <StatGroup className="summary-container-columns">
-                  <StatPropertyPair label={t('deployments.details.deviceGroup')} value={deviceGroupName} />
-                </StatGroup>
-                <StatGroup className="summary-container-columns">
-                  <StatPropertyPair
-                    label={t('deployments.details.packageType')}
-                    value={type ? getPackageTypeTranslation(type, t) : undefined} />
-                </StatGroup>
-                <StatGroup className="summary-container-columns">
-                  <StatPropertyPair label={t('deployments.details.priority')} value={priority} />
-                </StatGroup>
-              </StatSection>
-              <StatSection className="summary-container-row2">
-                <StatGroup className="summary-container-columns">
-                  <StatProperty
-                    value={targetedCount}
-                    label={t('deployments.details.targeted')}
-                    size="large" />
-                </StatGroup>
-                <StatGroup className="summary-container-columns">
-                  <StatProperty
-                    className="summary-container-succeeded"
-                    value={succeededCount}
-                    label={t('deployments.details.succeeded')}
-                    size="small" />
-                  <StatProperty
-                    className="summary-container-pending"
-                    value={pendingCount}
-                    label={t('deployments.details.pending')}
-                    size="small" />
-                </StatGroup>
-                <StatGroup className="summary-container-columns">
-                  <StatPropertyPair
-                    label={t('deployments.details.start')}
-                    value={TimeRenderer({ value: createdDateTimeUtc })} />
-                </StatGroup>
-                <StatGroup className="summary-container-columns">
-                  <StatPropertyPair label={t('deployments.details.package')} value={packageName} />
+                {
+                  customMetricsExist &&
+                  <StatGroup className="summary-container-columns summary-custom-column">
+                    <div>
+                      {
+                        Object.keys(customMetrics).map((customKey) =>
+                          <StatProperty
+                            className="summary-container-customMetric"
+                            value={customMetrics[customKey]}
+                            label={customKey}
+                            size="small" />
+                        )
+                      }
+                    </div>
+                  </StatGroup>
+                }
+                <StatGroup>
+                  <StatSection className="summary-container-row1">
+                    <StatGroup className="summary-container-columns">
+                      <StatPropertyPair label={t('deployments.details.deviceGroup')} value={deviceGroupName} />
+                    </StatGroup>
+                    <StatGroup className="summary-container-columns">
+                      <StatPropertyPair
+                        label={t('deployments.details.packageType')}
+                        value={packageType ? getPackageTypeTranslation(packageType, t) : undefined} />
+                    </StatGroup>
+                    <StatGroup className="summary-container-columns">
+                      <StatPropertyPair label={t('deployments.details.priority')} value={priority} />
+                    </StatGroup>
+                  </StatSection>
+                  <StatSection className="summary-container-row2">
+                    <StatGroup className="summary-container-columns">
+                      <StatPropertyPair
+                        label={t('deployments.details.start')}
+                        value={TimeRenderer({ value: createdDateTimeUtc })} />
+                    </StatGroup>
+                    <StatGroup className="summary-container-columns">
+                      <StatPropertyPair label={t('deployments.details.package')} value={packageName} />
+                    </StatGroup>
+                  </StatSection>
+                  {isADMDeployment &&
+                    <StatGroup className="summary-container-columns">
+                      <StatPropertyPair
+                        label={t('deployments.details.configType')}
+                        value={configType ? getConfigTypeTranslation(configType, t) : undefined} />
+                    </StatGroup>
+                  }
                 </StatGroup>
               </StatSection>
             </div>
@@ -226,7 +267,7 @@ export class DeploymentDetails extends Component {
               error={deployedDevicesError} />
           }
 
-          {!isDeployedDevicesPending && <DeploymentDetailsGrid t={t} deployedDevices={deployedDevices} logEvent={logEvent} />}
+          {!isDeployedDevicesPending && <DeploymentDetailsGrid t={t} deployedDevices={deployedDevices} isADMDeployment={isADMDeployment} logEvent={logEvent} />}
         </PageContent>
       </ComponentArray>
     );

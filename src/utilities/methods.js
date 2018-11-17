@@ -114,7 +114,6 @@ export const getEdgeAgentStatusCode = (code, t) => {
 
 /** Converts a packageType enum to a translated string equivalent */
 export const getPackageTypeTranslation = (packageType, t) => {
-  console.log(toCamelcase(packageType));
   switch (toCamelcase(packageType)) {
     case 'edgeManifest': return t('packageTypes.edgeManifest');
     case 'deviceConfiguration': return t('packageTypes.deviceConfiguration');
@@ -125,7 +124,7 @@ export const getPackageTypeTranslation = (packageType, t) => {
 /** Converts a packageType enum to a translated string equivalent */
 export const getConfigTypeTranslation = (configType, t) => {
   switch (toCamelcase(configType)) {
-    case 'firmwareUpdateMxChip': return t('configTypes.firmwareUpdateMxChip');
+    case 'firmware': return t('configTypes.firmware');
     case 'custom': return t('configTypes.custom');
     default: return configType;
   }

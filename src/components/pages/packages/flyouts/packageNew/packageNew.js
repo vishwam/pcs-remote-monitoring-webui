@@ -59,7 +59,7 @@ export class PackageNew extends LinkedComponent {
 
     // If configType is 'Custom' concatenate 'Custom' with customConfigName.
     let configName = '';
-    if (configType === configTypeOptions[2]) configName = `${configTypeOptions[2]} - ${customConfigName}`;
+    if (configType === configTypeOptions[1]) configName = `${configTypeOptions[1]} - ${customConfigName}`;
     else configName = configType;
 
     this.props.logEvent(
@@ -157,12 +157,12 @@ export class PackageNew extends LinkedComponent {
     this.customConfigNameLink = this.linkTo('customConfigName')
       .check(
         // Validate for non-empty value if configType is of type 'Custom'
-        customConfigValue => this.configTypeLink.value === configTypeOptions[2] ? Validator.notEmpty(customConfigValue) : true,
+        customConfigValue => this.configTypeLink.value === configTypeOptions[1] ? Validator.notEmpty(customConfigValue) : true,
         this.props.t('packages.flyouts.new.validation.required')
       );
 
     const configTypeEnabled = this.packageTypeLink.value === packageTypeOptions[1] && !configTypesError && !configTypesIsPending;
-    const customTextVisible = configTypeEnabled && this.configTypeLink.value === configTypeOptions[2];
+    const customTextVisible = configTypeEnabled && this.configTypeLink.value === configTypeOptions[1];
 
     return (
       <Flyout>
