@@ -115,8 +115,8 @@ export class ConfigService {
   }
 
   /** Returns filtered packages */
-  static getfilteredPackages(packageType, configType) {
-    return HttpClient.get(`${ENDPOINT}packages/${packageType}/${configType}`)
+  static getFilteredPackages(packageType, configType) {
+    return HttpClient.get(`${ENDPOINT}packages/?packageType=${packageType}&configType=${configType}`)
       .map(toPackagesModel);
   }
 

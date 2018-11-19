@@ -36,10 +36,12 @@ export const epics = createEpicScenario({
   /** Loads filtered Packages*/
   fetchFilteredPackages: {
     type: 'PACKAGES_FILTERED_FETCH',
-    epic: fromAction =>
-      ConfigService.getPackages(fromAction.payload.packageType, fromAction.payload.configType)
+    epic: fromAction =>{
+      console.log(fromAction.payload);
+      return ConfigService.getFilteredPackages(fromAction.payload.packageType, fromAction.payload.configType)
         .map(toActionCreator(redux.actions.updatePackages, fromAction))
         .catch(handleError(fromAction))
+    }
   },
   /** Create a new package */
   createPackage: {

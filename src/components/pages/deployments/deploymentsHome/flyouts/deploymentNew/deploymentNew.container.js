@@ -53,7 +53,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   createDeployment: deploymentModel => dispatch(deploymentsEpics.actions.createDeployment(deploymentModel)),
   resetCreatePendingError: () => dispatch(deploymentsRedux.actions.resetPendingAndError(deploymentsEpics.actions.createDeployment)),
-  fetchPackages: (packageType, configType) => dispatch(packagesEpics.actions.fetchFilteredPackages(packageType, configType)),
+  fetchPackages: (packageType, configType) => dispatch(packagesEpics.actions.fetchFilteredPackages({ packageType, configType })),
   resetPackagesPendingError: () => dispatch(packagesRedux.actions.resetPendingAndError(packagesEpics.actions.fetchPackages)),
   fetchDevices: condition => dispatch(devicesEpics.actions.fetchDevicesByCondition(condition)),
   resetDevicesPendingError: () => dispatch(devicesRedux.actions.resetPendingAndError(devicesEpics.actions.fetchDevicesByCondition)),

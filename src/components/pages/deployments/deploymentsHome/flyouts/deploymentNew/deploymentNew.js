@@ -235,7 +235,7 @@ export class DeploymentNew extends LinkedComponent {
       .check(val => isPositiveInteger(val), t('deployments.flyouts.new.validation.positiveInteger'));
     this.packageIdLink = this.linkTo('packageId').map(({ value }) => value).withValidator(requiredValidator);
 
-    const isPackageTypeSelected = packageType !== '' && configType !== '';
+    const isPackageTypeSelected = packageType === packageTypeOptions[0] || (packageType !== '' && configType !== '');
     const isDeviceGroupSelected = deviceGroupId !== undefined;
     const packageOptions = packages.map(this.toPackageSelectOption);
     const deviceGroupOptions = deviceGroups.map(this.toDeviceGroupSelectOption);
