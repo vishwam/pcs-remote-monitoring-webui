@@ -693,7 +693,7 @@
       "deviceGroup": "Device group",
       "priority": "Priority",
       "packageType": "Package Type",
-      "configType": "Config Type",
+      "configType": "Configuration Type",
       "targeted": "Targeted",
       "applied": "Applied",
       "failed": "Failed",
@@ -711,7 +711,7 @@
     "grid": {
       "name": "Name",
       "packageType": "Package Type",
-      "configType": "Config Type",
+      "configType": "Configuration Type",
       "dateCreated": "Date Created"
     },
     "flyouts": {
@@ -728,7 +728,7 @@
         "browse": "Browse",
         "browseText": "for a package file",
         "packageTypePlaceHolder": "Select package type",
-        "configTypePlaceHolder": "Select config type",
+        "configTypePlaceHolder": "Select configuration type",
         "customTextPlaceHolder": "Enter custom name",
         "package": "Package",
         "deploymentsPage": "Deployments page",

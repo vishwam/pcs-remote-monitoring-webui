@@ -5,7 +5,7 @@ import { Trans } from 'react-i18next';
 import { Link } from "react-router-dom";
 
 import { packageTypeOptions, toDiagnosticsModel, toSinglePropertyDiagnosticsModel } from 'services/models';
-import { svgs, LinkedComponent, Validator, toCamelcase, getConfigTypeTranslation } from 'utilities';
+import { svgs, LinkedComponent, Validator, getPackageTypeTranslation, getConfigTypeTranslation } from 'utilities';
 import {
   AjaxError,
   Btn,
@@ -240,9 +240,9 @@ export class DeploymentNew extends LinkedComponent {
     const packageOptions = packages.map(this.toPackageSelectOption);
     const deviceGroupOptions = deviceGroups.map(this.toDeviceGroupSelectOption);
     const packageTypeSelectOptions = packageTypeOptions.map(value => ({
-      label: t(`packageTypes.${toCamelcase(value)}`),
+      label: getPackageTypeTranslation(value, t),
       value
-    }));
+    }))
     const configTypeSelectOptions = configTypes ?
       configTypes.map(value => ({
         label: getConfigTypeTranslation(value, t),

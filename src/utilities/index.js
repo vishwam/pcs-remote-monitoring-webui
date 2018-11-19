@@ -8,4 +8,3 @@ export * from './methods';
 export * from './svgs';
 export * from './themedPaths';
 export * from './validation';
-export * from './camelcase';

@@ -10,7 +10,7 @@ import {
   toSinglePropertyDiagnosticsModel,
   toDiagnosticsModel
 } from 'services/models';
-import { svgs, LinkedComponent, Validator, toCamelcase, getConfigTypeTranslation } from 'utilities';
+import { svgs, LinkedComponent, Validator, getPackageTypeTranslation, getConfigTypeTranslation } from 'utilities';
 import {
   AjaxError,
   Btn,
@@ -131,9 +131,9 @@ export class PackageNew extends LinkedComponent {
 
     const summaryCount = 1;
     const packageOptions = packageTypeOptions.map(value => ({
-      label: t(`packageTypes.${toCamelcase(value)}`),
+      label: getPackageTypeTranslation(value, t),
       value
-    }));
+    }))
     const configOptions = configTypes ?
       configTypes.map(value => ({
         label: getConfigTypeTranslation(value, t),
