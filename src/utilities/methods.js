@@ -30,6 +30,11 @@ export const stringToBoolean = value => {
   else if (str === 'false') return false;
 };
 
+/** Returns true if value is an email address */
+export const isValidEmail = value => {
+  return value.match(/^$|^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+}
+
 /** Returns either Items or items from the given object, allowing for either casing from the server */
 export const getItems = (response) => response.Items || response.items || [];
 
@@ -128,6 +133,16 @@ export const getConfigTypeTranslation = (configType, t) => {
     case 'custom': return t('configTypes.custom');
     default: return configType;
   }
+}
+
+/** Converts an enum string with its translated string. */
+export const getEnumTranslation = (t, rootPath, name, defaultVal) => {
+  const fullPath = `${rootPath}.${name}`;
+  const val = t(fullPath);
+  if (val === fullPath) {
+    return defaultVal || name;
+  }
+  return val;
 }
 
 /* A helper method to copy text to the clipbaord */

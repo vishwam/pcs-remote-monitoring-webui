@@ -2,11 +2,14 @@
   "companyName": "Contoso",
   "header": {
     "appName": "Azure IoT Remote Monitoring",
-    "logout": "Logout",
     "profile": "Profile",
     "getStarted": "Get started",
     "documentation": "Documentation",
     "sendSuggestion": "Send a suggestion"
+  },
+  "accessDenied": {
+    "message": "Oops, you don't have permissions for the the page you requested. Please contact your administrator. <1><0>learnMore</0></1>",
+    "learnMore": "Learn more"
   },
   "pageNotFound": {
     "title": "404 - Page not found",
@@ -39,6 +42,26 @@
     "retryFailure": "Oops, we got a temporary error from the service but were unable to recover. Try again later.",
     "unknown": "An unknown error occurred. {{message}}"
   },
+  "permissions": {
+    "ReadAll": "View solution",
+    "CreateDeviceGroups": "Create device groups",
+    "DeleteDeviceGroups": "Delete device groups",
+    "UpdateDeviceGroups": "Update device groups",
+    "CreateDevices": "Create devices",
+    "DeleteDevices": "Delete devices",
+    "UpdateDevices": "Update devices",
+    "CreateRules": "Create rules",
+    "DeleteRules": "Delete rules",
+    "UpdateRules": "Update rules",
+    "DeleteAlarms": "Delete alerts",
+    "UpdateAlarms": "Update alerts",
+    "CreateJobs": "Create jobs",
+    "UpdateSIMManagement": "Update SIM management",
+    "DeletePackages": "Delete packages",
+    "CreatePackages": "Create packages",
+    "CreateDeployments": "Create deployments",
+    "DeleteDeployments": "Delete deployments"
+  },
   "protected": {
     "permissionDenied": "Permission {{permission}} is denied."
   },
@@ -67,6 +90,18 @@
     "sendDiagnosticsCheckbox": "Yes, share information with Microsoft",
     "sendDiagnosticsMicrosoftPrivacyUrl": "Privacy Statement",
     "diagnosticsLoadError": "Error updating diagnostics preference"
+  },
+  "profileFlyout": {
+    "title": "User Profile",
+    "description": "<0><0>learnMore</0></0> about roles and permissions.",
+    "learnMore": "Learn more",
+    "logout": "Logout",
+    "noUser": "No user found",
+    "roles": "Roles",
+    "noRoles": "No roles found",
+    "permissions": "Permissions",
+    "noPermissions": "No permissions found",
+    "close": "Close"
   },
   "deviceGroupsFlyout": {
     "actions": "Actions",
@@ -150,7 +185,9 @@
         "criticalAlerts": "Critical alerts",
         "currentWindow": "Currently",
         "previousWindow": "Previously",
-        "exploreTimeSeries": "Explore in Time Series Insights"
+        "exploreTimeSeries": "Explore in Time Series Insights",
+        "exploreTimeSeriesTooltip": "To view data in the Time Series Insights explorer, please ask the solution owner to grant you data access. <1><0>learnMore</0></1>",
+        "learnMore": "Learn more"
       },
       "map": {
         "header": "Device locations",
@@ -168,7 +205,9 @@
       },
       "telemetry": {
         "header": "Telemetry",
-        "exploreTimeSeries": "Explore in Time Series Insights"
+        "exploreTimeSeries": "Explore in Time Series Insights",
+        "exploreTimeSeriesTooltip": "To view data in the Time Series Insights explorer, please ask the solution owner to grant you data access. <1><0>learnMore</0></1>",
+        "learnMore": "Learn more"
       }
     }
   },
@@ -447,6 +486,30 @@
           "operatorPlaceholder": ">=",
           "value": "Value",
           "valuePlaceholder": "Enter value"
+        },
+        "actions":{
+          "action": "Action",
+          "checkingEmailSetup": "Checking status of email configuration.",
+          "setupEmail": "To send email alerts, <1><0>outlookLogin</0></1> is required.",
+          "outlookLogin": "sign in to Outlook",
+          "emailSetupConfirmed": "Your email configuration has been completed successfully.",
+          "setupEmailError": "There has been an error confirming your email setup. <1><0>tryAgain</0></1>",
+          "setupEmailTimeout": "Checking for email setup has timed out. <1><0>tryAgain</0></1>",
+          "emailSetupHelp": "Sending email alerts requires manual configuration. <1><0>learnMore</0></1>",
+          "tryAgain": "Please try again.",
+          "learnMore": "Learn more",
+          "emailActionLabel": "Send email",
+          "emailAddresses": "Email addresses",
+          "enterEmail": "Press enter to add email recipient",
+          "emailComments": "Additional Notes",
+          "enterEmailComments": "Enter additional notes for the email message.",
+          "emailSubject": "Email Subject",
+          "enterEmailSubject": "Enter email subject",
+          "syntaxError": "Not a valid email address",
+          "on": "Email enabled",
+          "off": "Email disabled",
+          "defaultEmailSubject": "Azure IoT Remote Monitoring alert: {{ruleName}} was triggered",
+          "deleteEmail": "Delete Email"
         },
         "calculationOptions": {
           "average": "Average",

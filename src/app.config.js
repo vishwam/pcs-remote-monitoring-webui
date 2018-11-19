@@ -14,6 +14,12 @@ const Config = {
     //TODO: Determine if should query java or dotnet
     gitHubReleases: 'https://api.github.com/repos/Azure/azure-iot-pcs-remote-monitoring-dotnet/releases'
   },
+  contextHelpUrls: {
+    accessDenied: 'https://docs.microsoft.com/azure/iot-accelerators/iot-accelerators-remote-monitoring-rbac#add-or-remove-users',
+    rolesAndPermissions: 'https://docs.microsoft.com/azure/iot-accelerators/iot-accelerators-remote-monitoring-rbac',
+    ruleActionsEmail: 'https://go.microsoft.com/fwlink/?linkid=2041110&clcid=0x409',
+    exploreTimeSeries: 'https://docs.microsoft.com/azure/iot-accelerators/iot-accelerators-remote-monitoring-rbac-tsi'
+  },
   // Constants
   showWalkthroughExamples: false,
   defaultAjaxTimeout: 20000, // 20s
@@ -26,6 +32,8 @@ const Config = {
   gridResizeDebounceTime: 200, // ms
   dashboardRefreshInterval: 15000, // 15 seconds
   telemetryRefreshInterval: 1000, // 1 seconds
+  actionSetupPollingInterval: 20 * 1000, // every 20 seconds
+  actionSetupPollingTimeLimit: 2 * 60 * 1000, // for up to 2 minutes
   simulationId: '1',
   validExtensions: validExtensions.join(),
   emptyValue: '--',
