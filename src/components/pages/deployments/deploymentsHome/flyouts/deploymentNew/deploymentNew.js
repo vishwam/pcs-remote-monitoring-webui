@@ -46,7 +46,6 @@ export class DeploymentNew extends LinkedComponent {
       packageId: undefined,
       packageName: '',
       targetedDeviceCount: '',
-      edgePackageSelected: false,
       changesApplied: false
     };
   }
@@ -138,12 +137,11 @@ export class DeploymentNew extends LinkedComponent {
       // case - Edge manifest
       case packageTypeOptions[0]:
         this.props.fetchPackages(packageTypeOptions[0], '');
-        this.setState({ configType: '', edgePackageSelected: true });
+        this.setState({ configType: '' });
         break;
       // case - Device Configuration
       case packageTypeOptions[1]:
         this.props.fetchConfigTypes();
-        this.setState({ edgePackageSelected: false });
         break;
       default:
         break;
@@ -215,8 +213,7 @@ export class DeploymentNew extends LinkedComponent {
       packageName,
       priority,
       targetedDeviceCount,
-      changesApplied,
-      edgePackageSelected,
+      changesApplied
     } = this.state;
 
     // Validators
@@ -402,7 +399,7 @@ export class DeploymentNew extends LinkedComponent {
               </SummaryBody>
               {
                 /** Displays a info message if package type selected is edge Manifest */
-                !changesApplied && edgePackageSelected &&
+                !changesApplied &&
                 <div className="new-deployment-info-text">
                   <strong className="new-deployment-info-star">* </strong>
                   {t('deployments.flyouts.new.infoText')}

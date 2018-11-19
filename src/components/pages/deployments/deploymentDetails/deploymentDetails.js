@@ -163,7 +163,7 @@ export class DeploymentDetails extends Component {
                 {name}
               </div>
               <StatSection>
-                <StatGroup>
+                <StatGroup className="summary-container-groups">
                   <StatSection className="summary-container-row1">
                     <StatGroup className="summary-container-columns">
                       <StatProperty
@@ -217,7 +217,7 @@ export class DeploymentDetails extends Component {
                     </div>
                   </StatGroup>
                 }
-                <StatGroup>
+                <StatGroup className="summary-container-groups">
                   <StatSection className="summary-container-row1">
                     <StatGroup className="summary-container-columns">
                       <StatPropertyPair label={t('deployments.details.deviceGroup')} value={deviceGroupName} />
