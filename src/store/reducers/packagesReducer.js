@@ -58,7 +58,7 @@ export const epics = createEpicScenario({
   },
   /** Gets configuration types*/
   fetchConfigTypes: {
-    type: 'CONFIG_TYPE_FETCH',
+    type: 'PACKAGES_CONFIG_TYPE_FETCH',
     epic: fromAction =>
       ConfigService.getConfigTypes()
         .map(toActionCreator(redux.actions.updateConfigTypes, fromAction))

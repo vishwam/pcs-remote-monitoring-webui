@@ -194,7 +194,8 @@ export class PackageNew extends LinkedComponent {
                 completedSuccessfully && <FormLabel className="new-package-success-labels">{packageType}</FormLabel>
               }
             </FormGroup>
-            {configTypeEnabled &&
+            {
+              configTypeEnabled &&
               <FormGroup>
                 <FormLabel isRequired="true">{t('packages.flyouts.new.configType')}</FormLabel>
                 {!completedSuccessfully &&
