@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Config from 'app.config';
 import {
   packageTypeOptions,
-  packagesModel,
+  packagesEnum,
   toDiagnosticsModel,
   toSinglePropertyDiagnosticsModel
 } from 'services/models';
@@ -151,12 +151,12 @@ export class DeploymentNew extends LinkedComponent {
 
     switch (selectedPackageType) {
       // case - Edge manifest
-      case packagesModel.edgeManifest:
-        this.props.fetchPackages(packagesModel.edgeManifest, '');
+      case packagesEnum.edgeManifest:
+        this.props.fetchPackages(packagesEnum.edgeManifest, '');
         this.setState({ configType: '' });
         break;
       // case - Device Configuration
-      case packagesModel.deviceConfiguration:
+      case packagesEnum.deviceConfiguration:
         this.props.fetchConfigTypes();
         break;
       default:
@@ -167,7 +167,7 @@ export class DeploymentNew extends LinkedComponent {
 
   configTypeChange = ({ target: { value: { value = {} } } }) => {
     this.props.logEvent(toSinglePropertyDiagnosticsModel('NewDeployment_ConfigTypeClick', 'ConfigType', value));
-    this.props.fetchPackages(packagesModel.deviceConfiguration, value);
+    this.props.fetchPackages(packagesEnum.deviceConfiguration, value);
     this.formControlChange();
   }
 
@@ -241,7 +241,7 @@ export class DeploymentNew extends LinkedComponent {
       .map(({ value }) => value)
       .check(
         // Validate for non-empty value if packageType is of type 'Device Configuration'
-        configValue => this.packageTypeLink.value === packagesModel.deviceConfiguration ? Validator.notEmpty(configValue) : true,
+        configValue => this.packageTypeLink.value === packagesEnum.deviceConfiguration ? Validator.notEmpty(configValue) : true,
         this.props.t('deployments.flyouts.new.validation.required')
       );
     this.nameLink = this.linkTo('name').withValidator(requiredValidator);
@@ -251,7 +251,7 @@ export class DeploymentNew extends LinkedComponent {
       .check(val => isPositiveInteger(val), t('deployments.flyouts.new.validation.positiveInteger'));
     this.packageIdLink = this.linkTo('packageId').map(({ value }) => value).withValidator(requiredValidator);
 
-    const isPackageTypeSelected = packageType === packagesModel.edgeManifest || (packageType !== '' && configType !== '');
+    const isPackageTypeSelected = packageType === packagesEnum.edgeManifest || (packageType !== '' && configType !== '');
     const isDeviceGroupSelected = deviceGroupId !== undefined;
     const packageOptions = packages.map(this.toPackageSelectOption);
     const deviceGroupOptions = deviceGroups.map(this.toDeviceGroupSelectOption);
@@ -267,7 +267,7 @@ export class DeploymentNew extends LinkedComponent {
       : {};
     const completedSuccessfully = changesApplied && !createError && !createIsPending;
     const deviceFetchSuccessful = isDeviceGroupSelected && !devicesError && !devicesPending;
-    const configTypeEnabled = this.packageTypeLink.value === packagesModel.deviceConfiguration;
+    const configTypeEnabled = this.packageTypeLink.value === packagesEnum.deviceConfiguration;
 
     return (
       <Flyout>
@@ -288,9 +288,7 @@ export class DeploymentNew extends LinkedComponent {
                   onBlur={(event) => this.genericOnChange('NewDeployment_NameText', 'Name', event.target.value)}
                   placeholder={t('deployments.flyouts.new.namePlaceHolder')} />
               }
-              {
-                completedSuccessfully && <FormLabel className="new-deployment-success-labels">{name}</FormLabel>
-              }
+              {completedSuccessfully && <FormLabel className="new-deployment-success-labels">{name}</FormLabel>}
             </FormGroup>
             <FormGroup className="new-deployment-formGroup">
               <FormLabel isRequired="true">{t('deployments.flyouts.new.packageType')}</FormLabel>
@@ -306,9 +304,7 @@ export class DeploymentNew extends LinkedComponent {
                   clearable={false}
                   searchable={false} />
               }
-              {
-                completedSuccessfully && <FormLabel className="new-deployment-success-labels">{packageType}</FormLabel>
-              }
+              {completedSuccessfully && <FormLabel className="new-deployment-success-labels">{packageType}</FormLabel>}
             </FormGroup>
             {
               configTypeEnabled &&
@@ -326,15 +322,12 @@ export class DeploymentNew extends LinkedComponent {
                     clearable={false}
                     searchable={false} />
                 }
-                {
-                  configTypesIsPending && <Indicator />}
+                {configTypesIsPending && <Indicator />}
                 {
                   /** Displays an error message if one occurs while fetching configTypes. */
                   configTypesError && <AjaxError className="new-deployment-flyout-error" t={t} error={configTypesError} />
                 }
-                {
-                  completedSuccessfully && <FormLabel className="new-deployment-success-labels">{configType}</FormLabel>
-                }
+                {completedSuccessfully && <FormLabel className="new-deployment-success-labels">{configType}</FormLabel>}
               </FormGroup>
             }
             <FormGroup className="new-deployment-formGroup">
@@ -352,16 +345,12 @@ export class DeploymentNew extends LinkedComponent {
                   clearable={false}
                   searchable={false} />
               }
-              {
-                packagesPending && <Indicator />
-              }
+              {packagesPending && <Indicator />}
               {
                 /** Displays an error message if one occurs while fetching packages. */
                 packagesError && <AjaxError className="new-deployment-flyout-error" t={t} error={packagesError} />
               }
-              {
-                completedSuccessfully && <FormLabel className="new-deployment-success-labels">{packageName}</FormLabel>
-              }
+              {completedSuccessfully && <FormLabel className="new-deployment-success-labels">{packageName}</FormLabel>}
             </FormGroup>
             <FormGroup className="new-deployment-formGroup">
               <FormLabel isRequired="true">{t('deployments.flyouts.new.deviceGroup')}</FormLabel>
@@ -378,9 +367,7 @@ export class DeploymentNew extends LinkedComponent {
                   clearable={false}
                   searchable={false} />
               }
-              {
-                completedSuccessfully && <FormLabel className="new-deployment-success-labels">{deviceGroupName}</FormLabel>
-              }
+              {completedSuccessfully && <FormLabel className="new-deployment-success-labels">{deviceGroupName}</FormLabel>}
             </FormGroup>
             <FormGroup className="new-deployment-formGroup">
               <FormLabel isRequired="true">
@@ -391,11 +378,9 @@ export class DeploymentNew extends LinkedComponent {
                       <Hyperlink href={Config.contextHelpUrls.deploymentPriority} target="_blank">{t('deployments.flyouts.new.priorityLearnMore')}</Hyperlink>
                   </Trans>
                 }>
-
                   <ThemedSvgContainer paths={themedPaths.questionBubble} />
                 </Tooltip>
               </FormLabel>
-
               {
                 !completedSuccessfully &&
                 <FormControl
@@ -405,9 +390,7 @@ export class DeploymentNew extends LinkedComponent {
                   onBlur={(event) => this.genericOnChange('NewDeployment_PriorityNumber', 'Priority', event.target.value)}
                   placeholder={t('deployments.flyouts.new.priorityPlaceHolder')} />
               }
-              {
-                completedSuccessfully && <FormLabel className="new-deployment-success-labels">{priority}</FormLabel>
-              }
+              {completedSuccessfully && <FormLabel className="new-deployment-success-labels">{priority}</FormLabel>}
             </FormGroup>
             <SummarySection className="new-deployment-summary">
               <SummaryBody>

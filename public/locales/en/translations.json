@@ -605,12 +605,12 @@
       "time": "Time"
     },
     "jobStatus": {
-      "enqueued": "Enqueued",
-      "running": "Running",
-      "completed": "Completed",
-      "failed": "Failed",
-      "cancelled": "Cancelled",
-      "scheduled": "Scheduled",
+      "1": "Enqueued",
+      "2": "Running",
+      "3": "Completed",
+      "4": "Failed",
+      "5": "Cancelled",
+      "6": "Scheduled",
       "queued": "Queued"
     }
   },

@@ -21,7 +21,7 @@ import {
   getError,
   toActionCreator
 } from 'store/utilities';
-import { packagesModel } from 'services/models';
+import { packagesEnum } from 'services/models';
 
 // ========================= Epics - START
 const handleError = fromAction => error =>
@@ -58,7 +58,7 @@ export const epics = createEpicScenario({
   fetchDeployedDevices: {
     type: 'DEPLOYED_DEVICES_FETCH',
     epic: fromAction => {
-      if (fromAction.payload.packageType === packagesModel.deviceConfiguration) {
+      if (fromAction.payload.packageType === packagesEnum.deviceConfiguration) {
         return IoTHubManagerService.getDevicesByQuery(createDevicesQuery(getDeployedDeviceIds(fromAction.payload)))
           .map(toActionCreator(redux.actions.updateADMDeployedDevices, fromAction))
           .catch(handleError(fromAction))

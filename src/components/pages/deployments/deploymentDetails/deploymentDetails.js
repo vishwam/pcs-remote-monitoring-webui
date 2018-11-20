@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import {
   permissions,
   toSinglePropertyDiagnosticsModel,
-  packagesModel
+  packagesEnum
 } from 'services/models';
 import {
   AjaxError,
@@ -118,7 +118,7 @@ export class DeploymentDetails extends Component {
       packageName,
       customMetrics = {}
     } = currentDeployment;
-    const isADMDeployment = packageType === packagesModel.deviceConfiguration;
+    const isADMDeployment = packageType === packagesEnum.deviceConfiguration;
     const customMetricsExist = Object.keys(customMetrics).length > 0;
 
     return (

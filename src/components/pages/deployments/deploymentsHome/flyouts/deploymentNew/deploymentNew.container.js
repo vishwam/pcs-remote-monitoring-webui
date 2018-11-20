@@ -25,7 +25,7 @@ import {
   epics as appEpics,
 } from 'store/reducers/appReducer';
 import {
-  getDevices,
+  getDevicesByCondition,
   getDevicesByConditionError,
   getDevicesByConditionPendingStatus,
   epics as devicesEpics,
@@ -38,7 +38,7 @@ const mapStateToProps = state => ({
   packagesPending: getPackagesPendingStatus(state),
   packagesError: getPackagesError(state),
   deviceGroups: getDeviceGroups(state),
-  devices: getDevices(state),
+  devices: getDevicesByCondition(state),
   devicesPending: getDevicesByConditionPendingStatus(state),
   devicesError: getDevicesByConditionError(state),
   createIsPending: getCreateDeploymentPendingStatus(state),

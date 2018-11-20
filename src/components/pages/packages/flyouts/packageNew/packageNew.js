@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 
 import {
   packageTypeOptions,
-  packagesModel,
+  packagesEnum,
   configTypeOptions,
-  configsModel,
+  configsEnum,
   toSinglePropertyDiagnosticsModel,
   toDiagnosticsModel
 } from 'services/models';
@@ -61,7 +61,7 @@ export class PackageNew extends LinkedComponent {
 
     // If configType is 'Custom' concatenate 'Custom' with customConfigName.
     let configName = '';
-    if (configType === configsModel.custom) configName = `${configsModel.custom} - ${customConfigName}`;
+    if (configType === configsEnum.custom) configName = `${configsEnum.custom} - ${customConfigName}`;
     else configName = configType;
 
     this.props.logEvent(
@@ -81,7 +81,7 @@ export class PackageNew extends LinkedComponent {
   packageTypeChange = ({ target: { value: { value = {} } } }) => {
     this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_PackageTypeClick', 'PackageType', value));
     this.setState({ configType: '', customConfigType: '' });
-    if (value === packagesModel.deviceConfiguration) this.props.fetchConfigTypes();
+    if (value === packagesEnum.deviceConfiguration) this.props.fetchConfigTypes();
   }
 
   configTypeChange = ({ target: { value: { value = {} } } }) => {
@@ -152,18 +152,18 @@ export class PackageNew extends LinkedComponent {
       .map(({ value }) => value)
       .check(
         // Validate for non-empty value if packageType is of type 'Device Configuration'
-        configValue => this.packageTypeLink.value === packagesModel.deviceConfiguration ? Validator.notEmpty(configValue) : true,
+        configValue => this.packageTypeLink.value === packagesEnum.deviceConfiguration ? Validator.notEmpty(configValue) : true,
         this.props.t('packages.flyouts.new.validation.required')
       );
     this.customConfigNameLink = this.linkTo('customConfigName')
       .check(
         // Validate for non-empty value if configType is of type 'Custom'
-        customConfigValue => this.configTypeLink.value === configsModel.custom ? Validator.notEmpty(customConfigValue) : true,
+        customConfigValue => this.configTypeLink.value === configsEnum.custom ? Validator.notEmpty(customConfigValue) : true,
         this.props.t('packages.flyouts.new.validation.required')
       );
 
-    const configTypeEnabled = this.packageTypeLink.value === packagesModel.deviceConfiguration && !configTypesError && !configTypesIsPending;
-    const customTextVisible = configTypeEnabled && this.configTypeLink.value === configsModel.custom;
+    const configTypeEnabled = this.packageTypeLink.value === packagesEnum.deviceConfiguration && !configTypesError && !configTypesIsPending;
+    const customTextVisible = configTypeEnabled && this.configTypeLink.value === configsEnum.custom;
 
     return (
       <Flyout>
