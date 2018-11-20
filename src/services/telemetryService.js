@@ -45,20 +45,17 @@ export class TelemetryService {
 
   /** Returns a list of alarms (all statuses) */
   static getAlerts(params = {}) {
-    return HttpClient.get(`${ENDPOINT}alarms?${stringify(params)}`)
-      .map(toAlertsModel)
+    return this.getOrPost(`${ENDPOINT}alarms`, params, toAlertsModel);
   }
 
   /** Returns a list of active alarms (open or ack) */
   static getActiveAlerts(params = {}) {
-    return HttpClient.get(`${ENDPOINT}alarmsbyrule?${stringify(params)}`)
-      .map(toActiveAlertsModel);
+    return this.getOrPost(`${ENDPOINT}alarmsbyrule`, params, toActiveAlertsModel);
   }
 
   /** Returns a list of alarms created from a given rule */
   static getAlertsForRule(id, params = {}) {
-    return HttpClient.get(`${ENDPOINT}alarmsbyrule/${id}?${stringify(params)}`)
-      .map(toAlertsForRuleModel);
+    return this.getOrPost(`${ENDPOINT}alarmsbyrule/${id}`, params, toAlertsForRuleModel);
   }
 
   /** Returns a list of alarms created from a given rule */
@@ -74,12 +71,12 @@ export class TelemetryService {
 
   /** Returns a telemetry events */
   static getTelemetryByMessages(params = {}) {
+    const devicesArr = params.devices || [];
     const _params = {
       ...params,
-      devices: (params.devices || []).map(encodeURIComponent).join()
+      devices: (devicesArr).map(encodeURIComponent).join()
     };
-    return HttpClient.get(`${ENDPOINT}messages?${stringify(_params)}`)
-      .map(toMessagesModel);
+    return this.getOrPost(`${ENDPOINT}messages`, _params, toMessagesModel, devicesArr);
   }
 
   static getTelemetryByDeviceIdP1M(devices = []) {
@@ -103,6 +100,22 @@ export class TelemetryService {
   static deleteRule(id) {
     return HttpClient.delete(`${ENDPOINT}rules/${id}`)
       .map(() => ({ deletedRuleId: id }));
+  }
+
+  static getOrPost(url, params, toModel, devicesArr = undefined) {
+    const urlWithParams = `${url}?${stringify(params)}`;
+    if (urlWithParams.length > 2048) {
+      if (devicesArr) {
+        params.devices = devicesArr;
+      } else if (params.devices && !Array.isArray(params.devices)) {
+        params.devices = params.devices.split(",");
+      }
+      return HttpClient.post(url, params)
+        .map(toModel);
+    } else {
+      return HttpClient.get(urlWithParams)
+        .map(toModel)
+    }
   }
 
 }
