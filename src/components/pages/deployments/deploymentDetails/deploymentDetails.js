@@ -213,9 +213,6 @@ export class DeploymentDetails extends Component {
                         label={t('deployments.details.packageType')}
                         value={packageType ? getPackageTypeTranslation(packageType, t) : undefined} />
                     </StatGroup>
-                    <StatGroup className="summary-container-columns">
-                      <StatPropertyPair label={t('deployments.details.priority')} value={priority} />
-                    </StatGroup>
                   </StatSection>
                   <StatSection className="summary-container-row2">
                     <StatGroup className="summary-container-columns">
@@ -226,6 +223,15 @@ export class DeploymentDetails extends Component {
                     <StatGroup className="summary-container-columns">
                       <StatPropertyPair label={t('deployments.details.package')} value={packageName} />
                     </StatGroup>
+                  </StatSection>
+                </StatGroup>
+                <StatGroup>
+                  <StatSection className="summary-container-row1">
+                    <StatGroup className="summary-container-columns">
+                      <StatPropertyPair label={t('deployments.details.priority')} value={priority} />
+                    </StatGroup>
+                  </StatSection>
+                  <StatSection className="summary-container-row2">
                     {
                       isADMDeployment &&
                       <StatGroup className="summary-container-columns">
