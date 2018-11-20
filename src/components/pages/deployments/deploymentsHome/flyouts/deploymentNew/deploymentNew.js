@@ -4,6 +4,7 @@ import React from 'react';
 import { Trans } from 'react-i18next';
 import { Link } from "react-router-dom";
 
+import Config from 'app.config';
 import {
   packageTypeOptions,
   packagesModel,
@@ -28,6 +29,7 @@ import {
   FlyoutTitle,
   FlyoutCloseBtn,
   FlyoutContent,
+  Hyperlink,
   Indicator,
   FormControl,
   FormGroup,
@@ -383,7 +385,13 @@ export class DeploymentNew extends LinkedComponent {
             <FormGroup className="new-deployment-formGroup">
               <FormLabel isRequired="true">
                 {t('deployments.flyouts.new.priority')}
-                <Tooltip content={t('deployments.flyouts.new.priorityToolTip')}>
+                <Tooltip content={
+                  <Trans i18nKey={`deployments.flyouts.new.priorityToolTip`}>
+                    Manual setup is required.
+                      <Hyperlink href={Config.contextHelpUrls.deploymentPriority} target="_blank">{t('deployments.flyouts.new.priorityLearnMore')}</Hyperlink>
+                  </Trans>
+                }>
+
                   <ThemedSvgContainer paths={themedPaths.questionBubble} />
                 </Tooltip>
               </FormLabel>
