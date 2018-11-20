@@ -59,8 +59,7 @@ export const epics = createEpicScenario({
     type: 'DEPLOYED_DEVICES_FETCH',
     epic: fromAction => {
       if (fromAction.payload.packageType === packagesModel.deviceConfiguration) {
-        return Observable
-          .map(IoTHubManagerService.getDevicesByQuery(createDevicesQuery(getDeployedDeviceIds(fromAction.payload))))
+        return IoTHubManagerService.getDevicesByQuery(createDevicesQuery(getDeployedDeviceIds(fromAction.payload)))
           .map(toActionCreator(redux.actions.updateADMDeployedDevices, fromAction))
           .catch(handleError(fromAction))
       }

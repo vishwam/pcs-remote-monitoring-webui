@@ -480,7 +480,7 @@
           "value": "Value",
           "valuePlaceholder": "Enter value"
         },
-        "actions":{
+        "actions": {
           "action": "Action",
           "checkingEmailSetup": "Checking status of email configuration.",
           "setupEmail": "To send email alerts, <1><0>outlookLogin</0></1> is required.",
@@ -639,6 +639,7 @@
         "deviceGroup": "Device Group",
         "name": "Name",
         "priority": "Priority",
+        "priorityToolTip": "Higher values indicate higher priority.",
         "package": "Package",
         "packageTypePlaceHolder": "Select package type",
         "configTypePlaceHolder": "Select configuration type",
@@ -661,6 +662,7 @@
       "deviceGroup": "Device group",
       "start": "Start",
       "packageType": "Package type",
+      "configType": "configType",
       "package": "Package",
       "priority": "Priority",
       "applied": "Applied",

@@ -10,7 +10,14 @@ import {
   toDiagnosticsModel,
   toSinglePropertyDiagnosticsModel
 } from 'services/models';
-import { svgs, LinkedComponent, Validator, getPackageTypeTranslation, getConfigTypeTranslation } from 'utilities';
+import {
+  svgs,
+  LinkedComponent,
+  Validator,
+  getPackageTypeTranslation,
+  getConfigTypeTranslation,
+  themedPaths
+} from 'utilities';
 import {
   AjaxError,
   Btn,
@@ -29,7 +36,9 @@ import {
   SectionDesc,
   SummaryCount,
   SummarySection,
-  Svg
+  Svg,
+  Tooltip,
+  ThemedSvgContainer
 } from 'components/shared';
 
 import './deploymentNew.css';
@@ -372,7 +381,13 @@ export class DeploymentNew extends LinkedComponent {
               }
             </FormGroup>
             <FormGroup className="new-deployment-formGroup">
-              <FormLabel isRequired="true">{t('deployments.flyouts.new.priority')}</FormLabel>
+              <FormLabel isRequired="true">
+                {t('deployments.flyouts.new.priority')}
+                <Tooltip content={t('deployments.flyouts.new.priorityToolTip')}>
+                  <ThemedSvgContainer paths={themedPaths.questionBubble} />
+                </Tooltip>
+              </FormLabel>
+
               {
                 !completedSuccessfully &&
                 <FormControl
