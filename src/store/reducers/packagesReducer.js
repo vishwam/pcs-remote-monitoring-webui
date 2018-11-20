@@ -130,7 +130,7 @@ export const redux = createReducerScenario({
   insertPackage: { type: 'PACKAGE_INSERT', reducer: insertPackageReducer },
   deletePackage: { type: 'PACKAGES_DELETE', reducer: deletePackageReducer },
   updatePackages: { type: 'PACKAGES_UPDATE', reducer: updatePackagesReducer },
-  updateConfigTypes: { type: 'CONFIG_TYPES_UPDATE', reducer: updateConfigTypesReducer },
+  updateConfigTypes: { type: 'PACKAGES_CONFIG_TYPES_UPDATE', reducer: updateConfigTypesReducer },
   registerError: { type: 'PACKAGES_REDUCER_ERROR', reducer: errorReducer },
   resetPendingAndError: { type: 'PACKAGES_REDUCER_RESET_ERROR_PENDING', reducer: resetPendingAndErrorReducer },
   isFetching: { multiType: fetchableTypes, reducer: pendingReducer }
