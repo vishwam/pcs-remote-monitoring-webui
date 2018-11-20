@@ -72,9 +72,19 @@ export const toSolutionSettingActionModel = (action = {}) => {
 export const toSolutionSettingActionsModel = (response = {}) => getItems(response)
   .map(toSolutionSettingActionModel);
 
-export const packageTypeOptions = ['EdgeManifest', 'DeviceConfiguration'];
+export const packagesModel = {
+  'edgeManifest': 'EdgeManifest',
+  'deviceConfiguration': 'DeviceConfiguration'
+}
 
-export const configTypeOptions = ['Firmware', 'Custom'];
+export const packageTypeOptions = Object.values(packagesModel);
+
+export const configsModel = {
+  'firmware': 'Firmware',
+  'custom': 'Custom'
+}
+
+export const configTypeOptions = Object.values(configsModel);
 
 export const toNewPackageRequestModel = ({
   packageType,

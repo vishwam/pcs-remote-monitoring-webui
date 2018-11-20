@@ -4,7 +4,12 @@ import React from 'react';
 import { Trans } from 'react-i18next';
 import { Link } from "react-router-dom";
 
-import { packageTypeOptions, toDiagnosticsModel, toSinglePropertyDiagnosticsModel } from 'services/models';
+import {
+  packageTypeOptions,
+  packagesModel,
+  toDiagnosticsModel,
+  toSinglePropertyDiagnosticsModel
+} from 'services/models';
 import { svgs, LinkedComponent, Validator, getPackageTypeTranslation, getConfigTypeTranslation } from 'utilities';
 import {
   AjaxError,
@@ -135,12 +140,12 @@ export class DeploymentNew extends LinkedComponent {
 
     switch (selectedPackageType) {
       // case - Edge manifest
-      case packageTypeOptions[0]:
-        this.props.fetchPackages(packageTypeOptions[0], '');
+      case packagesModel.edgeManifest:
+        this.props.fetchPackages(packagesModel.edgeManifest, '');
         this.setState({ configType: '' });
         break;
       // case - Device Configuration
-      case packageTypeOptions[1]:
+      case packagesModel.deviceConfiguration:
         this.props.fetchConfigTypes();
         break;
       default:
@@ -151,7 +156,7 @@ export class DeploymentNew extends LinkedComponent {
 
   configTypeChange = ({ target: { value: { value = {} } } }) => {
     this.props.logEvent(toSinglePropertyDiagnosticsModel('NewDeployment_ConfigTypeClick', 'ConfigType', value));
-    this.props.fetchPackages(packageTypeOptions[0], value);
+    this.props.fetchPackages(packagesModel.deviceConfiguration, value);
     this.formControlChange();
   }
 
@@ -225,7 +230,7 @@ export class DeploymentNew extends LinkedComponent {
       .map(({ value }) => value)
       .check(
         // Validate for non-empty value if packageType is of type 'Device Configuration'
-        configValue => this.packageTypeLink.value === packageTypeOptions[1] ? Validator.notEmpty(configValue) : true,
+        configValue => this.packageTypeLink.value === packagesModel.deviceConfiguration ? Validator.notEmpty(configValue) : true,
         this.props.t('deployments.flyouts.new.validation.required')
       );
     this.nameLink = this.linkTo('name').withValidator(requiredValidator);
@@ -235,7 +240,7 @@ export class DeploymentNew extends LinkedComponent {
       .check(val => isPositiveInteger(val), t('deployments.flyouts.new.validation.positiveInteger'));
     this.packageIdLink = this.linkTo('packageId').map(({ value }) => value).withValidator(requiredValidator);
 
-    const isPackageTypeSelected = packageType === packageTypeOptions[0] || (packageType !== '' && configType !== '');
+    const isPackageTypeSelected = packageType === packagesModel.edgeManifest || (packageType !== '' && configType !== '');
     const isDeviceGroupSelected = deviceGroupId !== undefined;
     const packageOptions = packages.map(this.toPackageSelectOption);
     const deviceGroupOptions = deviceGroups.map(this.toDeviceGroupSelectOption);
@@ -251,7 +256,7 @@ export class DeploymentNew extends LinkedComponent {
       : {};
     const completedSuccessfully = changesApplied && !createError && !createIsPending;
     const deviceFetchSuccessful = isDeviceGroupSelected && !devicesError && !devicesPending;
-    const configTypeEnabled = this.packageTypeLink.value === packageTypeOptions[1] && !configTypesError && !configTypesIsPending;
+    const configTypeEnabled = this.packageTypeLink.value === packagesModel.deviceConfiguration;
 
     return (
       <Flyout>
@@ -294,10 +299,12 @@ export class DeploymentNew extends LinkedComponent {
                 completedSuccessfully && <FormLabel className="new-deployment-success-labels">{packageType}</FormLabel>
               }
             </FormGroup>
-            {configTypeEnabled &&
+            {
+              configTypeEnabled &&
               <FormGroup className="new-deployment-formGroup">
                 <FormLabel isRequired="true">{t('deployments.flyouts.new.configType')}</FormLabel>
-                {!completedSuccessfully &&
+                {
+                  !completedSuccessfully &&
                   <FormControl
                     type="select"
                     className="long"
@@ -308,7 +315,8 @@ export class DeploymentNew extends LinkedComponent {
                     clearable={false}
                     searchable={false} />
                 }
-                {configTypesIsPending && <Indicator />}
+                {
+                  configTypesIsPending && <Indicator />}
                 {
                   /** Displays an error message if one occurs while fetching configTypes. */
                   configTypesError && <AjaxError className="new-deployment-flyout-error" t={t} error={configTypesError} />
@@ -320,7 +328,8 @@ export class DeploymentNew extends LinkedComponent {
             }
             <FormGroup className="new-deployment-formGroup">
               <FormLabel isRequired="true">{t('deployments.flyouts.new.package')}</FormLabel>
-              {!packagesPending && !completedSuccessfully &&
+              {
+                !packagesPending && !completedSuccessfully &&
                 <FormControl
                   type="select"
                   className="long"

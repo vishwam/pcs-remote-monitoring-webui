@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import {
   permissions,
   toSinglePropertyDiagnosticsModel,
-  packageTypeOptions
+  packagesModel
 } from 'services/models';
 import {
   AjaxError,
@@ -132,7 +132,7 @@ export class DeploymentDetails extends Component {
       customMetrics = {}
     } = currentDeployment;
     const pendingCount = this.state.pendingCount ? this.state.pendingCount : '0';
-    const isADMDeployment = packageType === packageTypeOptions[1];
+    const isADMDeployment = packageType === packagesModel.deviceConfiguration;
     const customMetricsExist = Object.keys(customMetrics).length > 0;
 
     return (
@@ -241,7 +241,8 @@ export class DeploymentDetails extends Component {
                       <StatPropertyPair label={t('deployments.details.package')} value={packageName} />
                     </StatGroup>
                   </StatSection>
-                  {isADMDeployment &&
+                  {
+                    isADMDeployment &&
                     <StatGroup className="summary-container-columns">
                       <StatPropertyPair
                         label={t('deployments.details.configType')}

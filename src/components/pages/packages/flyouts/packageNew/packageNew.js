@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 
 import {
   packageTypeOptions,
+  packagesModel,
   configTypeOptions,
+  configsModel,
   toSinglePropertyDiagnosticsModel,
   toDiagnosticsModel
 } from 'services/models';
@@ -59,7 +61,7 @@ export class PackageNew extends LinkedComponent {
 
     // If configType is 'Custom' concatenate 'Custom' with customConfigName.
     let configName = '';
-    if (configType === configTypeOptions[1]) configName = `${configTypeOptions[1]} - ${customConfigName}`;
+    if (configType === configsModel.custom) configName = `${configsModel.custom} - ${customConfigName}`;
     else configName = configType;
 
     this.props.logEvent(
@@ -79,7 +81,7 @@ export class PackageNew extends LinkedComponent {
   packageTypeChange = ({ target: { value: { value = {} } } }) => {
     this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_PackageTypeClick', 'PackageType', value));
     this.setState({ configType: '', customConfigType: '' });
-    if (value === packageTypeOptions[1]) this.props.fetchConfigTypes();
+    if (value === packagesModel.deviceConfiguration) this.props.fetchConfigTypes();
   }
 
   configTypeChange = ({ target: { value: { value = {} } } }) => {
@@ -133,13 +135,12 @@ export class PackageNew extends LinkedComponent {
     const packageOptions = packageTypeOptions.map(value => ({
       label: getPackageTypeTranslation(value, t),
       value
+    }));
+    const configTypesUnion = configTypes ? [...new Set([...configTypes, ...configTypeOptions])] : configTypeOptions;
+    const configOptions = configTypesUnion.map(value => ({
+      label: getConfigTypeTranslation(value, t),
+      value
     }))
-    const configOptions = configTypes ?
-      configTypes.map(value => ({
-        label: getConfigTypeTranslation(value, t),
-        value
-      }))
-      : {};
 
     const completedSuccessfully = changesApplied && !error && !isPending;
     // Validators
@@ -151,18 +152,18 @@ export class PackageNew extends LinkedComponent {
       .map(({ value }) => value)
       .check(
         // Validate for non-empty value if packageType is of type 'Device Configuration'
-        configValue => this.packageTypeLink.value === packageTypeOptions[1] ? Validator.notEmpty(configValue) : true,
+        configValue => this.packageTypeLink.value === packagesModel.deviceConfiguration ? Validator.notEmpty(configValue) : true,
         this.props.t('packages.flyouts.new.validation.required')
       );
     this.customConfigNameLink = this.linkTo('customConfigName')
       .check(
         // Validate for non-empty value if configType is of type 'Custom'
-        customConfigValue => this.configTypeLink.value === configTypeOptions[1] ? Validator.notEmpty(customConfigValue) : true,
+        customConfigValue => this.configTypeLink.value === configsModel.custom ? Validator.notEmpty(customConfigValue) : true,
         this.props.t('packages.flyouts.new.validation.required')
       );
 
-    const configTypeEnabled = this.packageTypeLink.value === packageTypeOptions[1] && !configTypesError && !configTypesIsPending;
-    const customTextVisible = configTypeEnabled && this.configTypeLink.value === configTypeOptions[1];
+    const configTypeEnabled = this.packageTypeLink.value === packagesModel.deviceConfiguration && !configTypesError && !configTypesIsPending;
+    const customTextVisible = configTypeEnabled && this.configTypeLink.value === configsModel.custom;
 
     return (
       <Flyout>
@@ -185,7 +186,7 @@ export class PackageNew extends LinkedComponent {
                   onChange={this.packageTypeChange}
                   link={this.packageTypeLink}
                   options={packageOptions}
-                  placeholder={t('packages.flyouts.new.packageTypePlaceHolder')}
+                  placeholder={t('packages.flyouts.new.packageTypePlaceholder')}
                   clearable={false}
                   searchable={false} />
               }
@@ -203,12 +204,13 @@ export class PackageNew extends LinkedComponent {
                     onChange={this.configTypeChange}
                     link={this.configTypeLink}
                     options={configOptions}
-                    placeholder={t('packages.flyouts.new.configTypePlaceHolder')}
+                    placeholder={t('packages.flyouts.new.configTypePlaceholder')}
                     clearable={false}
                     searchable={false} />
                 }
                 {configTypesIsPending && <Indicator />}
-                {/** Displays an error message if one occurs while fetching configTypes. */
+                {
+                  /** Displays an error message if one occurs while fetching configTypes. */
                   configTypesError && <AjaxError className="new-package-flyout-error" t={t} error={configTypesError} />
                 }
                 {
@@ -225,7 +227,7 @@ export class PackageNew extends LinkedComponent {
                   className="long"
                   onBlur={this.customConfigNameChange}
                   link={this.customConfigNameLink}
-                  placeholder={t('packages.flyouts.new.customTextPlaceHolder')} />
+                  placeholder={t('packages.flyouts.new.customTextPlaceholder')} />
               </FormGroup>
             }
             {
