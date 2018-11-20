@@ -49,20 +49,6 @@ export class DeploymentDetails extends Component {
     props.fetchDeployment(props.match.params.id);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { currentDeployment } = nextProps;
-    if (currentDeployment && currentDeployment.deviceStatuses) {
-      let pendingCount = 0;
-      Object.values(currentDeployment.deviceStatuses)
-        .forEach(
-          (status) => {
-            if (status.toLowerCase() === 'pending') pendingCount++;
-          }
-        );
-      this.setState({ pendingCount });
-    }
-  }
-
   componentWillUnmount() {
     this.props.resetDeployedDevices();
   }
@@ -122,6 +108,7 @@ export class DeploymentDetails extends Component {
       targetedCount = 0,
       succeededCount = 0,
       failedCount = 0,
+      pendingCount = 0,
       name,
       priority,
       deviceGroupName,
@@ -131,7 +118,6 @@ export class DeploymentDetails extends Component {
       packageName,
       customMetrics = {}
     } = currentDeployment;
-    const pendingCount = this.state.pendingCount ? this.state.pendingCount : '0';
     const isADMDeployment = packageType === packagesModel.deviceConfiguration;
     const customMetricsExist = Object.keys(customMetrics).length > 0;
 
