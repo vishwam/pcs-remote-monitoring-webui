@@ -240,15 +240,15 @@ export class DeploymentDetails extends Component {
                     <StatGroup className="summary-container-columns">
                       <StatPropertyPair label={t('deployments.details.package')} value={packageName} />
                     </StatGroup>
+                    {
+                      isADMDeployment &&
+                      <StatGroup className="summary-container-columns">
+                        <StatPropertyPair
+                          label={t('deployments.details.configType')}
+                          value={configType ? getConfigTypeTranslation(configType, t) : undefined} />
+                      </StatGroup>
+                    }
                   </StatSection>
-                  {
-                    isADMDeployment &&
-                    <StatGroup className="summary-container-columns">
-                      <StatPropertyPair
-                        label={t('deployments.details.configType')}
-                        value={configType ? getConfigTypeTranslation(configType, t) : undefined} />
-                    </StatGroup>
-                  }
                 </StatGroup>
               </StatSection>
             </div>

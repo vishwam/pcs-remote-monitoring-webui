@@ -663,7 +663,7 @@
       "deviceGroup": "Device group",
       "start": "Start",
       "packageType": "Package type",
-      "configType": "configType",
+      "configType": "Configuration Type",
       "package": "Package",
       "priority": "Priority",
       "applied": "Applied",
