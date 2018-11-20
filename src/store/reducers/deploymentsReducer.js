@@ -177,7 +177,7 @@ const updateADMDeployedDevicesReducer = (state, { payload, fromAction }) => {
           id: deviceId,
           start: normalizedDevices[deviceId].lastFwUpdateStartTime,
           end: normalizedDevices[deviceId].lastFwUpdateEndTime,
-          firmware: normalizedDevices[deviceId].firmwareVersion,
+          firmware: normalizedDevices[deviceId].currentFwVersion,
           device: normalizedDevices[deviceId]
         }
       }),

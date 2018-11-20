@@ -35,7 +35,6 @@ export class Devices extends Component {
       contextBtns: null
     };
 
-    this.props.fetchDevices();
     this.props.updateCurrentWindow('Devices');
   }
 
