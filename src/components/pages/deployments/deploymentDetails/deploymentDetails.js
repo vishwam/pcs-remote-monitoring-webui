@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 
-import Config from 'app.config';
 import {
   permissions,
   toSinglePropertyDiagnosticsModel,
@@ -25,7 +24,7 @@ import {
   StatPropertyPair
 } from 'components/shared';
 import { TimeRenderer } from 'components/shared/cellRenderers';
-import { getPackageTypeTranslation, getConfigTypeTranslation, svgs } from 'utilities';
+import { getPackageTypeTranslation, getConfigTypeTranslation, svgs, renderUndefined } from 'utilities';
 import { DeploymentDetailsGrid } from './deploymentDetailsGrid/deploymentDetailsGrid';
 
 import "./deploymentDetails.css";
@@ -106,11 +105,11 @@ export class DeploymentDetails extends Component {
     } = this.props;
     const {
       id,
-      appliedCount = Config.emptyValue,
-      targetedCount = Config.emptyValue,
-      succeededCount = Config.emptyValue,
-      failedCount = Config.emptyValue,
-      pendingCount = Config.emptyValue,
+      appliedCount,
+      targetedCount,
+      succeededCount,
+      failedCount,
+      pendingCount,
       name,
       priority,
       deviceGroupName,
@@ -155,15 +154,15 @@ export class DeploymentDetails extends Component {
                   <StatSection className="summary-container-row1">
                     <StatGroup className="summary-container-columns">
                       <StatProperty
-                        value={appliedCount}
+                        value={renderUndefined(appliedCount)}
                         label={t('deployments.details.applied')}
                         size="large" />
                     </StatGroup>
                     <StatGroup className="summary-container-columns">
                       <StatProperty
-                        value={failedCount}
+                        value={renderUndefined(failedCount)}
                         label={t('deployments.details.failed')}
-                        svg={failedCount !== 0 && failedCount !== Config.emptyValue ? svgs.failed : undefined}
+                        svg={failedCount && failedCount !== '' && failedCount !== 0 ? svgs.failed : undefined}
                         svgClassName="stat-failed"
                         size="large" />
                     </StatGroup>
@@ -171,19 +170,19 @@ export class DeploymentDetails extends Component {
                   <StatSection className="summary-container-row2">
                     <StatGroup className="summary-container-columns">
                       <StatProperty
-                        value={targetedCount}
+                        value={renderUndefined(targetedCount)}
                         label={t('deployments.details.targeted')}
                         size="large" />
                     </StatGroup>
                     <StatGroup className="summary-container-columns">
                       <StatProperty
                         className="summary-container-succeeded"
-                        value={succeededCount}
+                        value={renderUndefined(succeededCount)}
                         label={t('deployments.details.succeeded')}
                         size="small" />
                       <StatProperty
                         className="summary-container-pending"
-                        value={pendingCount}
+                        value={renderUndefined(pendingCount)}
                         label={t('deployments.details.pending')}
                         size="small" />
                     </StatGroup>
