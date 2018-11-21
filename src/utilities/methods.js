@@ -113,6 +113,9 @@ export const getEdgeAgentStatusCode = (code, t) => getEnumTranslation(t, 'edgeAg
 /** Converts a job status code to a translated string equivalent */
 export const getStatusCode = (code, t) => getEnumTranslation(t, 'maintenance.jobStatus', code, t('maintenance.jobStatus.queued'));
 
+/** Converts a device status to a translated string equivalent */
+export const getDeviceStatusTranslation = (status, t) => getEnumTranslation(t, 'deployments.details', status, status);
+
 /* A helper method to copy text to the clipbaord */
 export const copyToClipboard = (data) => {
   const textField = document.createElement('textarea');

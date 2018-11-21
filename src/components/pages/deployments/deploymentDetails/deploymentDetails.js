@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React, { Component } from 'react';
+
+import Config from 'app.config';
 import {
   permissions,
   toSinglePropertyDiagnosticsModel,
@@ -104,11 +106,11 @@ export class DeploymentDetails extends Component {
     } = this.props;
     const {
       id,
-      appliedCount = 0,
-      targetedCount = 0,
-      succeededCount = 0,
-      failedCount = 0,
-      pendingCount = 0,
+      appliedCount = Config.emptyValue,
+      targetedCount = Config.emptyValue,
+      succeededCount = Config.emptyValue,
+      failedCount = Config.emptyValue,
+      pendingCount = Config.emptyValue,
       name,
       priority,
       deviceGroupName,
@@ -161,7 +163,7 @@ export class DeploymentDetails extends Component {
                       <StatProperty
                         value={failedCount}
                         label={t('deployments.details.failed')}
-                        svg={failedCount !== 0 ? svgs.failed : undefined}
+                        svg={failedCount !== 0 && failedCount !== Config.emptyValue ? svgs.failed : undefined}
                         svgClassName="stat-failed"
                         size="large" />
                     </StatGroup>
@@ -192,8 +194,9 @@ export class DeploymentDetails extends Component {
                   <StatGroup className="summary-container-columns summary-custom-column">
                     <div>
                       {
-                        Object.keys(customMetrics).map((customKey) =>
+                        Object.keys(customMetrics).map((customKey, idx) =>
                           <StatProperty
+                            key={idx}
                             className="summary-container-customMetric"
                             value={customMetrics[customKey]}
                             label={customKey}

@@ -671,6 +671,7 @@
       "failed": "Failed",
       "succeeded": "Succeeded",
       "pending": "Pending",
+      "unknown": "unknown",
       "devicesAffected": "Devices Affected",
       "grid": {
         "name": "Name",
