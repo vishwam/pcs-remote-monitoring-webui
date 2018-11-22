@@ -736,7 +736,7 @@
     "unknown": "Unknown"
   },
   "configTypes": {
-    "firmware": "Firmware",
+    "firmwareUpdate": "Firmware Update",
     "custom": "Custom"
   },
   "modal": {
