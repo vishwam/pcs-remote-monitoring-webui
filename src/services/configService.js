@@ -116,13 +116,13 @@ export class ConfigService {
 
   /** Returns filtered packages */
   static getFilteredPackages(packageType, configType) {
-    return HttpClient.get(`${ENDPOINT}packages/?packageType=${packageType}&configType=${configType}`)
+    return HttpClient.get(`${ENDPOINT}packages?packagetype=${packageType}&configtype=${configType}`)
       .map(toPackagesModel);
   }
 
   /** Returns all the account's packages */
   static getConfigTypes() {
-    return HttpClient.get(`${ENDPOINT}packages/configTypes`)
+    return HttpClient.get(`${ENDPOINT}configtypes`)
       .map(toConfigTypesModel);
   }
 

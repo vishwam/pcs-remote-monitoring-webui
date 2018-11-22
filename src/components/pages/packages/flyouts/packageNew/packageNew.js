@@ -162,7 +162,7 @@ export class PackageNew extends LinkedComponent {
         this.props.t('packages.flyouts.new.validation.required')
       );
 
-    const configTypeEnabled = this.packageTypeLink.value === packagesEnum.deviceConfiguration && !configTypesError && !configTypesIsPending;
+    const configTypeEnabled = this.packageTypeLink.value === packagesEnum.deviceConfiguration;
     const customTextVisible = configTypeEnabled && this.configTypeLink.value === configsEnum.custom;
 
     return (
@@ -238,7 +238,7 @@ export class PackageNew extends LinkedComponent {
                   <span
                     role="button"
                     aria-controls="hidden-input-id"
-                    tabindex="0"
+                    tabIndex="0"
                     onKeyUp={this.onKeyEvent}>
                     {t('packages.flyouts.new.browse')}
                   </span>

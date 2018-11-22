@@ -102,10 +102,10 @@ export const getEnumTranslation = (t, rootPath, name, defaultVal) => {
 }
 
 /** Converts a packageType enum to a translated string equivalent */
-export const getPackageTypeTranslation = (packageType, t) => getEnumTranslation(t, 'packageType', packageType, t('packageType.unknown'));
+export const getPackageTypeTranslation = (packageType, t) => getEnumTranslation(t, 'packageTypes', toCamelcase(packageType), t('packageTypes.unknown'));
 
 /** Converts a packageType enum to a translated string equivalent */
-export const getConfigTypeTranslation = (configType, t) => getEnumTranslation(t, 'configTypes', configType, configType);
+export const getConfigTypeTranslation = (configType, t) => getEnumTranslation(t, 'configTypes', toCamelcase(configType), configType);
 
 /** Converts a deployment status code to a translated string equivalent */
 export const getEdgeAgentStatusCode = (code, t) => getEnumTranslation(t, 'edgeAgentStatus', code, t('edgeAgentStatus.unknown'));
