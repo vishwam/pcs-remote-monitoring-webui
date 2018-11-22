@@ -181,7 +181,7 @@ const fetchableTypes = [
 
 export const redux = createReducerScenario({
   updateDevices: { type: 'DEVICES_UPDATE', reducer: updateDevicesReducer },
-  updateDevicesByCondition: { type: 'DEVICES_UPDATE', reducer: updateDevicesByConditionReducer },
+  updateDevicesByCondition: { type: 'DEVICES_UPDATE_BY_CONDITION', reducer: updateDevicesByConditionReducer },
   registerError: { type: 'DEVICES_REDUCER_ERROR', reducer: errorReducer },
   isFetching: { multiType: fetchableTypes, reducer: pendingReducer },
   deleteDevices: { type: 'DEVICE_DELETE', reducer: deleteDevicesReducer },
