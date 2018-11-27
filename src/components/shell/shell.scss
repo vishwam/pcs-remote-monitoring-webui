@@ -3,9 +3,9 @@
 @import 'src/styles/themes';
 @import 'src/styles/mixins';
 
-.shell-container { height: 100%; }
+.shell-container { height: 100vh; }
 
-.shell {
+.shell-content {
   height: 100%;
   display: flex;
 
@@ -13,8 +13,8 @@
 
   // Apply theme properties
   @include themify($themes) {
-    color: themed('colorContentText');
-    background-color: themed('colorContentBackground');
+    color: themed('color-text-rest');
+    background-color: themed('color-bg-content');
 
     // Style text highlights
     // Set RGBa opacity to .99 to get correct color in the selection styling

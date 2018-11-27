@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Trans } from 'react-i18next';
+import { Shell as FluentShell } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 
 // App Components
 import Config from 'app.config';
@@ -12,7 +13,7 @@ import Main from './main/main';
 import { PageNotFoundContainer as PageNotFound } from './pageNotFound'
 import { Hyperlink } from 'components/shared';
 
-import './shell.css';
+import './shell.scss';
 
 /** The base component for the app shell */
 class Shell extends Component {
@@ -33,40 +34,42 @@ class Shell extends Component {
     const { pagesConfig, crumbsConfig, openSystemSettings, openUserProfile, t, theme, children, denyAccess } = this.props;
 
     return (
-      <div className={`shell-container theme-${theme}`}>
-        {
-          denyAccess &&
-          <div className="shell">
-            <Main>
-              <Header crumbsConfig={crumbsConfig} openUserProfile={openUserProfile} t={t} />
-              <div className="access-denied">
-                <Trans i18nKey={'accessDenied.message'}>
-                  You don't have permissions.
-                  <Hyperlink href={Config.contextHelpUrls.accessDenied} target="_blank">{t('accessDenied.learnMore')}</Hyperlink>
-                </Trans>
-              </div>
-            </Main>
-          </div>
-        }
-        {
-          (!denyAccess && pagesConfig) &&
-          <div className="shell">
-            <NavigationContainer tabs={pagesConfig} t={t} />
-            <Main>
-              <Header crumbsConfig={crumbsConfig} openSystemSettings={openSystemSettings} openUserProfile={openUserProfile} t={t} />
-              <Switch>
-                <Redirect exact from="/" to={pagesConfig[0].to} />
-                {
-                  pagesConfig.map(({ to, exact, component }) =>
-                    <Route key={to} exact={exact} path={to} component={component} />)
-                }
-                <Route component={PageNotFound} />
-              </Switch>
-              {children}
-            </Main>
-          </div>
-        }
-      </div>
+      <FluentShell theme={theme} isRtl={false}>
+        <div className={`shell-container`}>
+          {
+            denyAccess &&
+            <div className="shell-content">
+              <Main>
+                <Header crumbsConfig={crumbsConfig} openUserProfile={openUserProfile} t={t} />
+                <div className="access-denied">
+                  <Trans i18nKey={'accessDenied.message'}>
+                    You don't have permissions.
+                    <Hyperlink href={Config.contextHelpUrls.accessDenied} target="_blank">{t('accessDenied.learnMore')}</Hyperlink>
+                  </Trans>
+                </div>
+              </Main>
+            </div>
+          }
+          {
+            (!denyAccess && pagesConfig) &&
+            <div className="shell-content">
+              <NavigationContainer tabs={pagesConfig} t={t} />
+              <Main>
+                <Header crumbsConfig={crumbsConfig} openSystemSettings={openSystemSettings} openUserProfile={openUserProfile} t={t} />
+                <Switch>
+                  <Redirect exact from="/" to={pagesConfig[0].to} />
+                  {
+                    pagesConfig.map(({ to, exact, component }) =>
+                      <Route key={to} exact={exact} path={to} component={component} />)
+                  }
+                  <Route component={PageNotFound} />
+                </Switch>
+                {children}
+              </Main>
+            </div>
+          }
+        </div>
+      </FluentShell>
     );
   }
 }
