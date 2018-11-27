@@ -96,9 +96,7 @@ $theme-dark: (
   // Pill - END
 
   // Page Content Colors - START
-  colorContentBackground: $colorNoir,
   colorPageContentBackground: $colorNoir,
-  colorContentText: $colorWhite,
   colorContentTextDim: $colorSmoke,
 
   colorFlyoutBackground: $colorNoir,
@@ -286,9 +284,7 @@ $theme-light: (
   // Pill - END
 
   // Page Content Colors - START
-  colorContentBackground: #f2f2f2, // Grey100
   colorPageContentBackground: $colorWhite,
-  colorContentText: #333,
   colorContentTextDim: #666,
 
   colorFlyoutBackground: #fff,
@@ -385,5 +381,27 @@ $theme-light: (
   // Modal -  END
 );
 
-// as a final step, import the default colors (this will preserve any overrides specified above):
+// now import the default fluent colors (this will preserve any overrides specified above):
 @import "~@microsoft/azure-iot-ux-fluent-css/src/colors";
+
+// TEMPORARY: in order to make the transition to fluent colors easier, create a
+// mapping of existing RM color variables to Fluent color variables. This way,
+// we don't need to change every css file in this repo:
+$rmToFluentColorVariables: (
+
+  // Page Content Colors - START
+  colorContentText: 'color-text-rest',
+  colorContentBackground: 'color-bg-content',
+  // Page Content Colors - END
+
+);
+
+// Add the RM mapping variables to $themes:
+@each $theme, $colors in $themes {
+  @each $key, $value in $rmToFluentColorVariables {
+      $mappedValue: map-get($colors, '#{$value}');
+      $colors: map-merge($colors, ($key: $mappedValue));
+  }
+
+  $themes: map-merge($themes, ($theme: $colors));
+}

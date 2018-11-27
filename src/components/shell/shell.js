@@ -35,38 +35,38 @@ class Shell extends Component {
 
     return (
       <FluentShell theme={theme} isRtl={false}>
-          {
-            denyAccess &&
-            <div className="app">
-              <Main>
-                <Header crumbsConfig={crumbsConfig} t={t} />
-                <div className="access-denied">
-                  <Trans i18nKey={'accessDenied.message'}>
-                    You don't have permissions.
-                    <Hyperlink href={Config.contextHelpUrls.accessDenied} target="_blank">{t('accessDenied.learnMore')}</Hyperlink>
-                  </Trans>
-                </div>
-              </Main>
-            </div>
-          }
-          {
-            (!denyAccess && pagesConfig) &&
-            <div className="app">
-              <NavigationContainer tabs={pagesConfig} t={t} />
-              <Main>
-                <Header crumbsConfig={crumbsConfig} openSystemSettings={openSystemSettings} openUserProfile={openUserProfile} t={t} />
-                <Switch>
-                  <Redirect exact from="/" to={pagesConfig[0].to} />
-                  {
-                    pagesConfig.map(({ to, exact, component }) =>
-                      <Route key={to} exact={exact} path={to} component={component} />)
-                  }
-                  <Route component={PageNotFound} />
-                </Switch>
-                {children}
-              </Main>
-            </div>
-          }
+        {
+          denyAccess &&
+          <div className="app">
+            <Main>
+              <Header crumbsConfig={crumbsConfig} t={t} />
+              <div className="access-denied">
+                <Trans i18nKey={'accessDenied.message'}>
+                  You don't have permissions.
+                  <Hyperlink href={Config.contextHelpUrls.accessDenied} target="_blank">{t('accessDenied.learnMore')}</Hyperlink>
+                </Trans>
+              </div>
+            </Main>
+          </div>
+        }
+        {
+          (!denyAccess && pagesConfig) &&
+          <div className="app">
+            <NavigationContainer tabs={pagesConfig} t={t} />
+            <Main>
+              <Header crumbsConfig={crumbsConfig} openSystemSettings={openSystemSettings} openUserProfile={openUserProfile} t={t} />
+              <Switch>
+                <Redirect exact from="/" to={pagesConfig[0].to} />
+                {
+                  pagesConfig.map(({ to, exact, component }) =>
+                    <Route key={to} exact={exact} path={to} component={component} />)
+                }
+                <Route component={PageNotFound} />
+              </Switch>
+              {children}
+            </Main>
+          </div>
+        }
       </FluentShell>
     );
   }
