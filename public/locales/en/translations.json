@@ -636,7 +636,8 @@
         "creating": "Creating deployment",
         "validation": {
           "required": "Is required",
-          "positiveInteger": "Must be a positive integer less than 2147483648"
+          "positiveInteger": "Must be a positive integer less than 2147483648",
+          "name": "name greater than 50 characters"
         }
       }
     },
@@ -654,6 +655,7 @@
       "succeeded": "Succeeded",
       "pending": "Pending",
       "unknown": "unknown",
+      "customMetrics": "Custom Metrics",
       "devicesAffected": "Devices Affected",
       "grid": {
         "name": "Name",
@@ -668,7 +670,7 @@
       "delete": {
         "contextMenuName": "Delete",
         "title": "Delete Deployment?",
-        "info": "Deleting '{{deploymentName}}' will stop this deployment from being applied to these devices. It may result in a lower priority edge manifest being applied."
+        "info": "Deleting '{{deploymentName}}' will stop this deployment from being applied to these devices. It may result in a lower priority deployment being applied."
       }
     },
     "grid": {
@@ -717,9 +719,12 @@
         "package": "Package",
         "deploymentsPage": "Deployments page",
         "newDeployment": "+ New Deployment",
-        "deploymentText": "To deploy packages, go to the <1>Deployments page</1>, and then click <3>+ New Deployment</3> button.",
+        "deploymentText": "To deploy packages, go to the <1>Deployments page</1>, and then click <3>+ New Deployment</3>.",
         "validation": {
-          "required": "Is required"
+          "required": "Is required",
+          "fileName": "File name greater than 50 characters",
+          "fileType": "Invalid file type",
+          "customConfig": "name greater than 50 characters"
         }
       }
     },
@@ -736,7 +741,7 @@
     "unknown": "Unknown"
   },
   "configTypes": {
-    "firmwareUpdate": "Firmware Update",
+    "firmware": "Firmware",
     "custom": "Custom"
   },
   "modal": {

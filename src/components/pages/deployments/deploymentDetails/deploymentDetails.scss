@@ -58,6 +58,10 @@
       line-height: unset;
       @include rem-fallback(padding-bottom, 3px);
     }
+    .summary-container-customMetrics-label {
+      text-transform: uppercase;
+      @include rem-font-size(12px);
+    }
   }
 
   .deployment-details-devices-affected {
@@ -68,6 +72,7 @@
 
   @include themify($themes) {
     .deployment-name,
+    .summary-container-customMetrics-label,
     .deployment-details-summary-labels { color: themed('colorHeaderText'); }
 
     .stat-failed { fill: themed('colorFailed'); }

@@ -80,7 +80,7 @@ export const packagesEnum = {
 export const packageTypeOptions = Object.values(packagesEnum);
 
 export const configsEnum = {
-  'firmwareUpdate': 'FirmwareUpdate',
+  'firmware': 'Firmware',
   'custom': 'Custom'
 }
 

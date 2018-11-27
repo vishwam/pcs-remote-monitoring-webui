@@ -192,6 +192,9 @@ export class DeploymentDetails extends Component {
                   customMetricsExist &&
                   <StatGroup className="summary-container-columns summary-custom-column">
                     <div>
+                      <div className={'summary-container-customMetrics-label'}>
+                        {t('deployments.details.customMetrics')}
+                      </div>
                       {
                         Object.keys(customMetrics).map((customKey, idx) =>
                           <StatProperty

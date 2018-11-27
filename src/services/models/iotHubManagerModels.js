@@ -17,7 +17,6 @@ export const toDeviceModel = (device = {}) => {
     'lastActivity': 'lastActivity',
     'connected': 'connected',
     'isSimulated': 'isSimulated',
-    'properties.reported.firmware': 'firmware',
     'properties.reported.supportedMethods': 'methods',
     'properties.reported.telemetry': 'telemetry',
     'properties.reported.type': 'type',
@@ -42,6 +41,9 @@ export const toDeviceModel = (device = {}) => {
     },
     desiredProperties: {
       $set: dot.pick('Properties.Desired', device)
+    },
+    firmware: {
+      $set: dot.pick('Properties.Reported.Firmware', device)
     }
   });
 }

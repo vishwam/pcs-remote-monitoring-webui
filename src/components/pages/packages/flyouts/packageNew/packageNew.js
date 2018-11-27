@@ -46,7 +46,8 @@ export class PackageNew extends LinkedComponent {
       configType: '',
       customConfigName: '',
       packageFile: undefined,
-      changesApplied: undefined
+      changesApplied: undefined,
+      fileError: undefined
     };
   }
 
@@ -57,7 +58,7 @@ export class PackageNew extends LinkedComponent {
   apply = (event) => {
     event.preventDefault();
     const { createPackage } = this.props;
-    const { packageType, configType, customConfigName, packageFile } = this.state;
+    const { packageType, configType, customConfigName, packageFile, fileError } = this.state;
 
     // If configType is 'Custom' concatenate 'Custom' with customConfigName.
     let configName = '';
@@ -72,7 +73,7 @@ export class PackageNew extends LinkedComponent {
           packageName: packageFile.name
         })
     );
-    if (this.formIsValid()) {
+    if (this.formIsValid() && !fileError) {
       createPackage({ packageType: packageType, configType: configName, packageFile: packageFile });
       this.setState({ changesApplied: true, configType: configName });
     }
@@ -95,7 +96,17 @@ export class PackageNew extends LinkedComponent {
 
   onFileSelected = (e) => {
     let file = e.target.files[0];
-    this.setState({ packageFile: file });
+    if (file.name.length > 50) {
+      this.setState({ fileError: this.props.t('packages.flyouts.new.validation.fileName') });
+      return;
+    }
+
+    if (file.type !== 'application/json') {
+      this.setState({ fileError: this.props.t('packages.flyouts.new.validation.fileType') });
+      return;
+    }
+
+    this.setState({ packageFile: file, fileError: undefined });
     this.props.logEvent(toSinglePropertyDiagnosticsModel('NewPackage_FileSelect', 'FileName', file.name));
   }
 
@@ -129,7 +140,8 @@ export class PackageNew extends LinkedComponent {
       packageType,
       configType,
       packageFile,
-      changesApplied } = this.state;
+      changesApplied,
+      fileError } = this.state;
 
     const summaryCount = 1;
     const packageOptions = packageTypeOptions.map(value => ({
@@ -160,7 +172,8 @@ export class PackageNew extends LinkedComponent {
         // Validate for non-empty value if configType is of type 'Custom'
         customConfigValue => this.configTypeLink.value === configsEnum.custom ? Validator.notEmpty(customConfigValue) : true,
         this.props.t('packages.flyouts.new.validation.required')
-      );
+      )
+      .check(customConfigValue => customConfigValue <= 50, this.props.t('packages.flyouts.new.validation.customConfig'));
 
     const configTypeEnabled = this.packageTypeLink.value === packagesEnum.deviceConfiguration;
     const customTextVisible = configTypeEnabled && this.configTypeLink.value === configsEnum.custom;
@@ -253,6 +266,7 @@ export class PackageNew extends LinkedComponent {
                 {t('packages.flyouts.new.browseText')}
               </div>
             }
+            {fileError && <AjaxError className="new-package-flyout-error" t={t} error={{ message: fileError }} />}
 
             <SummarySection className="new-package-summary">
               <SummaryBody>
@@ -270,7 +284,7 @@ export class PackageNew extends LinkedComponent {
                     <Link className="new-package-deployment-page-link" to={'/deployments'}>{t('packages.flyouts.new.deploymentsPage')}</Link>
                     , and then click
                       <strong>{t('packages.flyouts.new.newDeployment')}</strong>
-                    button.
+                    .
                     </Trans>
                 </div>
               }

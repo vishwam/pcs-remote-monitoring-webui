@@ -153,22 +153,22 @@ export class DeploymentNew extends LinkedComponent {
       // case - Edge manifest
       case packagesEnum.edgeManifest:
         this.props.fetchPackages(packagesEnum.edgeManifest, '');
-        this.setState({ configType: '' });
+        this.setState({ configType: '', changesApplied: false, packageId: undefined, packageName: '' });
         break;
       // case - Device Configuration
       case packagesEnum.deviceConfiguration:
         this.props.fetchConfigTypes();
+        this.formControlChange();
         break;
       default:
         break;
     }
-    this.formControlChange();
   }
 
   configTypeChange = ({ target: { value: { value = {} } } }) => {
     this.props.logEvent(toSinglePropertyDiagnosticsModel('NewDeployment_ConfigTypeClick', 'ConfigType', value));
     this.props.fetchPackages(packagesEnum.deviceConfiguration, value);
-    this.formControlChange();
+    this.setState({ changesApplied: false, packageId: undefined, packageName: '' });
   }
 
   onDeviceGroupSelected = (e) => {
@@ -244,7 +244,9 @@ export class DeploymentNew extends LinkedComponent {
         configValue => this.packageTypeLink.value === packagesEnum.deviceConfiguration ? Validator.notEmpty(configValue) : true,
         this.props.t('deployments.flyouts.new.validation.required')
       );
-    this.nameLink = this.linkTo('name').withValidator(requiredValidator);
+    this.nameLink = this.linkTo('name')
+      .withValidator(requiredValidator)
+      .check(name => name.length <= 50, this.props.t('deployments.flyouts.new.validation.name'));
     this.deviceGroupIdLink = this.linkTo('deviceGroupId').map(({ value }) => value).withValidator(requiredValidator);
     this.priorityLink = this.linkTo('priority')
       .check(Validator.notEmpty, () => this.props.t('deployments.flyouts.new.validation.required'))

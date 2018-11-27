@@ -26,7 +26,7 @@ const mapStateToProps = state => ({
 // Wrap the dispatch methods
 const mapDispatchToProps = dispatch => ({
   createPackage: packageModel => dispatch(packagesEpics.actions.createPackage(packageModel)),
-  resetPackagesPendingError: () => dispatch(packagesRedux.actions.resetPendingAndError(packagesEpics.actions.createPackage)),
+  resetPackagesPendingError: () => dispatch(packagesRedux.actions.resetPendingAndError(packagesEpics.actionTypes.createPackage)),
   logEvent: diagnosticsModel => dispatch(appEpics.actions.logEvent(diagnosticsModel)),
   fetchConfigTypes: () => dispatch(packagesEpics.actions.fetchConfigTypes())
 });
