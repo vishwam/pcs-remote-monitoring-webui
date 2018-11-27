@@ -3,10 +3,8 @@
 @import 'src/styles/themes';
 @import 'src/styles/mixins';
 
-.shell-container { height: 100%; }
-
-.shell {
-  height: 100%;
+.app {
+  height: 100vh;
   display: flex;
 
   ::-webkit-scrollbar { width: 12px; }

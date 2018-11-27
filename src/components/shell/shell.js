@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Trans } from 'react-i18next';
+import { Shell as FluentShell } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 
 // App Components
 import Config from 'app.config';
@@ -12,7 +13,7 @@ import Main from './main/main';
 import { PageNotFoundContainer as PageNotFound } from './pageNotFound'
 import { Hyperlink } from 'components/shared';
 
-import './shell.css';
+import './shell.scss';
 
 /** The base component for the app shell */
 class Shell extends Component {
@@ -33,10 +34,10 @@ class Shell extends Component {
     const { pagesConfig, crumbsConfig, openSystemSettings, openUserProfile, t, theme, children, denyAccess } = this.props;
 
     return (
-      <div className={`shell-container theme-${theme}`}>
+      <FluentShell theme={theme} isRtl={false}>
         {
           denyAccess &&
-          <div className="shell">
+          <div className="app">
             <Main>
               <Header crumbsConfig={crumbsConfig} t={t} />
               <div className="access-denied">
@@ -50,7 +51,7 @@ class Shell extends Component {
         }
         {
           (!denyAccess && pagesConfig) &&
-          <div className="shell">
+          <div className="app">
             <NavigationContainer tabs={pagesConfig} t={t} />
             <Main>
               <Header crumbsConfig={crumbsConfig} openSystemSettings={openSystemSettings} openUserProfile={openUserProfile} t={t} />
@@ -66,7 +67,7 @@ class Shell extends Component {
             </Main>
           </div>
         }
-      </div>
+      </FluentShell>
     );
   }
 }
