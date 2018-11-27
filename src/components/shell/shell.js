@@ -35,12 +35,11 @@ class Shell extends Component {
 
     return (
       <FluentShell theme={theme} isRtl={false}>
-        <div className={`shell-container`}>
           {
             denyAccess &&
-            <div className="shell-content">
+            <div className="app">
               <Main>
-                <Header crumbsConfig={crumbsConfig} openUserProfile={openUserProfile} t={t} />
+                <Header crumbsConfig={crumbsConfig} t={t} />
                 <div className="access-denied">
                   <Trans i18nKey={'accessDenied.message'}>
                     You don't have permissions.
@@ -52,7 +51,7 @@ class Shell extends Component {
           }
           {
             (!denyAccess && pagesConfig) &&
-            <div className="shell-content">
+            <div className="app">
               <NavigationContainer tabs={pagesConfig} t={t} />
               <Main>
                 <Header crumbsConfig={crumbsConfig} openSystemSettings={openSystemSettings} openUserProfile={openUserProfile} t={t} />
@@ -68,7 +67,6 @@ class Shell extends Component {
               </Main>
             </div>
           }
-        </div>
       </FluentShell>
     );
   }
