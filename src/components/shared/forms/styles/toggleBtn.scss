@@ -23,10 +23,14 @@
   @include themify($themes) {
     .cls-1 { stroke: themed('colorEnableToggleBackground'); }
 
-    .enable-toggle .cls-2,
+    .enable-toggle .cls-2 {
+      fill: themed('color-circle-toggle-btn-rest-on');
+      stroke: themed('color-circle-toggle-btn-rest-on');
+    }
+
     .disable-toggle .cls-2 {
-      fill: themed('colorToggle');
-      stroke: themed('colorToggle');
+      fill: themed('color-circle-toggle-btn-rest-off');
+      stroke: themed('color-circle-toggle-btn-rest-off');
     }
 
     .disable-toggle,
