@@ -36,13 +36,13 @@
 
 // A helper mixin for converting Px to REMs for the font-size property
 @mixin rem-font-size($pxFontSize) {
-  @include rem-fallback(font-size, $pxFontSize);
+  font-size: $pxFontSize;
 }
 
 // A helper mixin for converting Px to REMs for height and width properties
 @mixin square-px-rem($pxValue) {
-  @include rem-fallback(height, $pxValue);
-  @include rem-fallback(width, $pxValue);
+  height: $pxValue;
+  width: $pxValue;
 }
 
 // ========================== Pixel to REM conversion mixins - END

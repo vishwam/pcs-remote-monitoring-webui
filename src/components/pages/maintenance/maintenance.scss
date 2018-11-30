@@ -70,7 +70,7 @@
     color: themed('colorContentTextDim');
 
     .tab-container {
-      border-bottom: 1px solid themed('colorTabBorder');
+      border-bottom: 1px solid themed('color-border-panel');
 
       .tab {
         color: themed('colorContentTextDim');
@@ -79,7 +79,7 @@
 
         &.active {
           color: themed('colorContentText');
-          border-bottom: 4px solid themed('colorTabBorder');
+          border-bottom: 4px solid themed('color-border-panel');
         }
       }
     }

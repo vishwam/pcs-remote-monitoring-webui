@@ -29,9 +29,7 @@ $btnIconSize: 14px;
   }
 
   .btn-text {
-    @include rem-fallback(line-height, $btnHeight);
     @include rem-fallback(padding-right, (($btnHeight - $btnIconSize) / 2));
-    @include rem-font-size(14px);
   }
 
   &:disabled {
