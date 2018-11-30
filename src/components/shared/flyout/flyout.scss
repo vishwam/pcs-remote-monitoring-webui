@@ -56,7 +56,7 @@ $flyoutPadding: 20px;
   @include themify($themes) {
     color: themed('colorFlyoutText');
     background-color: themed('colorFlyoutBackground');
-    border-top: 1px solid themed('colorFlyoutSectionBorder');
+    border-left: 1px solid themed('colorFlyoutSectionBorder');
     box-shadow: -3px 3px 14px themed('colorFlyoutDropShadow');
 
     .flyout-header { border-bottom: 1px solid themed('colorFlyoutSectionBorder'); }

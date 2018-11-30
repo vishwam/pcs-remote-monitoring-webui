@@ -47,8 +47,8 @@ $theme-dark: (
   // Dashboard Panel Colors - START
   colorDashboardMapPopupText: $color-lightgrey-1200,
   colorDashboardPanelText: $color-white,
-  colorDashboardPanelHeaderBg: $color-grey-1100,
-  colorDashboardPanelContentBg: $color-grey-1400,
+  colorDashboardPanelHeaderBg: $color-grey-1500,
+  colorDashboardPanelContentBg: $color-grey-1500,
   colorDashboardPanelOverlayBg: $color-black-transparent-half,
   colorDashboardPanelErrorOverlayBg: $color-grey-1400,
   // Dashboard Panel Colors - END
@@ -216,14 +216,6 @@ $rmToFluentColorVariables: (
   colorHeaderBorderColor: 'color-border-masthead-item',
   colorHeaderItemContainerBorderColor: 'color-border-masthead-item',
   // Header Colors - END
-
-  // Hyperlink - START
-  colorHyperlinkText: 'color-text-hyperlink-rest',
-  colorHyperlinkTextHover: 'color-text-hyperlink-hover',
-  colorHyperlinkTextFocus: 'color-text-hyperlink-focus',
-  colorHyperlinkOutlineFocus: 'color-border-hyperlink-focus',
-  colorHyperlinkTextDisabled: 'color-text-hyperlink-disabled',
-  // Hyperlink - END
 
   // Modal - START
   colorModalText: 'color-text-rest',

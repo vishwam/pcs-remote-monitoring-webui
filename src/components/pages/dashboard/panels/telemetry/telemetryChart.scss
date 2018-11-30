@@ -40,13 +40,13 @@
     .tsi-lineChart { background: transparent; }
 
     .options-container .telemetry-option {
-      color: themed('colorContentTextDim');
+      color: themed('colorContentText');
 
       &:hover { border-color: themed('colorContentTextDim'); }
 
       &.active {
         color: themed('colorContentText');
-        border-bottom: 2px solid themed('colorContentText');
+        border-bottom: 2px solid themed('color-border-pivot-tab');
       }
     }
   }
