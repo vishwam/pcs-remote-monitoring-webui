@@ -35,13 +35,6 @@ $iconSize: 14px;
     > .icon-only { display: none !important; }
   }
 
-  .soft-select-link-cell {
-    display: inline;
-    color: inherit;
-    text-decoration: underline;
-
-    &:hover { text-decoration: none; }
-  }
 
   .glimmer-icon {
     svg {

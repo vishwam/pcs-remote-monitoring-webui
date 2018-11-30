@@ -52,8 +52,7 @@ $doublePadding: $baseContentPadding * 2;
   }
 
   .ag-header-cell {
-    text-transform: uppercase;
-    @include rem-font-size(12px);
+    font-size: $font-size-small;
 
     .ag-icon { cursor: auto; }
   }
