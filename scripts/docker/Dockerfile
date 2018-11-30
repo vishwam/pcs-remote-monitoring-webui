@@ -1,9 +1,9 @@
 # Note: multi-stage build, requires Docker 17.05+ (released in May 2017)
 
-FROM node:9.2.0-alpine as codebuilder
+FROM node:10.14.0-alpine as codebuilder
 COPY ./ /app/
 WORKDIR /app
-RUN echo "Installing node packages ..." && npm install
+RUN echo "Installing node packages ..." && npm ci
 RUN echo "Building app..."              && export CI=true && npm run build
 RUN echo "Removing temp files..."       && rm -rf node_modules src public package.json Dockerfile .dockerignore
 

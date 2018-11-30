@@ -23,7 +23,7 @@ export class SoftSelectLinkRenderer extends Component {
         <GlimmerRenderer value={data.isNew} />
         {
           isFunc(context.onSoftSelectChange)
-            ? <a href="" className="soft-select-link-cell" onClick={this.onClick}>{value}</a>
+            ? <a href="#cell" className="link inline-text-overflow" onClick={this.onClick}>{value}</a>
             : value
         }
       </div>
