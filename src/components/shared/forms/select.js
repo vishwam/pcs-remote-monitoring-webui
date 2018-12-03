@@ -12,11 +12,27 @@ const onChangeSelect = (onChange, name) => (value) => {
   onChange({ target: { name, value: { value } } });
 }
 
-export const Select = ({ className, onChange, name, options, ...props }) => {
+export const Select = ({ className, onChange, name, options, placeholder, value, ...props }) => {
+  if (!options) {
+    options = [];
+  }
+
+  if (!options.some(x => x.value === value)) {
+    // add a dummy placeholder option:
+    options = options.slice(0); // create a shallow copy of the input options array
+    options.push({
+      value,
+      label: placeholder || value,
+      hidden: true,
+      disabled: true
+    });
+  }
+
   return <SelectInput
     name={name}
     className={joinClasses('select-container', className)}
-    options={options || []}
+    options={options}
+    value={value}
     {...props}
     onChange={onChangeSelect(onChange, name)} />;
 };
