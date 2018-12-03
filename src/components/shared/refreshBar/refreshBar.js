@@ -19,8 +19,8 @@ export class RefreshBar extends Component {
         {
           isPending || time
             ? <span className="time">
-                <span className="refresh-text">{ isPending ? t('refreshBar.refreshing') : t('refreshBar.lastRefreshed')} | </span>
-                { !isPending ? moment(time).format(DEFAULT_TIME_FORMAT) : '' }
+                <span className="refresh-text">{t('refreshBar.lastRefreshed')} | </span>
+                { !isPending ? moment(time).format(DEFAULT_TIME_FORMAT) : <span className="empty-text"></span> }
               </span>
             : null
         }

@@ -22,7 +22,7 @@ export class TimeSeriesInsightsLink extends Component {
     return (
       <div className="time-series-explorer-container">
         <Hyperlink href={href} onClick={this.onClick} target="_blank">{t('timeSeriesInsights.explore')}</Hyperlink>
-        <Tooltip position="bottom" content={
+        <Tooltip position={1} align={3} content={
           <Trans i18nKey={'timeSeriesInsights.exploreTooltip'}>
             To view in TSI, get permissions from the solution owner.
             <Hyperlink href={Config.contextHelpUrls.exploreTimeSeries} target="_blank">{t('timeSeriesInsights.learnMore')}</Hyperlink>
