@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import * as classnames from 'classnames/bind';
 import { SelectInput } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Input/SelectInput';
 
-import { Select } from 'components/shared';
 import { isFunc } from 'utilities';
 
 const cx = classnames.bind(require('./timeIntervalDropdown.scss'));
