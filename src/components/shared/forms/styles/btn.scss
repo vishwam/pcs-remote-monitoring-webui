@@ -44,18 +44,21 @@ $btnIconSize: 14px;
 
     .btn-icon svg { fill: themed('colorBtnSvgFill'); }
 
-    &:focus { outline: 1px dashed themed('colorBtnOutlineFocus'); }
+    &:focus {
+      outline: 1px dashed themed('colorBtnOutlineFocus');
+      outline-offset: -1px;
+    }
 
     &:hover {
       color: themed('colorBtnTextHover');
-      background-color: themed('colorBtnBackgroundHover');
+      background-color: themed('color-bg-item-hover');
 
       .btn-icon svg { fill: themed('colorBtnSvgFillHover'); }
     }
 
     &:active {
       color: themed('colorBtnTextActive');
-      background-color: themed('colorBtnBackgroundActive');
+      background-color: themed('color-bg-item-selected');
 
       .btn-icon svg { fill: themed('colorBtnSvgFillActive'); }
     }
