@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved.
 
+@import 'src/styles/variables';
 @import 'src/styles/themes';
 @import 'src/styles/mixins';
 
@@ -16,6 +17,7 @@ $btnIconSize: 14px;
   border: 0;
   cursor: pointer;
   font-family: inherit;
+  line-height: $input-height;
   @include rem-fallback(padding, 0px, $btnHeight);
   @include rem-fallback(min-width, $btnMinWidth);
 
