@@ -28,7 +28,7 @@ $btn-icon-size: 4*$grid-size;
     }
 
     .btn-icon {
-      @include square-px-rem();
+      @include square-px-rem($grid-size*4);
     }
 
     &:focus {
