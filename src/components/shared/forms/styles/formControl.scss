@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved.
 
+@import 'src/styles/variables';
 @import 'src/styles/themes';
 @import 'src/styles/mixins';
 
@@ -76,12 +77,8 @@ $textareaHeight: 60px;
   }
 
   input.form-control {
-    @include rem-fallback(height, $inputHeight - (2 * $verticalPadding));
-    @include rem-fallback(width, $defaultInputWidth - $horizontalPadding);
-
-    &.small { @include rem-fallback(width, $smallInputWidth - $horizontalPadding); }
-
-    &.long { @include rem-fallback(width, $longInputWidth - $horizontalPadding); }
+    height: $input-height;
+    width: 100%;
   }
 
   textarea.form-control {

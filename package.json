@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@microsoft/azure-iot-ux-fluent-controls": "^5.2.0",
-    "@microsoft/azure-iot-ux-fluent-css": "^5.0.1",
+    "@microsoft/azure-iot-ux-fluent-css": "^5.0.2",
     "adal-angular": "1.0.15",
     "ag-grid": "17.1.1",
     "ag-grid-react": "17.1.0",
