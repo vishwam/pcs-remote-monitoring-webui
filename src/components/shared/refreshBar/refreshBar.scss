@@ -13,7 +13,6 @@ $btn-icon-size: 4*$grid-size;
   display: flex;
   justify-content: flex-end;
   text-transform: uppercase;
-  font-size: $font-size-default;
   flex-shrink: 0;
   margin-top: 0;
   @include themify($themes) {
