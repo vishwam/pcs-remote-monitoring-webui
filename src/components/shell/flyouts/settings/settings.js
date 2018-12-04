@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React from 'react';
+import { Toggle } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Toggle';
 
 import Config from 'app.config';
 import Flyout from 'components/shared/flyout';
-import { Btn, Indicator, ToggleBtn } from 'components/shared';
+import { Btn, Indicator } from 'components/shared';
 import { svgs, LinkedComponent, isDef } from 'utilities';
 import ApplicationSettings from './applicationSettings';
 
@@ -74,21 +75,19 @@ export class Settings extends LinkedComponent {
     this.setState({ [name]: value });
   };
 
-  onSimulationChange = ({ target }) => {
-    const { name, value } = target;
+  onSimulationChange = (value) => {
     const etag = this.props.simulationEtag;
     this.setState({
       toggledSimulation: true,
-      [name]: value
+      desiredSimulationState: value
     });
     this.props.toggleSimulationStatus(etag, value);
   }
 
-  toggleDiagnostics = () => {
-    const { diagnosticsOptIn } = this.state;
+  toggleDiagnostics = (value) => {
     this.setState(
-      { diagnosticsOptIn: !diagnosticsOptIn },
-      () => this.props.updateDiagnosticsOptIn(!diagnosticsOptIn)
+      { diagnosticsOptIn: value },
+      () => this.props.updateDiagnosticsOptIn(value)
     );
   }
 
@@ -175,12 +174,13 @@ export class Settings extends LinkedComponent {
                       {t('settingsFlyout.diagnosticsLoadError')}
                     </div>
                     : <div className="toggle">
-                      <ToggleBtn
-                        value={this.state.diagnosticsOptIn}
-                        onChange={this.toggleDiagnostics} />
-                      <div className="label">
-                        {getDiagnosticsPending ? t('settingsFlyout.loading') : t('settingsFlyout.sendDiagnosticsCheckbox')}
-                      </div>
+                      <Toggle
+                        name='settings-diagnostics-opt-in'
+                        on={this.state.diagnosticsOptIn}
+                        disabled={getDiagnosticsPending}
+                        onChange={this.toggleDiagnostics}
+                        onLabel={t(getDiagnosticsPending ? 'settingsFlyout.loading' : 'settingsFlyout.sendDiagnosticsCheckbox')}
+                        offLabel={t(getDiagnosticsPending ? 'settingsFlyout.loading' : 'settingsFlyout.sendDiagnosticsCheckbox')} />
                     </div>
                 }
               </Section.Content>
@@ -201,15 +201,14 @@ export class Settings extends LinkedComponent {
                       {t('settingsFlyout.simulationLoadError')}
                     </div>
                     : <div className="simulation-toggle">
-                      <ToggleBtn
+                      <Toggle
                         className="simulation-toggle-button"
                         name="desiredSimulationState"
-                        value={desiredSimulationState}
+                        on={desiredSimulationState}
                         disabled={getSimulationPending}
-                        onChange={this.onSimulationChange} />
-                      <div className="simulation-toggle-label">
-                        {getSimulationPending ? t('settingsFlyout.loading') : simulationLabel}
-                      </div>
+                        onChange={this.onSimulationChange}
+                        onLabel={getSimulationPending ? t('settingsFlyout.loading') : simulationLabel}
+                        offLabel={getSimulationPending ? t('settingsFlyout.loading') : simulationLabel} />
                     </div>
                 }
               </Section.Content>
