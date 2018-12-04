@@ -2,13 +2,13 @@
 
 import React, { Component } from 'react';
 import { Observable } from 'rxjs';
+import { Toggle } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Toggle';
 
 import {
   AjaxError,
   Btn,
   BtnToolbar,
   Protected,
-  ToggleBtn
 } from 'components/shared';
 import { svgs } from 'utilities';
 import { TelemetryService } from 'services';
@@ -42,7 +42,7 @@ export class RuleStatus extends Component {
     if (this.subscription) this.subscription.unsubscribe();
   }
 
-  onToggle = ({ target: { value } }) => {
+  onToggle = (value) => {
     if (this.state.changesApplied) {
       this.setState({ status: value, changesApplied: false });
     } else {
@@ -88,11 +88,12 @@ export class RuleStatus extends Component {
           <Protected permission={permissions.updateRules}>
             <form onSubmit={this.changeRuleStatus} className="disable-rule-flyout-container">
               <div className="padded-top-bottom">
-                <ToggleBtn
-                  value={status}
-                  onChange={this.onToggle} >
-                  {status ? t('rules.flyouts.enable') : t('rules.flyouts.disable')}
-                </ToggleBtn>
+                <Toggle
+                  name='rules-flyouts-status-enable'
+                  on={status}
+                  onChange={this.onToggle}
+                  onLabel={t('rules.flyouts.enable')}
+                  offLabel={t('rules.flyouts.disable')} />
               </div>
               {
                 rules.map((rule, idx) => (
