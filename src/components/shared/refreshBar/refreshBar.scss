@@ -5,7 +5,7 @@
 
 $rotateTime: 2s;
 // min size allocated for the refresh time according the current design
-$minWidthTime: 238px;
+$minWidthTime: 66*$grid-size;
 $minWidthEmptyTime:  33*$grid-size;
 $btn-icon-size: 4*$grid-size;
 
