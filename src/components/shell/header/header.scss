@@ -101,21 +101,22 @@ $imgSize: 30px;
 
   // Apply theme properties
   @include themify($themes) {
+    color: themed('color-text-white');
     background-color: themed('colorHeaderBg');
     border-bottom: 1px solid themed('colorHeaderBorderColor');
 
     .breadcrumbs {
-      .chevron-icon svg { fill: themed('colorHeaderText'); }
-      .crumb { color: themed('colorHeaderText'); }
+      .chevron-icon svg { fill: themed('color-text-white'); }
+      .crumb { color: themed('color-text-white'); }
     }
 
-    .label { color: themed('colorHeaderText'); }
+    .label { color: themed('color-text-white'); }
 
     .items-container {
       border-left: 1px solid themed('colorHeaderItemContainerBorderColor');
 
       .item-icon {
-        svg { fill: themed('colorHeaderText'); }
+        svg { fill: themed('color-text-white'); }
 
         &:hover {
           background-color: themed('colorHeaderItemBgHover');

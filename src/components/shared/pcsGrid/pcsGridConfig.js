@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved.
 /* This file contains default values useful for creating PcsGrid */
 
-export const ROW_HEIGHT = 48;
+export const ROW_HEIGHT = 56; // has to match $rowHeight in pcsGrid.scss
 
 /** The default value for PcsGrid cells that are empty */
 export const EMPTY_FIELD_VAL = '---';
