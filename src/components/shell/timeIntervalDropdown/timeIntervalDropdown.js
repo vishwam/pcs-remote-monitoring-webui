@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React, { Component } from 'react';
+import * as classnames from 'classnames/bind';
+import { SelectInput } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Input/SelectInput';
 
-import { Select } from 'components/shared';
 import { isFunc } from 'utilities';
 
-import './timeIntervalDropdown.css';
+const cx = classnames.bind(require('./timeIntervalDropdown.scss'));
 
 const optionValues = [
   { value: 'PT1H' },
@@ -16,7 +17,7 @@ const optionValues = [
 
 export class TimeIntervalDropdown extends Component {
 
-  onChange = (propOnChange) => ({ target: { value: { value } = {} } = {} }) => {
+  onChange = (propOnChange) => (value) => {
     if (isFunc(propOnChange)) propOnChange(value);
   }
 
@@ -26,12 +27,19 @@ export class TimeIntervalDropdown extends Component {
       value
     }));
     return (
-      <Select
-        className="time-interval-dropdown"
+      <SelectInput
+        name='time-interval-dropdown'
+        className={cx('time-interval-dropdown')}
+        attr={{
+          select: {
+            className: cx('time-interval-dropdown-select'),
+          },
+          chevron: {
+            className: cx('time-interval-dropdown-chevron'),
+          },
+        }}
         options={options}
         value={this.props.value}
-        searchable={false}
-        clearable={false}
         onChange={this.onChange(this.props.onChange)} />
     );
   }

@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved.
 
+@import 'src/styles/variables';
 @import 'src/styles/mixins';
 @import 'src/styles/themes';
 
@@ -49,7 +50,8 @@
   .icon-only-btn {
     min-width: 0;
     padding: 0;
-    @include rem-fallback(width, 20px);
+    height: $input-height;
+    width: $input-height;
   }
 
   .data-grid { @include rem-fallback(margin-top, 16px); }
