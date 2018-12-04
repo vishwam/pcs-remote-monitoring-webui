@@ -3,6 +3,7 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
 import update from 'immutability-helper';
+import { Balloon, BalloonAlignment, BalloonPosition } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Balloon/Balloon';
 
 import Config from 'app.config';
 import {
@@ -24,7 +25,6 @@ import {
   Svg,
   ThemedSvgContainer,
   ToggleBtn,
-  Tooltip
 } from 'components/shared';
 import { ActionEmailSetupContainer } from './actionEmailSetup.container';
 import { SeverityRenderer } from 'components/shared/cellRenderers';
@@ -564,14 +564,18 @@ export class RuleEditor extends LinkedComponent {
                     onChange={this.onActionToggle} >
                     {formData.actionEnabled ? t('rules.flyouts.ruleEditor.actions.on') : t('rules.flyouts.ruleEditor.actions.off')}
                   </ToggleBtn>
-                  <Tooltip content={
-                    <Trans i18nKey={`rules.flyouts.ruleEditor.actions.emailSetupHelp`}>
-                      Manual setup is required.
-                      <Hyperlink href={Config.contextHelpUrls.ruleActionsEmail} target="_blank">{t('rules.flyouts.ruleEditor.actions.learnMore')}</Hyperlink>
-                    </Trans>
-                  }>
-                    <ThemedSvgContainer paths={themedPaths.questionBubble} />
-                  </Tooltip>
+                  <Balloon
+                    position={BalloonPosition.Top}
+                    align={BalloonAlignment.End}
+                    tooltip={
+                      <Trans i18nKey={`rules.flyouts.ruleEditor.actions.emailSetupHelp`}>
+                        Manual setup is required.
+                        <Hyperlink href={Config.contextHelpUrls.ruleActionsEmail} target="_blank">{t('rules.flyouts.ruleEditor.actions.learnMore')}</Hyperlink>
+                      </Trans>
+                    }
+                  >
+                  <ThemedSvgContainer paths={themedPaths.questionBubble} />
+                  </Balloon>
                 </div>
                 {
                   formData.actionEnabled &&
