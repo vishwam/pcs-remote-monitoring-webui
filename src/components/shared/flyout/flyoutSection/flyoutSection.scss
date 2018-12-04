@@ -22,7 +22,7 @@
 
     .collapse-section-icon {
       transition: all 100ms linear;
-      @include rem-fallback(margin-right, 20px);
+      margin-right: 2 * $grid-size;
 
       svg { @include square-px-rem(14px); }
 
