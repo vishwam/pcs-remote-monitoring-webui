@@ -3,7 +3,7 @@
 @import 'src/styles/mixins';
 @import 'src/styles/themes';
 
-$read-more: 20px;
+$read-more: 4*$grid-size;
 
 .analytics-panel-container {
   display: flex;
@@ -30,14 +30,14 @@ $read-more: 20px;
       justify-content: center;
       flex-grow: 1;
       font-family: $fontSelawikLight;
-      @include rem-font-size(60px);
+      @include rem-font-size(15*$grid-size);
 
       .analytics-percentage-container {
         display: flex;
         align-items: flex-end;
 
         .analytics-percentage-sign {
-          @include rem-font-size(40px);
+          @include rem-font-size(10*$grid-size);
         }
       }
     }
