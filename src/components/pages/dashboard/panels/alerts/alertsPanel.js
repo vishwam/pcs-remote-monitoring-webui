@@ -50,7 +50,6 @@ export class AlertsPanel extends Component {
       <Panel className="alerts-panel-container">
         <PanelHeader>
           <PanelHeaderLabel>{t('dashboard.panels.alerts.header')}</PanelHeaderLabel>
-          { !showOverlay && isPending && <Indicator size="small" /> }
         </PanelHeader>
         <PanelContent>
           <RulesGrid {...gridProps} />

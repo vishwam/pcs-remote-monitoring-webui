@@ -11,7 +11,7 @@ $theme-dark: (
   colorFailed: $color-error-local-100,
 
   // Grid - START
-  colorGridScrollBar: $color-grey-1100,
+
   colorGridRowBackground: $color-grey-1400,
   colorGridRowHoverBackground: $color-grey-1400,
   colorGridRowSelectedBackground: $color-grey-1100,
@@ -40,8 +40,6 @@ $theme-dark: (
   // Page Content Colors - START
   colorFlyoutDropShadow: $color-black-transparent-primary,
 
-  colorScrollBarBackground: $color-grey-1400,
-  colorScrollBarButton: $color-lightgrey-700,
   // Page Content Colors - END
 
   // Dashboard Panel Colors - START
@@ -64,7 +62,6 @@ $theme-light: (
   colorFailed: $color-error-local-100,
 
   // Grid - START
-  colorGridScrollBar: $color-grey-1100,
   colorGridRowBackground: $color-white,
   colorGridRowHoverBackground: $color-grey-100,
   colorGridRowSelectedBackground: $color-grey-200,
@@ -91,8 +88,6 @@ $theme-light: (
   // Page Content Colors - START
   colorFlyoutDropShadow: $color-black-transparent-primary,
 
-  colorScrollBarBackground: #f2f2f2,
-  colorScrollBarButton: #ccc,
   // Page Content Colors - END
 
   // Dashboard Panel Colors - START
@@ -236,7 +231,7 @@ $rmToFluentColorVariables: (
   colorPageContentBackground: 'color-bg-content',
   colorContentText: 'color-text-rest',
   colorContentBackground: 'color-bg-content',
-  colorContentTextDim: 'color-text-disabled',
+  colorContentTextDim: 'color-text-rest',
   colorFlyoutBackground: 'color-bg-panel-contextual',
   colorFlyoutText: 'color-text-rest',
   colorFlyoutConfirmationText: 'color-text-rest',

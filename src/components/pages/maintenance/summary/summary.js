@@ -53,14 +53,15 @@ export const Summary = ({
           onChange={onTimeIntervalChange}
           value={timeInterval}
           t={props.t} />
+          <RefreshBar
+            refresh={props.refreshData}
+            time={props.lastUpdated}
+            isPending={alertProps.isPending || jobProps.isPending}
+            t={props.t} />
       </ContextMenuAlign>
     </ContextMenu>
     <PageContent className="maintenance-container summary-container">
-        <RefreshBar
-          refresh={props.refreshData}
-          time={props.lastUpdated}
-          isPending={alertProps.isPending || jobProps.isPending}
-          t={props.t} />
+
       <PageTitle titleValue={props.t('maintenance.title')} />
       <StatSection className="summary-stat-container">
         <StatGroup>

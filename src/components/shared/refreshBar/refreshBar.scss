@@ -4,24 +4,35 @@
 @import 'src/styles/themes';
 
 $rotateTime: 2s;
+// min size allocated for the refresh time according the current design
+$minWidthTime: 66*$grid-size;
+$minWidthEmptyTime:  33*$grid-size;
+$btn-icon-size: 4*$grid-size;
 
 .last-updated-container {
   display: flex;
   justify-content: flex-end;
   text-transform: uppercase;
-  font-size: 0.9em;
   flex-shrink: 0;
   margin-top: 0;
-
+  @include themify($themes) {
+    border-left: 1px solid themed('color-border-rest');
+  }
   .btn.refresh-btn {
     @include rem-fallback(padding, 0px, 5px);
     @include rem-fallback(min-width, 0px);
 
-    &:hover { background: none !important; }
+    &:hover {
+      background: none !important;
+    }
 
-    .btn-icon { @include square-px-rem(15px); }
+    .btn-icon {
+      @include square-px-rem($grid-size*4);
+    }
 
-    &:focus { outline: 0px; }
+    &:focus {
+      outline: 0px;
+    }
 
     &.refreshing {
       -webkit-animation: spin $rotateTime linear infinite;
@@ -30,21 +41,47 @@ $rotateTime: 2s;
     }
   }
 
+  .time {
+    min-width: $minWidthTime;
+  }
+  .empty-time{
+    min-width: $minWidthEmptyTime;
+  }
+
   @include themify($themes) {
     .time {
       color: themed('colorContentText');
 
-      .refresh-text { color: themed('colorContentTextDim'); }
+      .refresh-text {
+        color: themed('colorContentTextDim');
+      }
     }
 
     .btn.refresh-btn {
       background: none;
 
-      &.refreshing .btn-icon svg { fill: themed('colorContentText'); }
+      &.refreshing .btn-icon svg {
+        fill: themed('colorContentText');
+      }
     }
   }
 }
 
-@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
