@@ -62,6 +62,12 @@ $flyoutPadding: 20px;
     .flyout-header { border-bottom: 1px solid themed('colorFlyoutSectionBorder'); }
 
     .flyout-close-btn .btn-icon svg { stroke: themed('colorFlyoutText'); }
+
+    // since the background color has changed, the borders for grids looks weird. To match
+    // the fluent behavior, don't show row separators for grids in a tile:
+    :global(.ag-row) {
+      border-color: themed('colorFlyoutBackground') !important;
+    }
   }
 }
 
