@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { Observable } from 'rxjs';
+import { Toggle } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Toggle';
 
 import { IoTHubManagerService } from 'services';
 import { svgs } from 'utilities';
@@ -23,7 +24,6 @@ import {
   SummaryCount,
   SummarySection,
   Svg,
-  ToggleBtn
 } from 'components/shared';
 
 import './deviceDelete.css';
@@ -63,7 +63,7 @@ export class DeviceDelete extends Component {
     this.setState({ physicalDevices, containsSimulatedDevices: (physicalDevices.length !== devices.length) });
   }
 
-  toggleConfirm = ({ target: { value } }) => {
+  toggleConfirm = (value) => {
     if (this.state.changesApplied) {
       this.setState({ confirmStatus: value, changesApplied: false, successCount: 0 });
     } else {
@@ -130,11 +130,12 @@ export class DeviceDelete extends Component {
             <form className="device-delete-container" onSubmit={this.deleteDevices}>
               <div className="device-delete-header">{t('devices.flyouts.delete.header')}</div>
               <div className="device-delete-descr">{t('devices.flyouts.delete.description')}</div>
-              <ToggleBtn
-                value={confirmStatus}
-                onChange={this.toggleConfirm}>
-                {confirmStatus ? t('devices.flyouts.delete.confirmYes') : t('devices.flyouts.delete.confirmNo')}
-              </ToggleBtn>
+              <Toggle
+                name='device-flyouts-delete'
+                on={confirmStatus}
+                onChange={this.toggleConfirm}
+                onLabel={t('devices.flyouts.delete.confirmYes')}
+                offLabel={t('devices.flyouts.delete.confirmNo')} />
               {
                 containsSimulatedDevices &&
                 <div className="simulated-device-selected">

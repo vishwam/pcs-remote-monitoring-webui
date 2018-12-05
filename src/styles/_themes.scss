@@ -51,10 +51,6 @@ $theme-dark: (
   colorDashboardPanelErrorOverlayBg: $color-grey-1400,
   // Dashboard Panel Colors - END
 
-  // Tooltip - START
-  colorTooltipDropShadow: $color-black-transparent-tenth,
-  // Tooltip - END
-
   // Modal - START
   colorModalDropShadow: $color-black-transparent-half,
   // Modal -  END
@@ -102,10 +98,6 @@ $theme-light: (
   colorDashboardPanelOverlayBg: rgba(255, 255, 255, .5),
   colorDashboardPanelErrorOverlayBg: $color-white,
   // Dashboard Panel Colors - END
-
-  // Tooltip - START
-  colorTooltipDropShadow: $color-black-transparent-tenth,
-  // Tooltip - END
 
   // Modal - START
   colorModalDropShadow: $color-black-transparent-tenth,
@@ -250,12 +242,6 @@ $rmToFluentColorVariables: (
   colorDisableToggleBackground: 'color-bg-toggle-btn-rest-off',
   colorDisabledLine: 'color-circle-toggle-btn-disabled-on',
   // Toggle Btn Colors - END
-
-  // Tooltip - START
-  colorTooltipText: 'color-text-rest',
-  colorTooltipBackground: 'color-bg-balloon',
-  colorTooltipBorder: 'color-border-controls',
-  // Tooltip - END
 );
 
 // Add the RM mapping variables to $themes:
