@@ -150,7 +150,7 @@ export class PackageNew extends LinkedComponent {
                   <span
                     role="button"
                     aria-controls="hidden-input-id"
-                    tabindex="0"
+                    tabIndex="0"
                     onKeyUp={this.onKeyEvent}>
                     {t('packages.flyouts.new.browse')}
                   </span>

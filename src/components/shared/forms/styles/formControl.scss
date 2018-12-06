@@ -86,7 +86,7 @@ $textareaHeight: 60px;
     min-height: 1em;
     @include rem-fallback(padding-right, $horizontalPadding);
     @include rem-fallback(height, $textareaHeight);
-    @include rem-fallback(width, $textareaWidth - (2 * $horizontalPadding));
+    width: 100%;
   }
 
   .error-message {
