@@ -1,17 +1,16 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React, { Component } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch, NavLink } from 'react-router-dom';
 import { Trans } from 'react-i18next';
 import { Shell as FluentShell } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 
 // App Components
 import Config from 'app.config';
 import Header from './header/header';
-import NavigationContainer from './navigation/navigationContainer';
 import Main from './main/main';
 import { PageNotFoundContainer as PageNotFound } from './pageNotFound'
-import { Hyperlink } from 'components/shared';
+import { Hyperlink, Svg } from 'components/shared';
 
 import './shell.scss';
 
@@ -21,7 +20,7 @@ class Shell extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { openFlyout: '' };
+    this.state = { openFlyout: '', isNavExpanded: true };
   }
 
   componentDidMount() {
@@ -32,9 +31,8 @@ class Shell extends Component {
 
   render() {
     const { pagesConfig, crumbsConfig, openSystemSettings, openUserProfile, t, theme, children, denyAccess } = this.props;
-
     return (
-      <FluentShell theme={theme} isRtl={false}>
+      <FluentShell theme={theme} isRtl={false} navigation={this.getNavProps()}>
         {
           denyAccess &&
           <div className="app">
@@ -52,7 +50,6 @@ class Shell extends Component {
         {
           (!denyAccess && pagesConfig) &&
           <div className="app">
-            <NavigationContainer tabs={pagesConfig} t={t} />
             <Main>
               <Header crumbsConfig={crumbsConfig} openSystemSettings={openSystemSettings} openUserProfile={openUserProfile} t={t} />
               <Switch>
@@ -69,6 +66,31 @@ class Shell extends Component {
         }
       </FluentShell>
     );
+  }
+
+  getNavProps() {
+    const { pagesConfig, t, denyAccess } = this.props;
+    if (denyAccess || !pagesConfig) {
+      return null;
+    }
+
+    return {
+      isExpanded: this.state.isNavExpanded,
+      onClick: this.handleGlobalNavToggle,
+      children: pagesConfig.map((tabProps, i) => (
+        <NavLink key={i} to={tabProps.to} className="global-nav-item" activeClassName="global-nav-item-active">
+          <Svg path={tabProps.svg} className="global-nav-item-icon" />
+          <div className="global-nav-item-text">{t(tabProps.labelId)}</div>
+        </NavLink>
+      ))
+    };
+  }
+
+  handleGlobalNavToggle = (e) => {
+    e.stopPropagation();
+    this.setState({
+        isNavExpanded: !this.state.isNavExpanded
+    });
   }
 }
 
