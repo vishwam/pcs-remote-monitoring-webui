@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import '@microsoft/azure-iot-ux-fluent-controls/lib/components/Button';
 import { Svg } from 'components/shared/svg/svg';
 import { joinClasses } from 'utilities';
 

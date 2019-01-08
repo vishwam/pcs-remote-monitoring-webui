@@ -153,12 +153,8 @@ export class Settings extends LinkedComponent {
     return (
 
       <form onSubmit={this.apply}>
-        <Flyout.Container>
-          <Flyout.Header>
-            <Flyout.Title>{t('settingsFlyout.title')}</Flyout.Title>
-            <Flyout.CloseBtn onClick={onClose} />
-          </Flyout.Header>
-          <Flyout.Content className="settings-workflow-container">
+        <div>
+          <div className="settings-workflow-container">
             <Section.Container collapsable={false}>
               <Section.Header>{t('settingsFlyout.sendDiagnosticsHeader')}</Section.Header>
               <Section.Content className="diagnostics-content">
@@ -247,8 +243,8 @@ export class Settings extends LinkedComponent {
                 {hasChanged ? t('settingsFlyout.cancel') : t('settingsFlyout.close')}</Btn>
               {loading && <Indicator size='small' />}
             </div>
-          </Flyout.Content>
-        </Flyout.Container>
+          </div>
+        </div>
       </form>
     );
   }

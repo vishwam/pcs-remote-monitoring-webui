@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft. All rights reserved.
-const baseUrl = process.env.REACT_APP_BASE_SERVICE_URL || '';
+const baseUrl = process.env.REACT_APP_BASE_SERVICE_URL || 'https://vishwams-rm-11-25-1.azurewebsites.net';
 const validExtensions = ['.png', '.jpeg', '.jpg', '.svg'];
 
 const Config = {

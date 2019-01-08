@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React, { Component } from 'react';
-import { Route, Redirect, Switch, NavLink } from 'react-router-dom';
+import { Route, Redirect, Switch, NavLink, Link } from 'react-router-dom';
 import { Trans } from 'react-i18next';
 import { Shell as FluentShell } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 
 // App Components
 import Config from 'app.config';
-import Header from './header/header';
 import Main from './main/main';
 import { PageNotFoundContainer as PageNotFound } from './pageNotFound'
 import { Hyperlink, Svg } from 'components/shared';
 
 import './shell.scss';
+import { SettingsContainer } from './flyouts';
 
 /** The base component for the app shell */
 class Shell extends Component {
@@ -29,16 +29,60 @@ class Shell extends Component {
     history.listen(({ pathname }) => registerRouteEvent(pathname));
   }
 
-  render() {
-    const { pagesConfig, crumbsConfig, openSystemSettings, openUserProfile, t, theme, children, denyAccess } = this.props;
+
+  helpMenu() {
+
+    const docLinks = [
+      {
+        translationId: 'header.getStarted',
+        url: 'https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-remote-monitoring-monitor'
+      },
+      {
+        translationId: 'header.documentation',
+        url: 'https://docs.microsoft.com/en-us/azure/iot-suite'
+      },
+      {
+        translationId: 'header.sendSuggestion',
+        url: 'https://feedback.azure.com/forums/916438-azure-iot-solution-accelerators'
+      }
+    ];
+
     return (
-      <FluentShell theme={theme} isRtl={false} navigation={this.getNavProps()}>
+      <div className="menu">
+      {
+        docLinks.map(({ url, translationId }) =>
+          <Link key={translationId}
+            className="menu-item"
+            target="_blank"
+            to={url}>
+            { this.props.t(translationId) }
+          </Link>
+        )
+      }
+    </div>
+    );
+  }
+
+  render() {
+    const { pagesConfig, t, theme, children, denyAccess } = this.props;
+    const navigation = this.getNavProps();
+    const masthead = {
+      branding:'Azure IoT Remote Monitoring',
+      navigation,
+      className:"app-header",
+      toolBarItems:{
+        settings: { title: 'settings', content: <SettingsContainer/>, actions: { cancel: { event: undefined, label: 'cancel' } } },
+        help: { title: 'help', content: this.helpMenu(), actions: { cancel: { event: undefined, label: 'cancel' } } }
+      }
+    };
+
+    return (
+      <FluentShell theme={theme} isRtl={false} navigation={navigation} masthead={masthead}>
         {
           denyAccess &&
           <div className="app">
             <Main>
-              <Header crumbsConfig={crumbsConfig} t={t} />
-              <div className="access-denied">
+            <div className="access-denied">
                 <Trans i18nKey={'accessDenied.message'}>
                   You don't have permissions.
                   <Hyperlink href={Config.contextHelpUrls.accessDenied} target="_blank">{t('accessDenied.learnMore')}</Hyperlink>
@@ -51,7 +95,6 @@ class Shell extends Component {
           (!denyAccess && pagesConfig) &&
           <div className="app">
             <Main>
-              <Header crumbsConfig={crumbsConfig} openSystemSettings={openSystemSettings} openUserProfile={openUserProfile} t={t} />
               <Switch>
                 <Redirect exact from="/" to={pagesConfig[0].to} />
                 {
