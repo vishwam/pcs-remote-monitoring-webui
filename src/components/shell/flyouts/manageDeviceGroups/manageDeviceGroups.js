@@ -60,12 +60,8 @@ export class ManageDeviceGroups extends LinkedComponent {
     const { closeFlyout, t, deviceGroups = [] } = this.props;
 
     return (
-      <Flyout.Container>
-        <Flyout.Header>
-          <Flyout.Title>{t('deviceGroupsFlyout.title')}</Flyout.Title>
-          <Flyout.CloseBtn onClick={closeFlyout} />
-        </Flyout.Header>
-        <Flyout.Content className="manage-filters-flyout-container">
+      <Flyout.Container header={t('deviceGroupsFlyout.title')} onClose={closeFlyout}>
+        <div className="manage-filters-flyout-container">
           {
             this.state.addNewDeviceGroup || !!this.state.selectedDeviceGroup
               ? <DeviceGroupForm {...this.props} {...this.state} cancel={this.closeForm} />
@@ -76,7 +72,7 @@ export class ManageDeviceGroups extends LinkedComponent {
                 {deviceGroups.length > 0 && <DeviceGroups {...this.props} onEditDeviceGroup={this.onEditDeviceGroup} />}
               </div>
           }
-        </Flyout.Content>
+        </div>
       </Flyout.Container>
     );
   }

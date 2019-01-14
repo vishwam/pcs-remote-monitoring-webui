@@ -79,12 +79,7 @@ export class RuleStatus extends Component {
     const completedSuccessfully = changesApplied && !error;
 
     return (
-      <Flyout.Container>
-        <Flyout.Header>
-          <Flyout.Title>{t('rules.flyouts.statusTitle')}</Flyout.Title>
-          <Flyout.CloseBtn onClick={onClose} />
-        </Flyout.Header>
-        <Flyout.Content>
+      <Flyout.Container header={t('rules.flyouts.statusTitle')}onClose={onClose}>
           <Protected permission={permissions.updateRules}>
             <form onSubmit={this.changeRuleStatus} className="disable-rule-flyout-container">
               <div className="padded-top-bottom">
@@ -110,7 +105,6 @@ export class RuleStatus extends Component {
               }
             </form>
           </Protected>
-        </Flyout.Content>
       </Flyout.Container>
     );
   }
