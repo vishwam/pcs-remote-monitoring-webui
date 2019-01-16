@@ -12,10 +12,6 @@ import {
   BtnToolbar,
   ComponentArray,
   Flyout,
-  FlyoutHeader,
-  FlyoutTitle,
-  FlyoutCloseBtn,
-  FlyoutContent,
   Indicator,
   FormControl,
   FormGroup,
@@ -227,12 +223,8 @@ export class DeploymentNew extends LinkedComponent {
     const deviceFetchSuccessful = isDeviceGroupSelected && !devicesError && !devicesPending;
 
     return (
-      <Flyout>
-        <FlyoutHeader>
-          <FlyoutTitle>{t('deployments.flyouts.new.title')}</FlyoutTitle>
-          <FlyoutCloseBtn onClick={() => this.genericCloseClick('NewDeployment_CloseClick')} />
-        </FlyoutHeader>
-        <FlyoutContent className="new-deployment-content">
+      <Flyout header={t('deployments.flyouts.new.title')} onClose={() => this.genericCloseClick('NewDeployment_CloseClick')}>
+        <div className="new-deployment-content">
           <form className="new-deployment-form" onSubmit={this.apply}>
             <FormGroup className="new-deployment-formGroup">
               <FormLabel isRequired="true">{t('deployments.flyouts.new.name')}</FormLabel>
@@ -389,7 +381,7 @@ export class DeploymentNew extends LinkedComponent {
               }
             </SummarySection>
           </form>
-        </FlyoutContent>
+        </div>
       </Flyout>
     );
   }

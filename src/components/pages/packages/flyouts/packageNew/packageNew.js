@@ -15,10 +15,6 @@ import {
   Btn,
   BtnToolbar,
   Flyout,
-  FlyoutHeader,
-  FlyoutTitle,
-  FlyoutCloseBtn,
-  FlyoutContent,
   Indicator,
   FormControl,
   FormGroup,
@@ -114,12 +110,8 @@ export class PackageNew extends LinkedComponent {
     this.packageTypeLink = this.linkTo('type').map(({ value }) => value).withValidator(requiredValidator);
 
     return (
-      <Flyout>
-        <FlyoutHeader>
-          <FlyoutTitle>{t('packages.flyouts.new.title')}</FlyoutTitle>
-          <FlyoutCloseBtn onClick={() => this.genericCloseClick('NewPackage_CloseClick')} />
-        </FlyoutHeader>
-        <FlyoutContent className="new-package-content">
+      <Flyout header={t('packages.flyouts.new.title')} onClose={() => this.genericCloseClick('NewPackage_CloseClick')}>
+        <div className="new-package-content">
           <form className="new-package-form" onSubmit={this.apply}>
             <div className="new-package-header">{t('packages.flyouts.new.header')}</div>
             <div className="new-package-descr">{t('packages.flyouts.new.description')}</div>
@@ -219,7 +211,7 @@ export class PackageNew extends LinkedComponent {
               }
             </SummarySection>
           </form>
-        </FlyoutContent>
+        </div>
       </Flyout>
     );
   }

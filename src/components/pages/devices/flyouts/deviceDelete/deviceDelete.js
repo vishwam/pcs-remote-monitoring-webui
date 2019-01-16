@@ -12,10 +12,6 @@ import {
   Btn,
   BtnToolbar,
   Flyout,
-  FlyoutHeader,
-  FlyoutTitle,
-  FlyoutCloseBtn,
-  FlyoutContent,
   Indicator,
   Protected,
   SectionDesc,
@@ -120,12 +116,7 @@ export class DeviceDelete extends Component {
     const summaryMessage = this.getSummaryMessage();
 
     return (
-      <Flyout>
-        <FlyoutHeader>
-          <FlyoutTitle>{t('devices.flyouts.delete.title')}</FlyoutTitle>
-          <FlyoutCloseBtn onClick={onClose} />
-        </FlyoutHeader>
-        <FlyoutContent>
+      <Flyout header={t('devices.flyouts.delete.title')} onClose={onClose}>
           <Protected permission={permissions.deleteDevices}>
             <form className="device-delete-container" onSubmit={this.deleteDevices}>
               <div className="device-delete-header">{t('devices.flyouts.delete.header')}</div>
@@ -170,7 +161,6 @@ export class DeviceDelete extends Component {
               }
             </form>
           </Protected>
-        </FlyoutContent>
       </Flyout>
     );
   }

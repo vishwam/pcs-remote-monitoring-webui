@@ -7,10 +7,6 @@ import { permissions } from 'services/models';
 import {
   ComponentArray,
   Flyout,
-  FlyoutHeader,
-  FlyoutTitle,
-  FlyoutCloseBtn,
-  FlyoutContent,
   ErrorMsg,
   FormGroup,
   FormLabel,
@@ -60,12 +56,7 @@ export class DeviceJobs extends LinkedComponent {
     } = this.props;
 
     return (
-      <Flyout>
-        <FlyoutHeader>
-          <FlyoutTitle>{t('devices.flyouts.jobs.title')}</FlyoutTitle>
-          <FlyoutCloseBtn onClick={onClose} />
-        </FlyoutHeader>
-        <FlyoutContent>
+      <Flyout header={t('devices.flyouts.jobs.title')} onClose={onClose}>
           <Protected permission={permissions.createJobs}>
             <div className="device-jobs-container">
               {
@@ -106,7 +97,6 @@ export class DeviceJobs extends LinkedComponent {
               }
             </div>
           </Protected>
-        </FlyoutContent>
       </Flyout>
     );
   }
