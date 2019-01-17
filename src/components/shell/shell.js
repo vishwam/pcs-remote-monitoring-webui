@@ -19,7 +19,10 @@ class Shell extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { openFlyout: '', isNavExpanded: true };
+    this.state = {
+      isNavExpanded: true,
+      isMastheadMoreExpanded: false
+    };
   }
 
   componentDidMount() {
@@ -91,8 +94,8 @@ class Shell extends Component {
         more: {
           icon: 'more',
           label: t('header.more'),
-          selected: false,
-          onClick: () => {},
+          selected: this.state.isMastheadMoreExpanded,
+          onClick: this.handleMastheadMoreToggle,
         },
       };
     } else if (pagesConfig) {
@@ -101,8 +104,8 @@ class Shell extends Component {
         more: {
           icon: 'more',
           label: t('header.more'),
-          selected: false,
-          onClick: () => {},
+          selected: this.state.isMastheadMoreExpanded,
+          onClick: this.handleMastheadMoreToggle,
         },
         toolBarItems: [{
           icon: 'settings',
@@ -130,6 +133,13 @@ class Shell extends Component {
     e.stopPropagation();
     this.setState({
         isNavExpanded: !this.state.isNavExpanded
+    });
+  }
+
+  handleMastheadMoreToggle = (e) => {
+    e.stopPropagation();
+    this.setState({
+        isMastheadMoreExpanded: !this.state.isMastheadMoreExpanded
     });
   }
 }
