@@ -7,7 +7,6 @@ import { Shell as FluentShell } from '@microsoft/azure-iot-ux-fluent-controls/li
 
 // App Components
 import Config from 'app.config';
-import Header from './header/header';
 import Main from './main/main';
 import { PageNotFoundContainer as PageNotFound } from './pageNotFound'
 import { Hyperlink, Svg } from 'components/shared';
@@ -20,7 +19,10 @@ class Shell extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { openFlyout: '', isNavExpanded: true };
+    this.state = {
+      isNavExpanded: true,
+      isMastheadMoreExpanded: false
+    };
   }
 
   componentDidMount() {
@@ -30,14 +32,13 @@ class Shell extends Component {
   }
 
   render() {
-    const { pagesConfig, crumbsConfig, openSystemSettings, openUserProfile, t, theme, children, denyAccess } = this.props;
+    const { pagesConfig, t, theme, children, denyAccess } = this.props;
     return (
-      <FluentShell theme={theme} isRtl={false} navigation={this.getNavProps()}>
+      <FluentShell theme={theme} isRtl={false} navigation={this.getNavProps()} masthead={this.getMastheadProps()}>
         {
           denyAccess &&
           <div className="app">
             <Main>
-              <Header crumbsConfig={crumbsConfig} t={t} />
               <div className="access-denied">
                 <Trans i18nKey={'accessDenied.message'}>
                   You don't have permissions.
@@ -51,7 +52,6 @@ class Shell extends Component {
           (!denyAccess && pagesConfig) &&
           <div className="app">
             <Main>
-              <Header crumbsConfig={crumbsConfig} openSystemSettings={openSystemSettings} openUserProfile={openUserProfile} t={t} />
               <Switch>
                 <Redirect exact from="/" to={pagesConfig[0].to} />
                 {
@@ -86,10 +86,58 @@ class Shell extends Component {
     };
   }
 
+  getMastheadProps() {
+    const { pagesConfig, t, denyAccess, openSystemSettings, openUserProfile, openHelpFlyout, openFlyout } = this.props;
+    if (denyAccess) {
+      return {
+        branding: t('header.appName'),
+        more: {
+          icon: 'more',
+          label: t('header.more'),
+          selected: this.state.isMastheadMoreExpanded,
+          onClick: this.handleMastheadMoreToggle,
+        },
+      };
+    } else if (pagesConfig) {
+      return {
+        branding: t('header.appName'),
+        more: {
+          selected: this.state.isMastheadMoreExpanded,
+          onClick: this.handleMastheadMoreToggle,
+        },
+        toolBarItems: [{
+          icon: 'settings',
+          label: t('settingsFlyout.title'),
+          selected: openFlyout === 'settings',
+          onClick: openSystemSettings
+        },{
+          icon: 'help',
+          label: t('helpFlyout.title'),
+          selected: openFlyout === 'help',
+          onClick: openHelpFlyout
+        }, {
+          icon: 'contact',
+          label: t('profileFlyout.title'),
+          selected: openFlyout === 'profile',
+          onClick: openUserProfile
+        }]
+      };
+    } else {
+      return null; // no masthead
+    }
+  }
+
   handleGlobalNavToggle = (e) => {
     e.stopPropagation();
     this.setState({
         isNavExpanded: !this.state.isNavExpanded
+    });
+  }
+
+  handleMastheadMoreToggle = (e) => {
+    e.stopPropagation();
+    this.setState({
+        isMastheadMoreExpanded: !this.state.isMastheadMoreExpanded
     });
   }
 }

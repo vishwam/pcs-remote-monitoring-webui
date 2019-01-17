@@ -3,6 +3,7 @@
   "header": {
     "appName": "Azure IoT Remote Monitoring",
     "profile": "Profile",
+    "more": "More",
     "getStarted": "Get started",
     "documentation": "Documentation",
     "sendSuggestion": "Send a suggestion"
@@ -90,6 +91,9 @@
     "sendDiagnosticsCheckbox": "Yes, share information with Microsoft",
     "sendDiagnosticsMicrosoftPrivacyUrl": "Privacy Statement",
     "diagnosticsLoadError": "Error updating diagnostics preference"
+  },
+  "helpFlyout": {
+    "title": "Documentation"
   },
   "profileFlyout": {
     "title": "User Profile",
