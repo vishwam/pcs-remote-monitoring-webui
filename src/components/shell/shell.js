@@ -102,8 +102,6 @@ class Shell extends Component {
       return {
         branding: t('header.appName'),
         more: {
-          icon: 'more',
-          label: t('header.more'),
           selected: this.state.isMastheadMoreExpanded,
           onClick: this.handleMastheadMoreToggle,
         },
