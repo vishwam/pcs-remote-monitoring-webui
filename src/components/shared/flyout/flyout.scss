@@ -5,7 +5,9 @@
 
 .flyout-container {
   // override the fluent controls styling till we fix the IA issues:
-  width: 500px;
+  @media(min-width: $screen-sm) {
+    width: $screen-sm;
+  }
 
   @include themify($themes) {
     // since the background color has changed, the borders for grids looks weird. To match
