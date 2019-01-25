@@ -47,7 +47,8 @@ $iconSize: 14px;
     background-color: transparent;
     border: none;
     cursor: pointer;
-    display: inline;
+    display: inline-block;
+    height: 100%; // center align vertically
     font-family: inherit;
     padding: 0;
     overflow: hidden;
