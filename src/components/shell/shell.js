@@ -77,12 +77,20 @@ class Shell extends Component {
     return {
       isExpanded: this.state.isNavExpanded,
       onClick: this.handleGlobalNavToggle,
-      children: pagesConfig.map((tabProps, i) => (
-        <NavLink key={i} to={tabProps.to} className="global-nav-item" activeClassName="global-nav-item-active">
-          <Svg path={tabProps.svg} className="global-nav-item-icon" />
-          <div className="global-nav-item-text">{t(tabProps.labelId)}</div>
-        </NavLink>
-      ))
+      attr: {
+        navButton: {
+          title: t(this.state.isNavExpanded ? 'globalNav.collapse' : 'globalNav.expand'),
+        },
+      },
+      children: pagesConfig.map((tabProps, i) => {
+        const label = t(tabProps.labelId);
+        return (
+          <NavLink key={i} to={tabProps.to} className="global-nav-item" activeClassName="global-nav-item-active" title={label}>
+            <Svg path={tabProps.svg} className="global-nav-item-icon" />
+            <div className="global-nav-item-text">{label}</div>
+          </NavLink>
+        );
+      })
     };
   }
 

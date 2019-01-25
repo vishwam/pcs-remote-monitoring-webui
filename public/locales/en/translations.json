@@ -8,6 +8,10 @@
     "documentation": "Documentation",
     "sendSuggestion": "Send a suggestion"
   },
+  "globalNav": {
+    "expand": "Expand Side Navigation",
+    "collapse": "Collapse Side Navigation"
+  },
   "accessDenied": {
     "message": "Oops, you don't have permissions for the the page you requested. Please contact your administrator. <1><0>learnMore</0></1>",
     "learnMore": "Learn more"
