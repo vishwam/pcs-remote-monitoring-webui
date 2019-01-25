@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React, { Component } from 'react';
-import * as classnames from 'classnames/bind';
 import { SelectInput } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Input/SelectInput';
 
 import { isFunc } from 'utilities';
+import { toDiagnosticsModel } from 'services/models';
 
-const cx = classnames.bind(require('./timeIntervalDropdown.scss'));
+import './timeIntervalDropdown.scss';
 
 const optionValues = [
   { value: 'PT1H' },
@@ -17,7 +17,8 @@ const optionValues = [
 
 export class TimeIntervalDropdown extends Component {
 
-  onChange = (propOnChange) => (value) => {
+  onChange = (propOnChange) => ({ target: { value: { value } = {} } = {} }) => {
+    this.props.logEvent(toDiagnosticsModel('TimeFilter_Select', {}));
     if (isFunc(propOnChange)) propOnChange(value);
   }
 
@@ -29,13 +30,13 @@ export class TimeIntervalDropdown extends Component {
     return (
       <SelectInput
         name='time-interval-dropdown'
-        className={cx('time-interval-dropdown')}
+        className='time-interval-dropdown'
         attr={{
           select: {
-            className: cx('time-interval-dropdown-select'),
+            className: 'time-interval-dropdown-select',
           },
           chevron: {
-            className: cx('time-interval-dropdown-chevron'),
+            className: 'time-interval-dropdown-chevron',
           },
         }}
         options={options}

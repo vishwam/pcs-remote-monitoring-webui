@@ -10,7 +10,7 @@ import { themedPaths } from 'utilities';
 import { Hyperlink, ThemedSvgContainer } from 'components/shared';
 import { Balloon, BalloonAlignment, BalloonPosition } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Balloon/Balloon';
 
-import './timeSeriesInsightsLink.css';
+import './timeSeriesInsightsLink.scss';
 
 export class TimeSeriesInsightsLink extends Component {
   onClick = () => {

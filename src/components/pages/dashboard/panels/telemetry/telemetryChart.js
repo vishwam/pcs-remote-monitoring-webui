@@ -6,8 +6,9 @@ import { Observable } from 'rxjs';
 import 'tsiclient';
 import { PivotMenu } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Pivot';
 
+import { toDiagnosticsModel } from 'services/models';
 
-import './telemetryChart.css';
+import './telemetryChart.scss';
 
 const maxDatums = 100; // Max telemetry messages for the telemetry graph
 
@@ -141,7 +142,10 @@ export class TelemetryChart extends Component {
     }
   }
 
-  setTelemetryKey = telemetryKey => () => this.setState({ telemetryKey });
+  setTelemetryKey = telemetryKey => () => {
+    this.props.logEvent(toDiagnosticsModel('TelemetryChartFilter_Click', {}));
+    this.setState({ telemetryKey });
+  }
 
   render() {
     const { telemetry } = this.props;

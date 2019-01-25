@@ -12,13 +12,14 @@ const Config = {
     diagnostics: `${baseUrl}/diagnostics/v1/`,
     privacy: 'https://privacy.microsoft.com/privacystatement',
     //TODO: Determine if should query java or dotnet
-    gitHubReleases: 'https://api.github.com/repos/Azure/azure-iot-pcs-remote-monitoring-dotnet/releases'
+    gitHubReleases: `https://api.github.com/repos/Azure/azure-iot-pcs-remote-monitoring-dotnet/releases/tags/2.1.3`
   },
   contextHelpUrls: {
     accessDenied: 'https://docs.microsoft.com/azure/iot-accelerators/iot-accelerators-remote-monitoring-rbac#add-or-remove-users',
     rolesAndPermissions: 'https://docs.microsoft.com/azure/iot-accelerators/iot-accelerators-remote-monitoring-rbac',
     ruleActionsEmail: 'https://go.microsoft.com/fwlink/?linkid=2041110&clcid=0x409',
-    exploreTimeSeries: 'https://docs.microsoft.com/azure/iot-accelerators/iot-accelerators-remote-monitoring-rbac-tsi'
+    exploreTimeSeries: 'https://docs.microsoft.com/azure/iot-accelerators/iot-accelerators-remote-monitoring-rbac-tsi',
+    deploymentPriority: 'https://docs.microsoft.com/en-us/azure/iot-edge/module-deployment-monitoring#priority'
   },
   // Constants
   showWalkthroughExamples: false,
@@ -36,7 +37,8 @@ const Config = {
   actionSetupPollingTimeLimit: 2 * 60 * 1000, // for up to 2 minutes
   simulationId: '1',
   validExtensions: validExtensions.join(),
-  emptyValue: '--',
+  emptyFieldValue: '---', // for use in grid columns
+  emptyValue: '--', // for use in stat components
   maxTopAlerts: 5,
   maxAlertsCount: 1000,
   gridMinResize: 1200, // In px
@@ -59,6 +61,14 @@ const Config = {
   deviceType: {
     simulated: 'Simulated',
     physical: 'Real'
+  },
+  authenticationType: {
+    symmetricKey: 'Symmetric key',
+    x509: 'X.509'
+  },
+  authenticationKey: {
+    autoKey: 'Auto generate keys',
+    manualKey: 'Enter keys manually'
   }
 };
 

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import update from 'immutability-helper';
 
 import { IoTHubManagerService } from 'services';
-import { toSubmitTagsJobRequestModel } from 'services/models';
+import { toSubmitTagsJobRequestModel, toDiagnosticsModel } from 'services/models';
 import { LinkedComponent } from 'utilities';
 import { svgs, Validator } from 'utilities';
 import {
@@ -141,6 +141,8 @@ export class DeviceJobTags extends LinkedComponent {
         updatedTags: this.state.commonTags.filter(({ value }) => value !== tagJobConstants.multipleValues)
       });
 
+      this.props.logEvent(toDiagnosticsModel('Devices_NewJobApply_Click', {}));
+
       const { devices } = this.props;
       const { commonTags, deletedTags } = this.state;
       const updatedTags = commonTags.filter(({ value }) => value !== tagJobConstants.multipleValues);
@@ -263,7 +265,7 @@ export class DeviceJobTags extends LinkedComponent {
               {
                 Object.keys(commonTags).length > 0 &&
                 tagLinks.map(({ name, value, type, edited, error }, idx) =>
-                  <ComponentArray>
+                  <ComponentArray key={idx}>
                     <Row className={error ? 'error-data-row' : ''}>
                       <Cell className="col-3">
                         <FormControl className="small" type="text" link={name} errorState={!!error} />

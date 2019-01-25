@@ -15,13 +15,13 @@ export class EditRuleFlyout extends Component {
   }
 
   render() {
-    const { onClose, t, rule } = this.props;
+    const { onClose, t, ruleId } = this.props;
     return (
       <Flyout.Container header={t('rules.flyouts.editRule')} onClose={this.onTopXClose}>
           <Protected permission={permissions.updateRules}>{
             (hasPermission, permission) =>
               hasPermission
-                ? <RuleEditorContainer onClose={onClose} rule={rule} />
+                ? <RuleEditorContainer onClose={onClose} ruleId={ruleId} />
                 :
                 <div>
                   <ProtectedError t={t} permission={permission} />

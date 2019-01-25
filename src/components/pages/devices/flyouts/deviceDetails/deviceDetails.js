@@ -30,11 +30,11 @@ import {
   TimeSeriesInsightsLinkContainer
 } from 'components/shared';
 import Flyout from 'components/shared/flyout';
-import { TelemetryChart, chartColorObjects } from 'components/pages/dashboard/panels/telemetry';
+import { TelemetryChartContainer as TelemetryChart, chartColorObjects } from 'components/pages/dashboard/panels/telemetry';
 import { transformTelemetryResponse } from 'components/pages/dashboard/panels';
 import { getEdgeAgentStatusCode } from 'utilities';
 
-import './deviceDetails.css';
+import './deviceDetails.scss';
 
 const Section = Flyout.Section;
 

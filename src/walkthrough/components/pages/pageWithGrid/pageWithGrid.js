@@ -7,11 +7,11 @@ import {
   ComponentArray,
   ContextMenu,
   PageContent,
-  RefreshBar
+  RefreshBarContainer as RefreshBar
 } from 'components/shared';
 import { ExampleGrid } from './exampleGrid';
 
-import './pageWithGrid.css';
+import './pageWithGrid.scss';
 
 export class PageWithGrid extends Component {
   constructor(props) {
@@ -24,14 +24,11 @@ export class PageWithGrid extends Component {
     if (!lastUpdated && !isPending) fetchData();
   }
 
-  onGridReady = gridReadyEvent => this.gridApi = gridReadyEvent.api;
-
   onContextMenuChange = contextBtns => this.setState({ contextBtns });
 
   render() {
     const { t, data, error, isPending, lastUpdated, fetchData } = this.props;
     const gridProps = {
-      onGridReady: this.onGridReady,
       rowData: isPending ? undefined : data || [],
       onContextMenuChange: this.onContextMenuChange,
       t: this.props.t

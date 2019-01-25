@@ -3,14 +3,14 @@
 import React from 'react';
 
 import { IoTHubManagerService } from 'services';
-import { permissions } from 'services/models';
+import { permissions, toDiagnosticsModel } from 'services/models';
 import { Btn, Protected } from 'components/shared';
 import { svgs, LinkedComponent } from 'utilities';
 import Flyout from 'components/shared/flyout';
 import DeviceGroupForm from './views/deviceGroupForm';
 import DeviceGroups from './views/deviceGroups';
 
-import './manageDeviceGroups.css';
+import './manageDeviceGroups.scss';
 
 const toOption = (value, label) => ({
   label: label || value,
@@ -45,22 +45,33 @@ export class ManageDeviceGroups extends LinkedComponent {
     if (this.subscription) this.subscription.unsubscribe();
   }
 
-  toggleNewFilter = () => this.setState({ addNewDeviceGroup: !this.state.addNewDeviceGroup });
+  toggleNewFilter = () => {
+    if (!this.state.addNewDeviceGroup) {
+      this.props.logEvent(toDiagnosticsModel('DeviceGroup_NewClick', {}));
+    }
+    this.setState({ addNewDeviceGroup: !this.state.addNewDeviceGroup });
+  }
 
   closeForm = () => this.setState({
     addNewDeviceGroup: false,
     selectedDeviceGroup: undefined
   });
 
-  onEditDeviceGroup = selectedDeviceGroup => () => this.setState({
-    selectedDeviceGroup
-  });
+  onEditDeviceGroup = selectedDeviceGroup => () => {
+    this.props.logEvent(toDiagnosticsModel('DeviceGroup_EditClick', {}));
+    this.setState({ selectedDeviceGroup });
+  }
+
+  onCloseFlyout = () => {
+    this.props.logEvent(toDiagnosticsModel('DeviceGroup_TopXCloseClick', {}));
+    this.props.closeFlyout();
+  }
 
   render() {
-    const { closeFlyout, t, deviceGroups = [] } = this.props;
+    const { t, deviceGroups = [] } = this.props;
 
     return (
-      <Flyout.Container header={t('deviceGroupsFlyout.title')} onClose={closeFlyout}>
+      <Flyout.Container header={t('deviceGroupsFlyout.title')} onClose={this.onCloseFlyout}>
         <div className="manage-filters-flyout-container">
           {
             this.state.addNewDeviceGroup || !!this.state.selectedDeviceGroup

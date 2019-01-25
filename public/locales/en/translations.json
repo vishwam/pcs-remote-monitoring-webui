@@ -424,7 +424,6 @@
       "count": "Count",
       "lastTrigger": "Last trigger",
       "maintenanceLog": "Maintenance log",
-      "unknown": "Unknown",
       "explore": "Explore"
     },
     "flyouts": {
@@ -466,7 +465,7 @@
           "value": "Value",
           "valuePlaceholder": "Enter value"
         },
-        "actions":{
+        "actions": {
           "action": "Action",
           "checkingEmailSetup": "Checking status of email configuration.",
           "setupEmail": "To send email alerts, <1><0>outlookLogin</0></1> is required.",
@@ -591,12 +590,12 @@
       "time": "Time"
     },
     "jobStatus": {
-      "enqueued": "Enqueued",
-      "running": "Running",
-      "completed": "Completed",
-      "failed": "Failed",
-      "cancelled": "Cancelled",
-      "scheduled": "Scheduled",
+      "1": "Enqueued",
+      "2": "Running",
+      "3": "Completed",
+      "4": "Failed",
+      "5": "Cancelled",
+      "6": "Scheduled",
       "queued": "Queued"
     }
   },
@@ -620,23 +619,28 @@
         "apply": "Apply",
         "cancel": "Cancel",
         "close": "Close",
-        "type": "Package type",
+        "packageType": "Package type",
+        "configType": "Configuration type",
         "deviceGroup": "Device Group",
         "name": "Name",
-        "priority": "Priority",
+        "priority": "Priority (Higher values indicate higher priority)",
+        "priorityToolTip": "When two deployments target the same device, the deployment with the higher priority gets applied. If two deployments have the same priority, the deployment with the later creation date gets applied. <1><0>Learn</0></1>",
+        "priorityLearnMore": "Learn more about priority",
         "package": "Package",
-        "typePlaceHolder": "Select package type",
+        "packageTypePlaceHolder": "Select package type",
+        "configTypePlaceHolder": "Select configuration type",
         "packagePlaceHolder": "Select package",
         "deviceGroupPlaceHolder": "Select device group",
         "priorityPlaceHolder": "Enter priority",
         "namePlaceHolder": "Enter name",
         "targetText": "targeted devices",
-        "infoText": "This deployment runs continuously. Every edge device (and any you add in the future) in the selected device group will receive this package.",
+        "infoText": "This deployment runs continuously. Every device (and any you add in the future) in the selected device group will receive this package.",
         "successText": "View your deployment status detail for <1><0>{{deploymentName}}</0></1>.",
         "creating": "Creating deployment",
         "validation": {
           "required": "Is required",
-          "positiveInteger": "Must be a positive integer less than 2147483648"
+          "positiveInteger": "Must be a positive integer less than 2147483648",
+          "name": "name greater than 50 characters"
         }
       }
     },
@@ -645,6 +649,7 @@
       "deviceGroup": "Device group",
       "start": "Start",
       "packageType": "Package type",
+      "configType": "Configuration Type",
       "package": "Package",
       "priority": "Priority",
       "applied": "Applied",
@@ -652,6 +657,8 @@
       "failed": "Failed",
       "succeeded": "Succeeded",
       "pending": "Pending",
+      "unknown": "unknown",
+      "customMetrics": "Custom Metrics",
       "devicesAffected": "Devices Affected",
       "grid": {
         "name": "Name",
@@ -666,21 +673,20 @@
       "delete": {
         "contextMenuName": "Delete",
         "title": "Delete Deployment?",
-        "info": "Deleting '{{deploymentName}}' will stop this deployment from being applied to these devices. It may result in a lower priority edge manifest being applied."
+        "info": "Deleting '{{deploymentName}}' will stop this deployment from being applied to these devices. It may result in a lower priority deployment being applied."
       }
-    },
-    "typeOptions": {
-      "edgemanifest": "Edge Manifest",
-      "unknown": "Unknown"
     },
     "grid": {
       "name": "Name",
       "package": "Package",
       "deviceGroup": "Device group",
       "priority": "Priority",
-      "type": "Package Type",
+      "packageType": "Package Type",
+      "configType": "Configuration Type",
       "targeted": "Targeted",
+      "targetedTooltip": "Number of device twins that match the target condition.",
       "applied": "Applied",
+      "appliedTooltip": "Number of device twins that have been modified by the configuration.",
       "failed": "Failed",
       "succeeded": "Succeeded",
       "dateCreated": "Created On"
@@ -695,7 +701,8 @@
     "delete": "Delete",
     "grid": {
       "name": "Name",
-      "type": "Type",
+      "packageType": "Package Type",
+      "configType": "Configuration Type",
       "dateCreated": "Date Created"
     },
     "flyouts": {
@@ -706,16 +713,23 @@
         "upload": "Upload",
         "cancel": "Cancel",
         "close": "Close",
-        "type": "Package type",
+        "packageType": "Package type",
+        "configType": "Configuration type",
+        "customType": "Custom configuration type",
         "browse": "Browse",
         "browseText": "for a package file",
-        "placeHolder": "Select package type",
+        "packageTypePlaceholder": "Select package type",
+        "configTypePlaceholder": "Select configuration type",
+        "customTextPlaceholder": "Enter custom name",
         "package": "Package",
         "deploymentsPage": "Deployments page",
         "newDeployment": "+ New Deployment",
-        "deploymentText": "To deploy packages, go to the <1>Deployments page</1>, and then click <3>+ New Deployment</3> button.",
+        "deploymentText": "To deploy packages, go to the <1>Deployments page</1>, and then click <3>+ New Deployment</3>.",
         "validation": {
-          "required": "Is required"
+          "required": "Is required",
+          "fileName": "File name greater than 50 characters",
+          "fileType": "Invalid file type",
+          "customConfig": "name greater than 50 characters"
         }
       }
     },
@@ -724,10 +738,16 @@
         "title": "Delete Package?",
         "info": "Deleting selected package will remove it. It will not impact any of the deployments of this package."
       }
-    },
-    "typeOptions": {
-      "edgemanifest": "Edge Manifest"
     }
+  },
+  "packageTypes": {
+    "edgeManifest": "Edge Manifest",
+    "deviceConfiguration": "Device Configuration",
+    "unknown": "Unknown"
+  },
+  "configTypes": {
+    "firmware": "Firmware",
+    "custom": "Custom"
   },
   "modal": {
     "delete": "Delete",

@@ -7,7 +7,7 @@ import { isFunc, translateColumnDefs, svgs } from 'utilities';
 import { checkboxColumn } from 'components/shared/pcsGrid/pcsGridConfig';
 import { PackageDeleteContainer } from '../modals';
 
-import './packagesGrid.css';
+import './packagesGrid.scss';
 
 const closedModalState = {
   openModalName: undefined
@@ -26,7 +26,8 @@ export class PackagesGrid extends Component {
     this.columnDefs = [
       checkboxColumn,
       packagesColumnDefs.name,
-      packagesColumnDefs.type,
+      packagesColumnDefs.packageType,
+      packagesColumnDefs.configType,
       packagesColumnDefs.dateCreated
     ];
 
@@ -49,19 +50,6 @@ export class PackagesGrid extends Component {
     }
     return null;
   }
-
-  /**
-   * Get the grid api options
-   *
-   * @param {Object} gridReadyEvent An object containing access to the grid APIs
-  */
-  onGridReady = gridReadyEvent => {
-    this.packagesGridApi = gridReadyEvent.api;
-    // Call the onReady props if it exists
-    if (isFunc(this.props.onGridReady)) {
-      this.props.onGridReady(gridReadyEvent);
-    }
-  };
 
   /**
    * Handles context filter changes and calls any hard select props method
@@ -95,7 +83,6 @@ export class PackagesGrid extends Component {
       sizeColumnsToFit: true,
       deltaRowDataMode: true,
       ...this.props, // Allow default property overrides
-      onGridReady: event => this.onGridReady(event), // Wrap in a function to avoid closure issues
       getRowNodeId: ({ id }) => id,
       enableSorting: true,
       unSortIcon: true,

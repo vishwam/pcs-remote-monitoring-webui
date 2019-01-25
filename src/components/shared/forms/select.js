@@ -6,7 +6,7 @@ import { SelectInput } from '@microsoft/azure-iot-ux-fluent-controls/lib/compone
 
 import { joinClasses } from 'utilities';
 
-import './styles/select.css';
+import './styles/select.scss';
 
 const onChangeSelect = (onChange, name) => (value) => {
   onChange({ target: { name, value: { value } } });

@@ -5,15 +5,19 @@ import React, { Component } from "react";
 import { isFunc } from 'utilities';
 import { GlimmerRenderer } from 'components/shared/cellRenderers';
 
-import '../cellRenderer.css';
+import '../cellRenderer.scss';
 
 export class SoftSelectLinkRenderer extends Component {
 
   onClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    const { context, rowIndex } = this.props;
-    context.onSoftSelectChange(rowIndex);
+    const { context, data } = this.props;
+    // To ensure up to date information, ALWAYS use the provided ID to
+    // get the entity from the redux store. Note that the full data object
+    // is passed along, but that is with the understanding that it may be
+    // out of date. This is for convenience in analytics logging only.
+    context.onSoftSelectChange(context.getSoftSelectId(data), data);
   };
 
   render() {
@@ -23,8 +27,8 @@ export class SoftSelectLinkRenderer extends Component {
         <GlimmerRenderer value={data.isNew} />
         {
           isFunc(context.onSoftSelectChange)
-            ? <a href="#cell" className="link inline-text-overflow" onClick={this.onClick}>{value}</a>
-            : value
+            ? <button type="button" className="link pcs-renderer-link soft-select-link" onClick={this.onClick}>{value}</button>
+            : <div className="link soft-select-text">{value}</div>
         }
       </div>
     );

@@ -12,6 +12,7 @@ $smallInputWidth: 80px;
 $longInputWidth: 248px;
 $textareaWidth: 348px;
 $textareaHeight: 60px;
+$borderWidth: 1px;
 
 .form-control-container {
   input.form-control,
@@ -40,7 +41,7 @@ $textareaHeight: 60px;
 
     @include themify($themes) {
       color: themed('colorInputText');
-      border: 1px solid themed('colorInputBorderColor');
+      border: $borderWidth solid themed('colorInputBorderColor');
 
       // Set RGBa opacity to .99 to get correct color in the selection styling
       &::selection {
@@ -66,7 +67,7 @@ $textareaHeight: 60px;
       &:disabled {
         background-color: themed('colorDisabledInputBg');
         color: themed('colorDisabledInputBg');
-        border: 1px solid themed('colorDisabledInputBg');
+        border: $borderWidth solid themed('colorDisabledInputBg');
 
         &::-webkit-input-placeholder { color: themed('colorDisabledInputBg'); }
              &:-ms-input-placeholder { color: themed('colorDisabledInputBg'); }
@@ -77,8 +78,14 @@ $textareaHeight: 60px;
   }
 
   input.form-control {
-    height: $input-height;
-    width: 100%;
+    // height: $input-height;
+    // width: 100%;
+    @include rem-fallback(height, $inputHeight + (2 * $borderWidth));
+    @include rem-fallback(width, $defaultInputWidth - $horizontalPadding);
+
+    &.small { @include rem-fallback(width, $smallInputWidth - $horizontalPadding); }
+
+    &.long { @include rem-fallback(width, $longInputWidth - $horizontalPadding); }
   }
 
   textarea.form-control {

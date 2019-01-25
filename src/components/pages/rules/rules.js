@@ -15,14 +15,14 @@ import {
   PageContent,
   PageTitle,
   Protected,
-  RefreshBar,
+  RefreshBarContainer as RefreshBar,
   SearchInput
 } from 'components/shared';
 import { NewRuleFlyout } from './flyouts';
 import { svgs } from 'utilities';
 import { toSinglePropertyDiagnosticsModel } from  'services/models';
 
-import './rules.css';
+import './rules.scss';
 
 const closedFlyoutState = {
   openFlyoutName: '',
@@ -43,6 +43,7 @@ export class Rules extends Component {
     }
 
     this.props.updateCurrentWindow('Rules');
+
     if (this.props.applicationPermissionsAssigned !== undefined) {
       this.logApplicationPermissions(this.props.applicationPermissionsAssigned);
     }

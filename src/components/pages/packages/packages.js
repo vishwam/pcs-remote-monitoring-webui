@@ -11,13 +11,13 @@ import {
   ContextMenuAlign,
   PageContent,
   Protected,
-  RefreshBar,
+  RefreshBarContainer as RefreshBar,
   PageTitle
 } from 'components/shared';
 import { PackageNewContainer } from './flyouts';
 import { svgs } from 'utilities';
 
-import './packages.css';
+import './packages.scss';
 
 const closedFlyoutState = { openFlyoutName: undefined };
 
@@ -31,9 +31,7 @@ export class Packages extends Component {
 
     this.props.updateCurrentWindow('Packages');
 
-    if (!this.props.lastUpdated && !this.props.error) {
-      this.props.fetchPackages();
-    }
+    this.props.fetchPackages();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -60,12 +58,9 @@ export class Packages extends Component {
     });
   }
 
-  onGridReady = gridReadyEvent => this.packageGridApi = gridReadyEvent.api;
-
   render() {
     const { t, packages, error, isPending, fetchPackages, lastUpdated } = this.props;
     const gridProps = {
-      onGridReady: this.onGridReady,
       rowData: isPending ? undefined : packages || [],
       onContextMenuChange: this.onContextMenuChange,
       t: this.props.t

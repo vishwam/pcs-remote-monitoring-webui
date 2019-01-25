@@ -1,18 +1,21 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React, { Component } from 'react';
-import * as classnames from 'classnames/bind';
 import { SelectInput } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Input/SelectInput';
 
-const cx = classnames.bind(require('./deviceGroupDropdown.scss'));
+import { toDiagnosticsModel } from 'services/models';
+
+import './deviceGroupDropdown.scss';
 
 export class DeviceGroupDropdown extends Component {
 
-  onChange = (deviceGroupIds) => (value) => {
+  onChange = (deviceGroupIds) => ({ target: { value: { value } = {} } = {} }) => {
+    this.props.logEvent(toDiagnosticsModel('DeviceGroupFilter_Select', {}));
     // Don't try to update the device group if the device id doesn't exist
     if (deviceGroupIds.indexOf(value) > -1) {
       this.props.changeDeviceGroup(value);
     }
+    this.props.logEvent(toDiagnosticsModel('DeviceFilter_Select', {}));
   }
 
   deviceGroupsToOptions = deviceGroups => deviceGroups
@@ -24,13 +27,13 @@ export class DeviceGroupDropdown extends Component {
     return (
       <SelectInput
         name='device-group-dropdown'
-        className={cx('device-group-dropdown')}
+        className='device-group-dropdown'
         attr={{
           select: {
-            className: cx('device-group-dropdown-select'),
+            className: 'device-group-dropdown-select',
           },
           chevron: {
-            className: cx('device-group-dropdown-chevron'),
+            className: 'device-group-dropdown-chevron',
           },
         }}
         options={this.deviceGroupsToOptions(deviceGroups)}

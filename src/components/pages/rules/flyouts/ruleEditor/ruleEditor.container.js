@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import { RuleEditor } from './ruleEditor';
 import { getDeviceGroups } from 'store/reducers/appReducer';
-import { redux as rulesRedux } from 'store/reducers/rulesReducer';
+import { redux as rulesRedux, getRuleById } from 'store/reducers/rulesReducer';
 import { epics as appEpics } from 'store/reducers/appReducer';
 
 // Pass device groups
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
+  rule: getRuleById(state, props.ruleId),
   deviceGroups: getDeviceGroups(state)
 });
 
@@ -19,4 +20,4 @@ const mapDispatchToProps = dispatch => ({
   logEvent: diagnosticsModel => dispatch(appEpics.actions.logEvent(diagnosticsModel))
 });
 
-export const RuleEditorContainer = translate()(connect(mapStateToProps, mapDispatchToProps)(RuleEditor));
+export const RuleEditorContainer = withNamespaces()(connect(mapStateToProps, mapDispatchToProps)(RuleEditor));

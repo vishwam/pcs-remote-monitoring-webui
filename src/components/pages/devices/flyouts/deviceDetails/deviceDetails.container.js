@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import { DeviceDetails } from './deviceDetails';
 import { getTheme, getDeviceGroups, getTimeSeriesExplorerUrl } from 'store/reducers/appReducer';
 import {
@@ -11,6 +11,7 @@ import {
   getRulesPendingStatus
 } from 'store/reducers/rulesReducer';
 import {
+  getDeviceById,
   getDeviceModuleStatus,
   getDeviceModuleStatusPendingStatus,
   getDeviceModuleStatusError,
@@ -19,7 +20,8 @@ import {
 } from 'store/reducers/devicesReducer';
 
 // Pass the device details
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
+  device: getDeviceById(state, props.deviceId),
   isRulesPending: getRulesPendingStatus(state),
   rules: getRulesEntities(state),
   rulesLastUpdated: getRulesLastUpdated(state),
@@ -38,4 +40,4 @@ const mapDispatchToProps = dispatch => ({
   resetPendingAndError: () => dispatch(devicesRedux.actions.resetPendingAndError(devicesEpics.actions.fetchEdgeAgent))
 });
 
-export const DeviceDetailsContainer = translate()(connect(mapStateToProps, mapDispatchToProps)(DeviceDetails));
+export const DeviceDetailsContainer = withNamespaces()(connect(mapStateToProps, mapDispatchToProps)(DeviceDetails));

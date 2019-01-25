@@ -5,14 +5,13 @@ import { Link } from "react-router-dom";
 import { Observable } from 'rxjs';
 
 import { IoTHubManagerService } from 'services';
-import { toSubmitMethodJobRequestModel, methodJobConstants } from 'services/models';
+import { toSubmitMethodJobRequestModel, toDiagnosticsModel } from 'services/models';
 import { LinkedComponent } from 'utilities';
 import { svgs, Validator } from 'utilities';
 import {
   AjaxError,
   Btn,
   BtnToolbar,
-  ComponentArray,
   FormControl,
   FormGroup,
   FormLabel,
@@ -37,8 +36,6 @@ const initialState = {
   jobName: undefined,
   jobId: undefined,
   methodName: undefined,
-  firmwareVersion: undefined,
-  firmwareUri: undefined,
   commonMethods: []
 };
 
@@ -55,18 +52,6 @@ export class DeviceJobMethods extends LinkedComponent {
     this.methodNameLink = this.linkTo('methodName')
       .map(({ value }) => value)
       .check(Validator.notEmpty, () => this.props.t('devices.flyouts.jobs.validation.required'));
-
-    this.firmwareVersionLink = this.linkTo('firmwareVersion')
-      .check(
-        value => (this.isFirmwareUpdate() ? Validator.notEmpty(value) : true),
-        () => this.props.t('devices.flyouts.jobs.validation.required')
-      );
-
-    this.firmwareUriLink = this.linkTo('firmwareUri')
-      .check(
-        value => (this.isFirmwareUpdate() ? Validator.notEmpty(value) : true),
-        () => this.props.t('devices.flyouts.jobs.validation.required')
-      );
   }
 
   componentDidMount() {
@@ -104,9 +89,7 @@ export class DeviceJobMethods extends LinkedComponent {
   formIsValid() {
     return [
       this.jobNameLink,
-      this.methodNameLink,
-      this.firmwareVersionLink,
-      this.firmwareUriLink
+      this.methodNameLink
     ].every(link => !link.error);
   }
 
@@ -114,6 +97,7 @@ export class DeviceJobMethods extends LinkedComponent {
     event.preventDefault();
     if (this.formIsValid()) {
       this.setState({ isPending: true });
+      this.props.logEvent(toDiagnosticsModel('Devices_NewJobApply_Click', {}));
 
       const { devices } = this.props;
       const request = toSubmitMethodJobRequestModel(devices, this.state);
@@ -129,12 +113,6 @@ export class DeviceJobMethods extends LinkedComponent {
           }
         );
     }
-  }
-
-  isFirmwareUpdate() {
-    return this.methodNameLink.value
-      ? this.methodNameLink.value === methodJobConstants.firmwareUpdate
-      : undefined;
   }
 
   getSummaryMessage() {
@@ -185,20 +163,6 @@ export class DeviceJobMethods extends LinkedComponent {
             <div className="help-message">{t('devices.flyouts.jobs.jobNameHelpMessage')}</div>
             <FormControl className="long" link={this.jobNameLink} type="text" placeholder={t('devices.flyouts.jobs.jobNameHint')} />
           </FormGroup>
-
-          {
-            this.isFirmwareUpdate() &&
-            <ComponentArray>
-              <FormGroup>
-                <FormLabel>{t('devices.flyouts.jobs.methods.firmwareVersion')}</FormLabel>
-                <FormControl className="long" link={this.firmwareVersionLink} type="text" placeholder={t('devices.flyouts.jobs.methods.firmwareVersionHint')} />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel>{t('devices.flyouts.jobs.methods.firmwareUri')}</FormLabel>
-                <FormControl className="long" link={this.firmwareUriLink} type="text" placeholder={t('devices.flyouts.jobs.methods.firmwareUriHint')} />
-              </FormGroup>
-            </ComponentArray>
-          }
 
           <SummarySection>
             <SectionHeader>{t('devices.flyouts.jobs.summaryHeader')}</SectionHeader>

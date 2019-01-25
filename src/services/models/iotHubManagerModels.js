@@ -17,10 +17,12 @@ export const toDeviceModel = (device = {}) => {
     'lastActivity': 'lastActivity',
     'connected': 'connected',
     'isSimulated': 'isSimulated',
-    'properties.reported.firmware': 'firmware',
     'properties.reported.supportedMethods': 'methods',
     'properties.reported.telemetry': 'telemetry',
     'properties.reported.type': 'type',
+    'properties.reported.firmware.currentFwVersion': 'currentFwVersion',
+    'properties.reported.firmware.lastFwUpdateStartTime': 'lastFwUpdateStartTime',
+    'properties.reported.firmware.lastFwUpdateEndTime': 'lastFwUpdateEndTime',
     'c2DMessageCount': 'c2DMessageCount',
     'enabled': 'enabled',
     'lastStatusUpdated': 'lastStatusUpdated',
@@ -28,20 +30,45 @@ export const toDeviceModel = (device = {}) => {
     'eTag': 'eTag',
     'authentication': 'authentication'
   });
+  // TODO: Remove this once device simulation has removed FirmwareUpdate from supportedMethods of devices
+  const methods = (modelData.methods ? modelData.methods.split(',') : [])
+    .filter((methodName) => methodName !== "FirmwareUpdate");
   return update(modelData, {
-    methods: { $set: modelData.methods ? modelData.methods.split(',') : [] },
+    methods: { $set: methods },
     tags: { $set: device.Tags || {} },
     // TODO: Rename properties to reportedProperties
     properties: {
       $set: update(dot.pick('Properties.Reported', device), {
-        $unset: ['Telemetry', 'SupportedMethods']
+        $unset: ['Telemetry', 'SupportedMethods', 'firmware']
       })
     },
     desiredProperties: {
       $set: dot.pick('Properties.Desired', device)
+    },
+    firmware: {
+      $set: modelData.currentFwVersion ? modelData.currentFwVersion : dot.pick('Properties.Reported.Firmware', device)
     }
   });
 }
+
+export const toModuleFieldsModel = (response = {}) => getItems(response)
+  .map(toModuleFieldModel);
+
+export const toModuleFieldModel = (module = {}) => camelCaseReshape(module, {
+  /* Expected schema for modules
+    "reported": {
+      "Telemetry": {
+        "MessageSchema": {
+          "Fields": {
+            "temperature": "Double",
+            ...
+          }
+        }
+      }
+    }
+    */
+  'reported.telemetry.messageSchema.fields': 'moduleFields',
+});
 
 export const toJobsModel = (response = []) => response.map(job => camelCaseReshape(job, {
   'jobId': 'jobId',
@@ -102,26 +129,16 @@ export const toSubmitPropertiesJobRequestModel = (devices, { jobName, updatedPro
   return request;
 };
 
-export const methodJobConstants = {
-  firmwareUpdate: 'FirmwareUpdate'
-};
-
-export const toSubmitMethodJobRequestModel = (devices, { jobName, methodName, firmwareVersion, firmwareUri }) => {
+export const toSubmitMethodJobRequestModel = (devices, { jobName, methodName }) => {
   const jobId = jobName ? jobName + '-' + uuid() : uuid();
   const deviceIds = devices.map(({ id }) => `'${id}'`).join(',');
-  const JsonPayload = (methodName === methodJobConstants.firmwareUpdate)
-    ? JSON.stringify({
-      Firmware: firmwareVersion,
-      FirmwareUri: firmwareUri
-    })
-    : '';
   const request = {
     JobId: jobId,
     QueryCondition: `deviceId in [${deviceIds}]`,
     MaxExecutionTimeInSeconds: 0,
     MethodParameter: {
       Name: methodName,
-      JsonPayload
+      JsonPayload: ''
     }
   };
   return request;
@@ -159,7 +176,7 @@ export const toNewDeviceRequestModel = ({
 
   return {
     Id: isGenerateId ? '' : deviceId,
-    isEdgeDevice: isEdgeDevice,
+    IsEdgeDevice: isEdgeDevice,
     IsSimulated: isSimulated,
     Enabled: true,
     Authentication:
@@ -189,15 +206,18 @@ export const toDeploymentModel = (deployment = {}) => {
     'deviceGroupName': 'deviceGroupName',
     'packageName': 'packageName',
     'priority': 'priority',
-    'type': 'type',
+    'packageType': 'packageType',
+    'configType': 'configType',
     'createdDateTimeUtc': 'createdDateTimeUtc',
-    'metrics.appliedCount': 'appliedCount',
-    'metrics.failedCount': 'failedCount',
-    'metrics.succeededCount': 'succeededCount',
-    'metrics.targetedCount': 'targetedCount'
+    'metrics.systemMetrics.appliedCount': 'appliedCount',
+    'metrics.systemMetrics.reportedFailedCount': 'failedCount',
+    'metrics.systemMetrics.reportedSuccessfulCount': 'succeededCount',
+    'metrics.systemMetrics.targetedCount': 'targetedCount',
+    'metrics.systemMetrics.pendingCount': 'pendingCount'
   });
   return update(modelData, {
-    deviceStatuses: { $set: dot.pick('Metrics.DeviceStatuses', deployment) }
+    deviceStatuses: { $set: dot.pick('Metrics.DeviceStatuses', deployment) },
+    customMetrics: { $set: dot.pick('Metrics.CustomMetrics', deployment) }
   });
 }
 
@@ -213,7 +233,8 @@ export const toDeploymentRequestModel = (deploymentModel = {}) => ({
   PackageName: deploymentModel.packageName,
   PackageContent: deploymentModel.packageContent,
   Priority: deploymentModel.priority,
-  Type: deploymentModel.type
+  PackageType: deploymentModel.packageType,
+  ConfigType: deploymentModel.configType
 });
 
 export const toEdgeAgentModel = (edgeAgent = {}) => camelCaseReshape(edgeAgent, {

@@ -11,7 +11,7 @@ import {
   ContextMenuAlign,
   PageContent,
   Protected,
-  RefreshBar,
+  RefreshBarContainer as RefreshBar,
   PageTitle
 } from 'components/shared';
 import { DeviceGroupDropdownContainer as DeviceGroupDropdown } from 'components/shell/deviceGroupDropdown';
@@ -20,7 +20,7 @@ import { DeploymentsGrid } from './deploymentsGrid';
 import { DeploymentNewContainer } from './flyouts';
 import { svgs } from 'utilities';
 
-import './deployments.css';
+import './deployments.scss';
 
 const closedFlyoutState = { openFlyoutName: undefined };
 
@@ -59,25 +59,23 @@ export class Deployments extends Component {
       openFlyoutName: 'newDeployment'
     });
   }
-  onGridReady = gridReadyEvent => this.deploymentGridApi = gridReadyEvent.api;
 
   getSoftSelectId = ({ id } = '') => id;
 
-  onSoftSelectChange = (deviceRowId) => {
-    const rowData = (this.deploymentGridApi.getDisplayedRowAtIndex(deviceRowId) || {}).data;
+  onSoftSelectChange = (deploymentId, rowData) => {
+    //Note: only the Id is reliable, rowData may be out of date
     this.props.logEvent(
       toDiagnosticsModel('Deployments_GridRowClick', {
-        id: rowData.id,
+        id: deploymentId,
         displayName: rowData.name
       })
     );
-    this.props.history.push(`/deployments/${rowData.id}`)
+    this.props.history.push(`/deployments/${deploymentId}`)
   }
 
   render() {
     const { t, deployments, error, isPending, fetchDeployments, lastUpdated } = this.props;
     const gridProps = {
-      onGridReady: this.onGridReady,
       rowData: isPending ? undefined : deployments || [],
       refresh: fetchDeployments,
       onContextMenuChange: this.onContextMenuChange,
