@@ -16,28 +16,33 @@
 @mixin rem-fallback($property, $values...) {
   $max: length($values);
   $pxValues: '';
+  $remValues: '';
 
   @for $i from 1 through $max {
     $pxValue: nth($values, $i);
     $pxValues: #{$pxValues + $pxValue};
+    $remValue: pxToRem($pxValue);
+    $remValues: #{$remValues + $remValue};
 
     @if $i < $max {
       $pxValues: #{$pxValues + " "};
+      $remValues: #{$remValues + " "};
     }
   }
 
   #{$property}: $pxValues;
+  #{$property}: $remValues;
 }
 
 // A helper mixin for converting Px to REMs for the font-size property
 @mixin rem-font-size($pxFontSize) {
-  font-size: $pxFontSize;
+  @include rem-fallback(font-size, $pxFontSize);
 }
 
 // A helper mixin for converting Px to REMs for height and width properties
 @mixin square-px-rem($pxValue) {
-  height: $pxValue;
-  width: $pxValue;
+  @include rem-fallback(height, $pxValue);
+  @include rem-fallback(width, $pxValue);
 }
 
 // ========================== Pixel to REM conversion mixins - END

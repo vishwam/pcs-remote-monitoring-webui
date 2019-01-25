@@ -30,7 +30,6 @@ cd %APP_HOME%
 
     copy .env            out\docker\
     copy package.json    out\docker\
-    copy package-lock.json    out\docker\
     xcopy /s src\*       out\docker\src\
     xcopy /s public\*    out\docker\public\
 

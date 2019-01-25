@@ -53,7 +53,7 @@ $doublePadding: $baseContentPadding * 2;
   }
 
   .ag-header-cell {
-    font-size: $font-size-small;
+    @include rem-font-size($font-size-small);
 
     .ag-icon { cursor: auto; }
   }
@@ -66,7 +66,7 @@ $doublePadding: $baseContentPadding * 2;
     .ag-cell {
       outline: none;
       border: none;
-      line-height: $rowLineHeight;
+      @include rem-fallback(line-height, $rowLineHeight);
 
       &.first-child-column {
         // Correct alignment of the padding since the border will add width

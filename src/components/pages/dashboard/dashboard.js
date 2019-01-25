@@ -384,7 +384,11 @@ export class Dashboard extends Component {
               onChange={this.props.updateTimeInterval}
               value={timeInterval}
               t={t} />
-            <RefreshBar refresh={this.refreshDashboard} time={lastRefreshed} isPending={analyticsIsPending || devicesIsPending} t={t} />
+            <RefreshBar
+              refresh={this.refreshDashboard}
+              time={lastRefreshed}
+              isPending={analyticsIsPending || devicesIsPending}
+              t={t} />
           </ContextMenuAlign>
         </ContextMenu>
         <PageContent className="dashboard-container">

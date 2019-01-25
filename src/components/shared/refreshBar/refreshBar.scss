@@ -22,17 +22,11 @@ $btn-icon-size: 4*$grid-size;
     @include rem-fallback(padding, 0px, 5px);
     @include rem-fallback(min-width, 0px);
 
-    &:hover {
-      background: none !important;
-    }
+    &:hover { background: none !important; }
 
-    .btn-icon {
-      @include square-px-rem($grid-size*4);
-    }
+    .btn-icon { @include square-px-rem($grid-size*4); }
 
-    &:focus {
-      outline: 0px;
-    }
+    &:focus { outline: 0px; }
 
     &.refreshing {
       -webkit-animation: spin $rotateTime linear infinite;
@@ -52,36 +46,17 @@ $btn-icon-size: 4*$grid-size;
     .time {
       color: themed('colorContentText');
 
-      .refresh-text {
-        color: themed('colorContentTextDim');
-      }
+      .refresh-text { color: themed('colorContentTextDim'); }
     }
 
     .btn.refresh-btn {
       background: none;
 
-      &.refreshing .btn-icon svg {
-        fill: themed('colorContentText');
-      }
+      &.refreshing .btn-icon svg { fill: themed('colorContentText'); }
     }
   }
 }
 
-@-moz-keyframes spin {
-  100% {
-    -moz-transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }

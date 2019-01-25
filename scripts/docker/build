@@ -24,7 +24,6 @@ build_docker_image() {
 
     cp -p .env          out/docker/
     cp -pR package.json out/docker/
-    cp -pR package-lock.json out/docker/
     cp -pR src/*        out/docker/src/
     cp -pR public/*     out/docker/public/
 

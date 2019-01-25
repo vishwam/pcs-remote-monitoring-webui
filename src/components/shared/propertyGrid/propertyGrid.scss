@@ -14,7 +14,7 @@ $scrollbarWidth: 4px;
   @include rem-fallback(padding-left, 8px);
 
   .grid-header {
-    font-size: $font-size-small;
+    @include rem-font-size($font-size-small);
   }
 
   .grid-header .cell {
