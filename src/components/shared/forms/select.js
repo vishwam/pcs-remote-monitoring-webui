@@ -4,10 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SelectInput } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Input/SelectInput';
 
-import { joinClasses } from 'utilities';
-
-import './styles/select.scss';
-
 const onChangeSelect = (onChange, name) => (value) => {
   onChange({ target: { name, value: { value } } });
 }
@@ -30,7 +26,7 @@ export const Select = ({ className, onChange, name, options, placeholder, value,
 
   return <SelectInput
     name={name}
-    className={joinClasses('select-container', className)}
+    className={className}
     options={options}
     value={value}
     {...props}
