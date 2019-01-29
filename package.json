@@ -3,7 +3,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@microsoft/azure-iot-ux-fluent-controls": "6.0.0-uialignment.8",
+    "@microsoft/azure-iot-ux-fluent-controls": "^6.0.0-uialignment.10",
     "@microsoft/azure-iot-ux-fluent-css": "6.0.0-uialignment.7",
     "adal-angular": "1.0.17",
     "ag-grid-community": "19.1.4",

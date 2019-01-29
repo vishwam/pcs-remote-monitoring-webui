@@ -22,7 +22,7 @@
   },
   "tabs": {
     "dashboard": "Dashboard",
-    "devices": "Devices",
+    "devices": "Device Explorer",
     "rules": "Rules",
     "maintenance": "Maintenance",
     "packages": "Packages",
@@ -193,7 +193,7 @@
     "lastRefreshed": "Last refreshed"
   },
   "devices": {
-    "title": "Devices",
+    "title": "Device Explorer",
     "searchPlaceholder": "Search devices...",
     "noneFound": "No devices found.",
     "refresh": "Refresh",

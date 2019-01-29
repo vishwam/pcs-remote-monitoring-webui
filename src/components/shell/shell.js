@@ -100,8 +100,7 @@ class Shell extends Component {
       return {
         branding: t('header.appName'),
         more: {
-          icon: 'more',
-          label: t('header.more'),
+          title: t('header.more'),
           selected: this.state.isMastheadMoreExpanded,
           onClick: this.handleMastheadMoreToggle,
         },
@@ -110,10 +109,11 @@ class Shell extends Component {
       return {
         branding: t('header.appName'),
         more: {
+          title: t('header.more'),
           selected: this.state.isMastheadMoreExpanded,
           onClick: this.handleMastheadMoreToggle,
         },
-        toolBarItems: [{
+        toolbarItems: [{
           icon: 'settings',
           label: t('settingsFlyout.title'),
           selected: openFlyout === 'settings',
@@ -136,7 +136,7 @@ class Shell extends Component {
   }
 
   handleGlobalNavToggle = (e) => {
-    e.stopPropagation();
+    e && e.stopPropagation();
     this.setState({
         isNavExpanded: !this.state.isNavExpanded
     });
