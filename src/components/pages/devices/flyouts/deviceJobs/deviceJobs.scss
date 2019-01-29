@@ -50,8 +50,7 @@
   .icon-only-btn {
     min-width: 0;
     padding: 0;
-    height: $input-height;
-    width: $input-height;
+    @include square-px-rem($input-height);
   }
 
   .data-grid { @include rem-fallback(margin-top, 16px); }

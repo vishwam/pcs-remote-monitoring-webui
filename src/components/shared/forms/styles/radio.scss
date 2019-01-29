@@ -8,8 +8,8 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  height: $input-height;
-  line-height: $input-height;
+  @include rem-fallback(height, $input-height);
+  @include rem-fallback(line-height, $input-height);
 
   + .radio-container { @include rem-fallback(margin-top, 12px); }
 

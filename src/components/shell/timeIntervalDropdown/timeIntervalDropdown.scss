@@ -12,7 +12,9 @@
       // match the background color of the underlying panel:
       background-color: themed('color-bg-content');
 
-      &:not(:active), &:not(:hover), &:not(:focus) {
+      &:not(:active),
+      &:not(:hover),
+      &:not(:focus) {
         border-top-color: transparent;
         border-bottom-color: transparent;
       }

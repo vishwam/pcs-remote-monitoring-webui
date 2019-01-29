@@ -29,8 +29,8 @@ export class TimeIntervalDropdown extends Component {
     }));
     return (
       <SelectInput
-        name='time-interval-dropdown'
-        className='time-interval-dropdown'
+        name="time-interval-dropdown"
+        className="time-interval-dropdown"
         attr={{
           select: {
             className: 'time-interval-dropdown-select',

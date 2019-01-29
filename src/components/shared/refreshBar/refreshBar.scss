@@ -15,9 +15,7 @@ $btn-icon-size: 4*$grid-size;
   text-transform: uppercase;
   flex-shrink: 0;
   margin-top: 0;
-  @include themify($themes) {
-    border-left: 1px solid themed('color-border-rest');
-  }
+
   .btn.refresh-btn {
     @include rem-fallback(padding, 0px, 5px);
     @include rem-fallback(min-width, 0px);
@@ -38,11 +36,14 @@ $btn-icon-size: 4*$grid-size;
   .time {
     min-width: $minWidthTime;
   }
+
   .empty-time{
     min-width: $minWidthEmptyTime;
   }
 
   @include themify($themes) {
+    border-left: 1px solid themed('color-border-rest');
+
     .time {
       color: themed('colorContentText');
 

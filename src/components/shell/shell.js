@@ -143,7 +143,7 @@ class Shell extends Component {
   }
 
   handleMastheadMoreToggle = (e) => {
-    e.stopPropagation();
+    e && e.stopPropagation();
     this.setState({
         isMastheadMoreExpanded: !this.state.isMastheadMoreExpanded
     });

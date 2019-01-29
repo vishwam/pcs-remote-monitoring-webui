@@ -26,14 +26,14 @@ export class DeviceGroupDropdown extends Component {
     const deviceGroupIds = deviceGroups.map(({ id }) => id);
     return (
       <SelectInput
-        name='device-group-dropdown'
-        className='device-group-dropdown'
+        name="device-group-dropdown"
+        className="device-group-dropdown"
         attr={{
           select: {
-            className: 'device-group-dropdown-select',
+            className: "device-group-dropdown-select",
           },
           chevron: {
-            className: 'device-group-dropdown-chevron',
+            className: "device-group-dropdown-chevron",
           },
         }}
         options={this.deviceGroupsToOptions(deviceGroups)}

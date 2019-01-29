@@ -190,7 +190,7 @@ export class Settings extends LinkedComponent {
                     </div>
                     : <div className="toggle">
                       <Toggle
-                        name='settings-diagnostics-opt-in'
+                        name="settings-diagnostics-opt-in"
                         on={this.state.diagnosticsOptIn}
                         disabled={getDiagnosticsPending}
                         onChange={this.toggleDiagnostics}
